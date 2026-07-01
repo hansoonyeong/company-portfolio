@@ -220,6 +220,12 @@
   gap: clamp(40px, 5vw, 56px);
 }
 
+.pricing__plans + .pricing__group-stack {
+  margin-top: clamp(40px, 5vw, 56px);
+  padding-top: clamp(32px, 4vw, 44px);
+  border-top: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
+}
+
 .pricing__group-block {
   margin: 0;
 }
