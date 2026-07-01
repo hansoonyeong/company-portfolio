@@ -7,8 +7,7 @@ export function absoluteUrl(path = '/') {
   return `${SITE_URL}${path.startsWith('/') ? path : `/${path}`}`
 }
 
-export function upsertMeta(selector, attributes) {
-  const { key, value, ...rest } = attributes
+export function upsertMeta({ key, value, ...rest }) {
   const attrName = key.startsWith('og:') || key.startsWith('twitter:') ? 'property' : 'name'
   let el = document.head.querySelector(`meta[${attrName}="${key}"]`)
 
