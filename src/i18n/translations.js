@@ -4,6 +4,8 @@ export const translations = {
   en: {
     meta: {
       title: 'soono | DESIGN · MEDIA · MARKETING',
+      description:
+        'Sydney-based creative studio for brand identity, content, websites, and SNS marketing. soono designs Brand · Build · Connect · Grow as one connected flow.',
       lang: 'en',
     },
     nav: {
@@ -233,11 +235,11 @@ export const translations = {
       ],
     },
     newsPage: {
-      meta: { title: 'soono | News' },
+      meta: { title: 'soono | News', description: 'Latest news and updates from soono — design, media, and marketing studio in Sydney.' },
       back: 'Back to home',
     },
     worksPage: {
-      meta: { title: 'soono | Works' },
+      meta: { title: 'soono | Works', description: 'Selected brand, content, web, and marketing projects by soono in Australia and beyond.' },
       back: 'Back to home',
       title: 'Works',
       count: '{n} projects',
@@ -256,7 +258,11 @@ export const translations = {
       },
     },
     aboutPage: {
-      meta: { title: 'soono | About' },
+      meta: {
+        title: 'soono | About',
+        description:
+          'Learn about soono — a Sydney creative studio for brand identity, content, websites, and SNS marketing.',
+      },
       back: 'Back to home',
       paragraphs: [
         'soono designs brand identity, content, websites, and SNS marketing as one connected flow.',
@@ -273,7 +279,10 @@ export const translations = {
       clientsMore: 'View all works →',
     },
     contactPage: {
-      meta: { title: 'soono | Contact' },
+      meta: {
+        title: 'soono | Contact',
+        description: 'Request a quote or get in touch with soono for design, media, and marketing projects.',
+      },
       back: 'Back to home',
       title: 'Contact',
       form: {
@@ -315,7 +324,10 @@ export const translations = {
       copyright: 'All rights reserved.',
     },
     servicesPage: {
-      meta: { title: 'soono | Services 2026' },
+      meta: {
+        title: 'soono | Services 2026',
+        description: '2026 soono services — Brand, Build, Connect, and Grow packages for growing brands.',
+      },
       back: 'Back to home',
       ...servicesEn,
     },
@@ -328,6 +340,8 @@ export const translations = {
   ko: {
     meta: {
       title: 'soono | DESIGN · MEDIA · MARKETING',
+      description:
+        '시드니 기반 크리에이티브 스튜디오 soono. 브랜드 아이덴티티, 콘텐츠, 웹사이트, SNS 마케팅을 하나의 흐름으로 설계합니다.',
       lang: 'ko',
     },
     nav: {
@@ -557,11 +571,11 @@ export const translations = {
       ],
     },
     newsPage: {
-      meta: { title: 'soono | 새소식' },
+      meta: { title: 'soono | 새소식', description: 'soono 스튜디오의 새소식과 업데이트.' },
       back: '홈으로 돌아가기',
     },
     worksPage: {
-      meta: { title: 'soono | 프로젝트' },
+      meta: { title: 'soono | 프로젝트', description: 'soono의 브랜드, 콘텐츠, 웹, 마케팅 프로젝트.' },
       back: '홈으로 돌아가기',
       title: '프로젝트',
       count: '총 {n}개',
@@ -580,7 +594,10 @@ export const translations = {
       },
     },
     aboutPage: {
-      meta: { title: 'soono | 회사 소개' },
+      meta: {
+        title: 'soono | 회사 소개',
+        description: '브랜드 아이덴티티, 콘텐츠, 웹사이트, SNS 마케팅 스튜디오 soono를 소개합니다.',
+      },
       back: '홈으로 돌아가기',
       paragraphs: [
         'soono는 브랜드 아이덴티티, 콘텐츠, 웹사이트, SNS 마케팅을 하나의 흐름으로 설계합니다.',
@@ -592,7 +609,7 @@ export const translations = {
       clientsMore: '전체 프로젝트 보기 →',
     },
     contactPage: {
-      meta: { title: 'soono | 문의' },
+      meta: { title: 'soono | 문의', description: 'soono에 디자인·미디어·마케팅 프로젝트 견적을 요청하세요.' },
       back: '홈으로 돌아가기',
       title: '문의',
       form: {
@@ -634,7 +651,10 @@ export const translations = {
       copyright: 'All rights reserved.',
     },
     servicesPage: {
-      meta: { title: 'soono | 2026 서비스' },
+      meta: {
+        title: 'soono | 2026 서비스',
+        description: '2026 soono 서비스 — Brand, Build, Connect, Grow 패키지 안내.',
+      },
       back: '홈으로 돌아가기',
       ...servicesKo,
     },

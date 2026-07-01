@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { useTranslation } from '../i18n/LanguageContext'
 import { useProjects } from '../context/ProjectsContext'
 import { isVideoSrc } from '../lib/media'
 import { useQuoteCart } from '../context/QuoteCartContext'
+import { usePageSeo } from '../lib/usePageSeo.js'
 import ProjectLightbox from '../components/ProjectLightbox'
 import ProjectCaseStudy from '../components/ProjectCaseStudy'
 import JustifiedGallery from '../components/JustifiedGallery'
@@ -40,13 +41,38 @@ function ProjectMediaItem({ src, className, loading }) {
 
 export default function ProjectDetailPage() {
   const { id } = useParams()
-  const { t } = useTranslation()
+  const { t, lang } = useTranslation()
   const { projects, quotePriceLabel, loading } = useProjects()
   const cart = useQuoteCart()
   const w = t.worksPage
   const project = findProject(projects, id)
   const { prev: prevProject, next: nextProject } = getProjectNeighbors(projects, id)
   const [lightboxIndex, setLightboxIndex] = useState(null)
+
+  const pageSeo = useMemo(() => {
+    if (!project) return null
+
+    const path = `/works/${project.slug || project.id}`
+    const description =
+      project.description?.[lang] ||
+      project.description?.en ||
+      project.subtitle ||
+      t.meta.description
+    const image =
+      project.thumb ||
+      (project.gallery ?? []).find((src) => !isVideoSrc(src)) ||
+      '/logo.png'
+
+    return {
+      title: `${project.title} | soono`,
+      description,
+      path,
+      image,
+      type: 'article',
+    }
+  }, [project, lang, t.meta.description])
+
+  usePageSeo(pageSeo)
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })

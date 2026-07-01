@@ -18,6 +18,7 @@ const HERO_PUBLIC = path.join(__dirname, '..', 'public', 'hero')
 const PUBLIC_ROOT = path.join(__dirname, '..', 'public')
 const PORT = process.env.PORT || 3001
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'soono2026'
+const SITE_URL = (process.env.SITE_URL || 'https://soono.au').replace(/\/$/, '')
 const TOKEN_TTL_MS = 1000 * 60 * 60 * 8
 
 const sessions = new Map()
@@ -735,6 +736,32 @@ app.delete('/api/hero/images', authMiddleware, async (req, res) => {
     res.json(updated)
   } catch (err) {
     res.status(500).json({ error: err.message || 'Delete failed' })
+  }
+})
+
+app.get('/sitemap.xml', async (_req, res) => {
+  try {
+    const projects = await readProjects()
+    const staticPaths = ['/', '/about', '/works', '/news', '/services', '/contact']
+    const projectPaths = projects.map((project) => `/works/${project.slug || project.id}`)
+    const urls = [...staticPaths, ...projectPaths]
+    const lastmod = new Date().toISOString().slice(0, 10)
+
+    const body = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls
+  .map(
+    (pathname) => `  <url>
+    <loc>${SITE_URL}${pathname === '/' ? '/' : pathname}</loc>
+    <lastmod>${lastmod}</lastmod>
+  </url>`,
+  )
+  .join('\n')}
+</urlset>`
+
+    res.type('application/xml').send(body)
+  } catch (err) {
+    res.status(500).type('text/plain').send('Failed to generate sitemap')
   }
 })
 

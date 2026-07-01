@@ -1,6 +1,7 @@
 // 연락처, 로고 등 언어와 무관한 정적 정보
 export const company = {
   name: 'soono',
+  siteUrl: 'https://soono.au',
   logoSrc: '/logo.png',
   logoGif: '/logo.gif',
   logoLight: null,
