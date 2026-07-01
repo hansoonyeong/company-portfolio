@@ -1,0 +1,103 @@
+.quote-cart-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  background: var(--color-bg-dark);
+  color: #fff;
+  padding: 16px 0;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.12);
+  animation: cartBarIn 0.25s ease;
+}
+
+@keyframes cartBarIn {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.quote-cart-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.quote-cart-bar__summary {
+  flex: 1;
+  min-width: 0;
+}
+
+.quote-cart-bar__count {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 8px;
+}
+
+.quote-cart-bar__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  max-height: 52px;
+  overflow: hidden;
+}
+
+.quote-cart-bar__item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.quote-cart-bar__item-name {
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+.quote-cart-bar__item-price {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.8125rem;
+}
+
+.quote-cart-bar__btn {
+  flex-shrink: 0;
+  padding: 14px 24px;
+  background: #fff;
+  color: var(--color-text);
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+
+.quote-cart-bar__btn:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 640px) {
+  .quote-cart-bar__inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .quote-cart-bar__items {
+    max-height: none;
+  }
+
+  .quote-cart-bar__btn {
+    text-align: center;
+  }
+}

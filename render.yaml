@@ -1,0 +1,21 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: soono-portfolio
+    runtime: node
+    plan: starter
+    region: singapore
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SERVE_STATIC
+        value: '1'
+      - key: ADMIN_PASSWORD
+        sync: false
+    disk:
+      name: soono-data
+      mountPath: /opt/render/project/src/server/data
+      sizeGB: 1

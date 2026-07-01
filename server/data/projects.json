@@ -1,0 +1,1122 @@
+[
+  {
+    "id": 3,
+    "slug": "peekabrew",
+    "tag": {
+      "ko": "마케팅",
+      "en": "Marketing"
+    },
+    "title": "Peek-a-Brew Beverage & Co.",
+    "subtitle": "SNS Content & Meta Ads",
+    "date": "2025.11",
+    "client": "Peek-a-Brew Beverage & Co.",
+    "location": "Australia",
+    "description": {
+      "ko": "코스트코 입점 음료 브랜드 Peek-a-Brew의 SNS 콘텐츠 관리와 Meta 광고 집행. 리치 우롱 티 제품 홍보를 위한 피드·릴스 콘텐츠와 유통 세일 기간 맞춤 광고를 운영했습니다.",
+      "en": "SNS content management and Meta ad campaigns for a Costco retail beverage brand. Promoted Lychee Oolong Tea with feed creatives, reels, and paid media during warehouse sale periods."
+    },
+    "scope": {
+      "ko": [
+        "SNS 콘텐츠 기획·운영",
+        "제품·코스트코 세일 홍보물",
+        "Meta 광고 세팅·집행",
+        "유통 세일·도달 캠페인",
+        "성과 리포트"
+      ],
+      "en": [
+        "SNS content planning & publishing",
+        "Product & Costco promo creatives",
+        "Meta ads setup & management",
+        "Retail sale & reach campaigns",
+        "Performance reporting"
+      ]
+    },
+    "thumb": "/projects/peekabrew/1782865427474-43.jpg",
+    "gallery": [
+      "/projects/peekabrew/thumb.jpg",
+      "/projects/peekabrew/hero-poster.jpg",
+      "/projects/peekabrew/sns-costco-sale.jpg",
+      "/projects/peekabrew/sns-imessage.jpg",
+      "/projects/peekabrew/sns-reel.mp4",
+      "/projects/peekabrew/meta-ad.mp4"
+    ],
+    "caseStudy": {
+      "accent": "#D4567A",
+      "hero": {
+        "eyebrow": {
+          "ko": "SNS 콘텐츠 · Meta 광고 · 코스트코 · 2025",
+          "en": "SNS content · Meta ads · Costco · 2025"
+        },
+        "headline": {
+          "ko": "코스트코 입점 음료, SNS로 알리고 광고로 전환하다.",
+          "en": "Costco beverage — awareness on SNS, conversion through ads."
+        },
+        "lead": {
+          "ko": "리치 우롱 티(Lychee Oolong Tea)를 판매하는 Peek-a-Brew Beverage & Co.의 SNS 콘텐츠 관리와 Meta 광고 집행 프로젝트입니다. 제품·세일 소식을 피드와 릴스로 운영하고, 코스트코 프로모션 기간에 맞춰 광고로 구매·매장 방문을 유도했습니다.",
+          "en": "SNS content management and Meta ad execution for Peek-a-Brew Beverage & Co. — Lychee Oolong Tea at Costco. Feed and reel content for product and sale updates, with paid campaigns timed to warehouse promotions."
+        },
+        "video": "/projects/peekabrew/hero.mp4",
+        "poster": "/projects/peekabrew/hero-poster.jpg",
+        "image": "/projects/peekabrew/hero-poster.jpg",
+        "meta": [
+          {
+            "label": {
+              "ko": "역할",
+              "en": "Role"
+            },
+            "value": {
+              "ko": "SNS 운영 · 광고 집행",
+              "en": "SNS ops · Ad management"
+            }
+          },
+          {
+            "label": {
+              "ko": "업종",
+              "en": "Industry"
+            },
+            "value": {
+              "ko": "음료 · 코스트코 유통",
+              "en": "Beverage · Costco retail"
+            }
+          },
+          {
+            "label": {
+              "ko": "산출물",
+              "en": "Deliverables"
+            },
+            "value": {
+              "ko": "SNS 콘텐츠 · Meta 광고",
+              "en": "SNS content · Meta ads"
+            }
+          },
+          {
+            "label": {
+              "ko": "연도",
+              "en": "Year"
+            },
+            "value": {
+              "ko": "2025",
+              "en": "2025"
+            }
+          }
+        ]
+      },
+      "overview": {
+        "label": {
+          "ko": "Overview",
+          "en": "Overview"
+        },
+        "title": {
+          "ko": "유통 세일 일정에 맞춘 콘텐츠·광고 운영",
+          "en": "Content and ads aligned to retail sale windows"
+        },
+        "paragraphs": {
+          "ko": [
+            "Peek-a-Brew는 리치 우롱 티 등 프리미엄 음료를 코스트코 등 대형 유통 채널에서 판매하는 브랜드입니다. 입점·세일 기간이 명확한 만큼, SNS에서는 '지금 어디서, 얼마에 살 수 있는지'를 빠르게 전달하는 것이 중요했습니다.",
+            "피드·릴스 콘텐츠 기획·제작·게시를 soono가 맡고, Meta 광고로 세일 기간 도달과 전환을 병행했습니다. 제품 비주얼과 UGC 톤을 맞춰 브랜드의 밝고 친근한 이미지를 일관되게 유지했습니다."
+          ],
+          "en": [
+            "Peek-a-Brew sells premium drinks like Lychee Oolong Tea through Costco and other major retail channels. With clear in-store and sale windows, SNS needed to communicate where and when to buy — quickly and clearly.",
+            "soono managed feed and reel content planning, production, and publishing, while running Meta ads for reach and conversion during sale periods. Product visuals and UGC-style posts shared one bright, approachable brand tone."
+          ]
+        }
+      },
+      "process": {
+        "label": {
+          "ko": "Process",
+          "en": "Process"
+        },
+        "title": {
+          "ko": "콘텐츠 운영부터 광고 집행까지, 다섯 단계",
+          "en": "Five stages from content ops to ad execution"
+        },
+        "steps": [
+          {
+            "tag": {
+              "ko": "01 · AUDIT",
+              "en": "01 · AUDIT"
+            },
+            "title": {
+              "ko": "브랜드·유통 채널 현황 점검",
+              "en": "Brand & retail channel audit"
+            },
+            "body": {
+              "ko": "제품 라인업, 코스트코 세일 일정, 기존 SNS 톤을 파악하고 입점·프로모션에 필요한 콘텐츠 유형을 정리했습니다.",
+              "en": "Mapped product lineup, Costco sale calendar, and existing SNS tone — then defined content types for retail and promo windows."
+            }
+          },
+          {
+            "tag": {
+              "ko": "02 · PLAN",
+              "en": "02 · PLAN"
+            },
+            "title": {
+              "ko": "세일·캠페인 콘텐츠 캘린더",
+              "en": "Sale & campaign content calendar"
+            },
+            "body": {
+              "ko": "코스트코 프로모션 일정에 맞춰 피드·릴스·스토리 주제를 배치하고, 광고 집행 시점과 예산을 함께 계획했습니다.",
+              "en": "Scheduled feed, reel, and story themes around Costco promotions — aligned with ad flight dates and budgets."
+            }
+          },
+          {
+            "tag": {
+              "ko": "03 · CREATE",
+              "en": "03 · CREATE"
+            },
+            "title": {
+              "ko": "제품·세일 홍보물 제작",
+              "en": "Product & sale creatives"
+            },
+            "body": {
+              "ko": "제품 컷, 코스트코 세일 안내, UGC 스타일 라이프스타일 콘텐츠를 SNS 비율과 브랜드 톤에 맞게 제작했습니다.",
+              "en": "Produced product shots, Costco sale announcements, and UGC-style lifestyle content in SNS-ready formats and brand tone."
+            }
+          },
+          {
+            "tag": {
+              "ko": "04 · PUBLISH",
+              "en": "04 · PUBLISH"
+            },
+            "title": {
+              "ko": "SNS 콘텐츠 관리·게시",
+              "en": "SNS content management"
+            },
+            "body": {
+              "ko": "캡션, 해시태그, 게시 타이밍을 관리하며 세일 전후로 안내 콘텐츠를 집중 배치했습니다.",
+              "en": "Managed captions, hashtags, and posting times — with focused pre/post sale content around warehouse windows."
+            }
+          },
+          {
+            "tag": {
+              "ko": "05 · ADS",
+              "en": "05 · ADS"
+            },
+            "title": {
+              "ko": "Meta 광고 세팅·집행·최적화",
+              "en": "Meta ads setup, run & optimise"
+            },
+            "body": {
+              "ko": "지역·관심사 타겟으로 도달·전환 캠페인을 운영하고, 세일 기간에는 제품·프로모션 소재를 광고로 확장해 매장 방문과 구매를 유도했습니다.",
+              "en": "Ran reach and conversion campaigns with local and interest targeting — scaling product and promo creatives during sale periods to drive store visits and purchases."
+            }
+          }
+        ]
+      },
+      "logo": {
+        "label": {
+          "ko": "Content",
+          "en": "Content"
+        },
+        "title": {
+          "ko": "제품·세일·UGC SNS 비주얼",
+          "en": "Product, sale & UGC SNS visuals"
+        },
+        "text": {
+          "ko": "릴스 영상, 코스트코 세일 안내, UGC 스타일 라이프스타일 포스트를 함께 운영해 제품의 밝고 친근한 무드가 피드 전체에 이어지도록 했습니다.",
+          "en": "Reels, Costco sale posts, and UGC-style lifestyle content — keeping the brand's bright, friendly mood consistent across the feed."
+        },
+        "cells": [
+          {
+            "video": "/projects/peekabrew/sns-reel.mp4",
+            "poster": "/projects/peekabrew/sns-reel-poster.jpg",
+            "tag": {
+              "ko": "릴스·영상",
+              "en": "Reel video"
+            },
+            "variant": "light"
+          },
+          {
+            "image": "/projects/peekabrew/sns-costco-sale.jpg",
+            "tag": {
+              "ko": "코스트코 세일",
+              "en": "Costco sale"
+            },
+            "variant": "light"
+          },
+          {
+            "image": "/projects/peekabrew/sns-imessage.jpg",
+            "tag": {
+              "ko": "UGC 라이프스타일",
+              "en": "UGC lifestyle"
+            },
+            "variant": "light"
+          }
+        ]
+      },
+      "businessCard": {
+        "label": {
+          "ko": "Ads",
+          "en": "Ads"
+        },
+        "title": {
+          "ko": "Meta 광고 영상 소재",
+          "en": "Meta ad video creative"
+        },
+        "text": {
+          "ko": "코스트코 입점·세일 메시지를 담은 Meta 광고 영상을 제작·집행했습니다. 제품 비주얼과 프로모션 정보를 짧은 포맷으로 압축해, 세일 기간 동안 지역 타겟에게 반복 노출했습니다.",
+          "en": "Produced and ran Meta ad video for Costco availability and sale messaging — compressing product visuals and promo info into short formats for repeated local exposure during sale windows."
+        },
+        "mainVideo": "/projects/peekabrew/meta-ad.mp4",
+        "mainPoster": "/projects/peekabrew/meta-ad-poster.jpg",
+        "mainImage": "/projects/peekabrew/meta-ad-poster.jpg",
+        "layout": "split"
+      },
+      "touchpoints": {
+        "label": {
+          "ko": "Channels",
+          "en": "Channels"
+        },
+        "title": {
+          "ko": "SNS 운영과 광고, 두 축으로 성장",
+          "en": "Growth on two tracks — SNS and ads"
+        },
+        "text": {
+          "ko": "오가닉 콘텐츠로 제품 인지도를 쌓고, Meta 광고로 코스트코 세일·입점 정보를 신규 고객에게 전달했습니다.",
+          "en": "Organic content built product awareness; Meta ads delivered Costco sale and availability info to new customers."
+        },
+        "cards": [
+          {
+            "title": {
+              "ko": "Instagram",
+              "en": "Instagram"
+            },
+            "text": {
+              "ko": "제품 소개, 코스트코 세일 안내, UGC 스타일 라이프스타일 콘텐츠를 피드·릴스·스토리로 꾸준히 운영했습니다.",
+              "en": "Steady feed, reels, and stories covering product intro, Costco sales, and UGC-style lifestyle content."
+            },
+            "linkUrl": "https://www.instagram.com/peekabrewau/",
+            "linkLabel": {
+              "ko": "Instagram 바로가기 ↗",
+              "en": "Open Instagram ↗"
+            },
+            "items": []
+          },
+          {
+            "title": {
+              "ko": "Meta Ads",
+              "en": "Meta Ads"
+            },
+            "text": {
+              "ko": "지역·관심사 타겟으로 도달·전환 캠페인을 집행했습니다.",
+              "en": "Reach and conversion campaigns with local and interest targeting."
+            },
+            "linkUrl": "",
+            "linkLabel": {
+              "ko": "",
+              "en": ""
+            },
+            "items": [
+              {
+                "label": "01",
+                "text": {
+                  "ko": "캠페인 목표 — 제품 인지 · 코스트코 방문 · 구매 전환",
+                  "en": "Goals — product awareness · Costco visits · purchase conversion"
+                }
+              },
+              {
+                "label": "02",
+                "text": {
+                  "ko": "타겟 — 호주 지역 · 음료·건강 관심사",
+                  "en": "Targeting — Australia local · beverage & wellness interests"
+                }
+              },
+              {
+                "label": "03",
+                "text": {
+                  "ko": "소재 — 제품·세일 영상, SNS와 동일 톤",
+                  "en": "Creatives — product & sale video, tone matched to SNS"
+                }
+              },
+              {
+                "label": "04",
+                "text": {
+                  "ko": "운영 — 세일 일정에 맞춘 예산·소재 교체",
+                  "en": "Ops — budget & creative swaps aligned to sale dates"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "quote": {
+        "text": {
+          "ko": "\"코스트코 세일 기간에 콘텐츠와 광고가 동시에 움직이니, 매장 문의가 눈에 띄게 늘었습니다.\"",
+          "en": "\"When content and ads moved together during Costco sales, store inquiries picked up noticeably.\""
+        },
+        "cite": {
+          "ko": "— Peek-a-Brew Beverage & Co.",
+          "en": "— Peek-a-Brew Beverage & Co."
+        }
+      }
+    },
+    "updatedAt": "2026-07-01T01:09:49.229Z"
+  },
+  {
+    "id": 4,
+    "tag": {
+      "ko": "디자인",
+      "en": "Design"
+    },
+    "title": "Bornga Australia",
+    "subtitle": "Menu Design",
+    "date": "2025",
+    "client": "Bornga Australia",
+    "location": "Sydney",
+    "description": {
+      "ko": "브랜드 분위기와 매장 톤앤매너에 맞춘 음료·런치 메뉴판 디자인. 고객이 메뉴를 직관적으로 이해할 수 있도록 정보 구조와 가독성을 정리하고, 고급스러운 다이닝 경험을 느낄 수 있도록 구성했습니다.",
+      "en": "Drink and lunch special menus aligned with Bornga's brand atmosphere and store tone. Clear information hierarchy and readability for intuitive ordering, with a premium dining feel. Includes wine, cocktails, soju, beer, lunch combos, and BBQ sets in bilingual EN/KR layout."
+    },
+    "scope": {
+      "ko": [
+        "음료·런치 메뉴 레이아웃",
+        "영·한 이중 언어 조판",
+        "정보 구조·가독성 정리",
+        "제품·음식 사진 연출",
+        "인쇄용 파일"
+      ],
+      "en": [
+        "Drink & lunch menu layout",
+        "Bilingual EN/KR typesetting",
+        "Information hierarchy & readability",
+        "Product & food photography",
+        "Print-ready files"
+      ]
+    },
+    "thumb": "/projects/bornga/drink-menu.jpg",
+    "gallery": [
+      "/projects/bornga/lunch-special.jpg",
+      "/projects/bornga/1782848100445--2026-07-01-5.34.37.png",
+      "/projects/bornga/1782848155060--2026-07-01-5.30.51.png",
+      "/projects/bornga/1782848155065-soono-sns.mp4"
+    ],
+    "slug": "bornga",
+    "updatedAt": "2026-06-30T19:35:55.074Z"
+  },
+  {
+    "id": 5,
+    "tag": {
+      "ko": "디자인",
+      "en": "Design"
+    },
+    "title": "GMGP",
+    "subtitle": "Kiosk Pamphlet Design",
+    "date": "2026.02",
+    "client": "GMGP",
+    "location": "Sydney",
+    "description": {
+      "ko": "매장 방문 고객이 제품 정보를 쉽게 확인하고 구매를 유도하기 위한 키오스크용 팜플렛 제작. 제품 특징과 활용도를 비주얼 중심으로 한눈에 전달하며, 브랜드의 프리미엄 이미지를 유지했습니다.",
+      "en": "In-store kiosk pamphlet helping visitors easily check product information and drive purchase. Visual-first layout conveying product features and usage at a glance, maintaining the brand's premium image."
+    },
+    "scope": {
+      "ko": [
+        "키오스크 팜플렛 레이아웃",
+        "제품 특징 비주얼",
+        "프리미엄 브랜드 스타일링",
+        "인쇄용 파일"
+      ],
+      "en": [
+        "Kiosk pamphlet layout",
+        "Product feature visuals",
+        "Premium brand styling",
+        "Print-ready files"
+      ]
+    },
+    "thumb": "/projects/gmgp-kiosk/1782843539167--2026-07-01-4.17.19.png",
+    "slug": "gmgp-kiosk",
+    "updatedAt": "2026-06-30T18:19:51.917Z",
+    "gallery": [
+      "/projects/gmgp-kiosk/1782843107772--2026-06-30-4.22.51.png",
+      "/projects/gmgp-kiosk/1782843539171--2026-07-01-4.17.40.png",
+      "/projects/gmgp-kiosk/1782843539176--2026-07-01-4.17.51.png"
+    ]
+  },
+  {
+    "id": 6,
+    "tag": {
+      "ko": "디자인",
+      "en": "Design"
+    },
+    "title": "Bornga Australia",
+    "subtitle": "Gift Voucher Design",
+    "date": "2025",
+    "client": "Bornga Australia",
+    "location": "Sydney",
+    "description": {
+      "ko": "선물용으로 고급스러운 컬러와 디테일을 중시하며 브랜드 아이덴티티가 자연스럽게 전달되도록 한 바우처 디자인. 매장 프로모션과 고객 경험을 고려했습니다.",
+      "en": "Brand gift voucher design for in-store promotions and customer gifting. Refined colours and details that naturally convey brand identity while enhancing the in-store experience."
+    },
+    "scope": {
+      "ko": [
+        "기프트 바우처 디자인",
+        "브랜드 아이덴티티 적용",
+        "매장 프로모션 소재",
+        "인쇄용 파일"
+      ],
+      "en": [
+        "Gift voucher design",
+        "Brand identity application",
+        "In-store promotion materials",
+        "Print-ready files"
+      ]
+    },
+    "slug": "project-6",
+    "updatedAt": "2026-06-30T18:30:13.270Z",
+    "thumb": "/projects/project-6/1782844213255--2026-07-01-4.29.02.png",
+    "gallery": [
+      "/projects/project-6/1782844213262--2026-07-01-4.28.21.png",
+      "/projects/project-6/1782844213266--2026-07-01-4.28.40.png"
+    ]
+  },
+  {
+    "id": 7,
+    "slug": "kimchi-house-au",
+    "tag": {
+      "ko": "디자인",
+      "en": "Design"
+    },
+    "title": "Kimchi House AU",
+    "subtitle": "Rebrand & Order System",
+    "date": "2026.05",
+    "client": "Kimchi House AU",
+    "location": "Sydney",
+    "description": {
+      "ko": "기존 이킴김치에서 Kimchi House AU로 리브랜딩. 로고·카카오톡 채널·사전예약 웹앱·오프라인 전단지까지 브랜드 경험 전체를 새로 설계했습니다.",
+      "en": "Rebrand from E-Kim Kimchi to Kimchi House AU — logo, Kakao channel, pre-order web app, and offline flyer as one unified brand experience."
+    },
+    "scope": {
+      "ko": [
+        "리브랜딩 & 로고 시스템",
+        "카카오톡 채널 구축",
+        "사전예약 주문 웹앱",
+        "프로모션 전단지"
+      ],
+      "en": [
+        "Rebrand & logo system",
+        "Kakao channel setup",
+        "Pre-order web app",
+        "Promotional flyer"
+      ]
+    },
+    "thumb": "/projects/kimchi-house-au/1782856260445--.jpg",
+    "gallery": [
+      "/projects/kimchi-house-au/hero-poster.jpg",
+      "/projects/kimchi-house-au/logo-dark.jpg",
+      "/projects/kimchi-house-au/logo-white.jpg",
+      "/projects/kimchi-house-au/logo-eng.jpg",
+      "/projects/kimchi-house-au/flyer.png"
+    ],
+    "caseStudy": {
+      "accent": "#123524",
+      "hero": {
+        "eyebrow": {
+          "ko": "리브랜딩 · 로고 · 카카오 채널 · 주문 웹앱 · 2026",
+          "en": "Rebrand · Logo · Kakao channel · Order web app · 2026"
+        },
+        "headline": {
+          "ko": "이킴김치에서 Kimchi House AU로, 브랜드와 주문 시스템을 새로 짓다.",
+          "en": "From E-Kim Kimchi to Kimchi House AU — rebuilding brand and order system."
+        },
+        "lead": {
+          "ko": "호주 교민 대상 냉동 반찬·김치 브랜드가 이킴김치에서 Kimchi House AU로 이름과 정체성을 바꾸며, 로고·카카오톡 채널·사전예약 웹앱·오프라인 전단지까지 하나의 브랜드 경험으로 다시 설계한 작업입니다.",
+          "en": "A Korean food brand in Australia rebranded from E-Kim Kimchi to Kimchi House AU — redesigning logo, Kakao channel, pre-order web app, and offline flyer as one cohesive experience."
+        },
+        "video": "/projects/kimchi-house-au/hero.webm",
+        "poster": "/projects/kimchi-house-au/hero-poster.jpg",
+        "image": "/projects/kimchi-house-au/hero-poster.jpg",
+        "meta": [
+          {
+            "label": {
+              "ko": "역할",
+              "en": "Role"
+            },
+            "value": {
+              "ko": "리브랜딩 · 로고 · 채널 · 웹앱",
+              "en": "Rebrand · Logo · Channel · Web app"
+            }
+          },
+          {
+            "label": {
+              "ko": "업종",
+              "en": "Industry"
+            },
+            "value": {
+              "ko": "반찬·김치 정기 판매",
+              "en": "Side dishes & kimchi subscription"
+            }
+          },
+          {
+            "label": {
+              "ko": "산출물",
+              "en": "Deliverables"
+            },
+            "value": {
+              "ko": "로고 · 카카오 채널 · 주문 웹앱 · 전단지",
+              "en": "Logo · Kakao channel · Web app · Flyer"
+            }
+          },
+          {
+            "label": {
+              "ko": "연도",
+              "en": "Year"
+            },
+            "value": {
+              "ko": "2026",
+              "en": "2026"
+            }
+          }
+        ]
+      },
+      "overview": {
+        "label": {
+          "ko": "Overview",
+          "en": "Overview"
+        },
+        "title": {
+          "ko": "이름을 바꾸고, 집 모양으로 세계관을 세우다",
+          "en": "A new name, a house-shaped brand world"
+        },
+        "paragraphs": {
+          "ko": [
+            "Kimchi House AU는 호주 교민을 대상으로 냉동 반찬과 김치·장류를 회차별 사전예약으로 판매하는 브랜드입니다. 기존 이킴김치에서 Kimchi House AU로 리브랜딩하며, '집밥'이라는 정서를 더 분명히 전달하는 방향으로 이름과 비주얼을 함께 바꿨습니다.",
+            "로고만 바꾸는 것으로는 부족했습니다. 주문이 카카오톡과 모바일 웹으로 이루어지는 구조였기에, 로고·채널·웹앱·오프라인 전단지를 하나의 톤으로 묶어 고객이 어느 접점에서 만나든 같은 브랜드를 경험하도록 설계했습니다."
+          ],
+          "en": [
+            "Kimchi House AU sells frozen side dishes, kimchi, and fermented sauces to the Korean community in Australia through round-based pre-orders. Rebranding from E-Kim Kimchi, the name and visual identity shifted to express 'home-cooked meals' more clearly.",
+            "A logo change alone wasn't enough. With orders flowing through KakaoTalk and mobile web, logo, channel, web app, and offline flyer were unified under one tone — the same brand at every touchpoint."
+          ]
+        }
+      },
+      "process": {
+        "label": {
+          "ko": "Process",
+          "en": "Process"
+        },
+        "title": {
+          "ko": "리브랜딩부터 주문 시스템까지, 다섯 단계",
+          "en": "Five stages from rebrand to order system"
+        },
+        "steps": [
+          {
+            "tag": {
+              "ko": "01 · REBRAND",
+              "en": "01 · REBRAND"
+            },
+            "title": {
+              "ko": "이킴김치 → Kimchi House AU",
+              "en": "E-Kim Kimchi → Kimchi House AU"
+            },
+            "body": {
+              "ko": "기존 브랜드명과 시각적 인상을 점검하고, '집밥'과 '하우스'라는 키워드로 새 이름과 방향을 정했습니다. 지붕 라인 안에 '김치하우스' 워드마크를 넣고, 굴뚝 연기 디테일로 따뜻함을 표현했습니다.",
+              "en": "Reviewed the existing brand name and visual impression, then set a new direction around 'home-cooked meals' and 'house'. The Korean wordmark sits inside a roofline with a chimney detail for warmth."
+            }
+          },
+          {
+            "tag": {
+              "ko": "02 · LOGO SYSTEM",
+              "en": "02 · LOGO SYSTEM"
+            },
+            "title": {
+              "ko": "국문 · 영문 · 컬러 반전 3종 정리",
+              "en": "Three versions: Korean, English, and reversed"
+            },
+            "body": {
+              "ko": "다크 그린 배경용, 화이트 배경용, 영문(Kimchi House) 강조형까지 사용 환경별로 세 가지 버전을 만들어 일관성을 확보했습니다.",
+              "en": "Dark green background, white background, and English-forward versions — three formats for consistent use across contexts."
+            }
+          },
+          {
+            "tag": {
+              "ko": "03 · KAKAO CHANNEL",
+              "en": "03 · KAKAO CHANNEL"
+            },
+            "title": {
+              "ko": "카카오톡 채널 개설 및 프로필 세팅",
+              "en": "Kakao channel launch and profile setup"
+            },
+            "body": {
+              "ko": "실제 주문 문의가 오가는 채널(@_alkDxb)을 신규 개설하고, 프로필·인사말·채팅 진입 동선을 새 로고 톤에 맞춰 정리했습니다.",
+              "en": "Launched the order inquiry channel (@_alkDxb) and aligned profile, greeting message, and chat entry flow with the new logo tone."
+            }
+          },
+          {
+            "tag": {
+              "ko": "04 · ORDER WEB APP",
+              "en": "04 · ORDER WEB APP"
+            },
+            "title": {
+              "ko": "사전예약 통합 주문 웹앱 제작",
+              "en": "Pre-order web app build"
+            },
+            "body": {
+              "ko": "품목 선택 → 배송 정보 → 결제 방법 → 주문자 정보 순으로 이어지는 단계형 주문 플로우를 모바일 우선으로 설계해, 회차별 사전예약을 한 페이지에서 처리할 수 있도록 만들었습니다.",
+              "en": "A mobile-first, step-by-step order flow — item selection, delivery, payment, and customer info — handles round-based pre-orders on a single page."
+            }
+          },
+          {
+            "tag": {
+              "ko": "05 · LAUNCH",
+              "en": "05 · LAUNCH"
+            },
+            "title": {
+              "ko": "채널 · 웹앱 · 전단지 연동 마무리",
+              "en": "Channel, web app & flyer rollout"
+            },
+            "body": {
+              "ko": "주문 접수 완료 화면에 카카오톡 채널 바로가기를 연결하고, 오프라인 홍보용 전단지까지 새 브랜드 톤으로 정리해 출시를 마감했습니다.",
+              "en": "Linked the order confirmation screen to the Kakao channel and finalised the offline promotional flyer in the new brand tone."
+            }
+          }
+        ]
+      },
+      "logo": {
+        "label": {
+          "ko": "Logo",
+          "en": "Logo"
+        },
+        "title": {
+          "ko": "짙은 그린 하우스, 세 가지 쓰임",
+          "en": "Dark green house — three applications"
+        },
+        "text": {
+          "ko": "메인 컬러는 차분한 다크 그린(#123524) 한 가지로 고정하고, 배경에 따라 반전되는 두 가지 버전과 영문 강조형을 추가해 패키지·채널·웹 어디서나 동일한 무게감을 유지하도록 했습니다.",
+          "en": "One calm dark green (#123524) anchors the palette, with reversed and English-forward versions — consistent visual weight across packaging, channels, and web."
+        },
+        "cells": [
+          {
+            "image": "/projects/kimchi-house-au/logo-dark.jpg",
+            "tag": {
+              "ko": "다크 버전",
+              "en": "Dark version"
+            },
+            "variant": "dark"
+          },
+          {
+            "image": "/projects/kimchi-house-au/logo-white.jpg",
+            "tag": {
+              "ko": "라이트 버전",
+              "en": "Light version"
+            },
+            "variant": "light"
+          },
+          {
+            "image": "/projects/kimchi-house-au/logo-eng.jpg",
+            "tag": {
+              "ko": "영문 강조형",
+              "en": "English version"
+            },
+            "variant": "dark"
+          }
+        ]
+      },
+      "businessCard": {
+        "label": {
+          "ko": "Print",
+          "en": "Print"
+        },
+        "title": {
+          "ko": "리브랜딩 후 오프라인 홍보 전단지",
+          "en": "Offline flyer after rebrand"
+        },
+        "text": {
+          "ko": "중장년층 고객을 고려해 가독성과 정보 전달력을 중심으로 구성했습니다. 프로모션·주문 안내를 새 브랜드 컬러와 톤으로 정리했습니다.",
+          "en": "Layout prioritises readability for a mature customer base, with promotion and order information in the new brand colour and tone."
+        },
+        "mainImage": "/projects/kimchi-house-au/flyer.png",
+        "layout": "split"
+      },
+      "touchpoints": {
+        "label": {
+          "ko": "Digital Touchpoints",
+          "en": "Digital Touchpoints"
+        },
+        "title": {
+          "ko": "채널부터 주문까지, 끊김 없는 흐름",
+          "en": "From channel to order — a seamless flow"
+        },
+        "text": {
+          "ko": "리브랜딩을 넘어 실제 고객이 주문하는 두 개의 디지털 접점—카카오톡 채널과 사전예약 웹앱—을 함께 구축했습니다.",
+          "en": "Beyond the rebrand — we built the two digital touchpoints where customers actually order: the Kakao channel and the pre-order web app."
+        },
+        "cards": [
+          {
+            "title": {
+              "ko": "카카오톡 채널",
+              "en": "Kakao Channel"
+            },
+            "text": {
+              "ko": "고객 문의와 주문 확인이 오가는 1:1 채널입니다. 프로필 이미지와 인사말을 새 로고 톤에 맞춰 정리했습니다.",
+              "en": "A 1:1 channel for customer inquiries and order confirmations. Profile and greeting aligned with the new logo tone."
+            },
+            "linkUrl": "http://pf.kakao.com/_alkDxb",
+            "linkLabel": {
+              "ko": "채널 바로가기 ↗",
+              "en": "Open channel ↗"
+            },
+            "items": []
+          },
+          {
+            "title": {
+              "ko": "사전예약 주문 웹앱",
+              "en": "Pre-order web app"
+            },
+            "text": {
+              "ko": "회차별 사전예약을 모바일에서 끊김 없이 처리하도록 만든 단계형 주문 페이지입니다.",
+              "en": "A step-based order page for round-based pre-orders, designed mobile-first."
+            },
+            "linkUrl": "https://kimchihouse-order.vercel.app/order.html",
+            "linkLabel": {
+              "ko": "웹앱 바로가기 ↗",
+              "en": "Open web app ↗"
+            },
+            "items": [
+              {
+                "label": "01",
+                "text": {
+                  "ko": "품목 선택 — 냉동 반찬과 김치·장류 통합 주문",
+                  "en": "Item selection — frozen sides, kimchi & sauces"
+                }
+              },
+              {
+                "label": "02",
+                "text": {
+                  "ko": "배송 정보 — 주소·지역(Suburb) 입력",
+                  "en": "Delivery — address and suburb"
+                }
+              },
+              {
+                "label": "03",
+                "text": {
+                  "ko": "결제 방법 — 현장 결제 / 계좌이체",
+                  "en": "Payment — on delivery or bank transfer"
+                }
+              },
+              {
+                "label": "04",
+                "text": {
+                  "ko": "주문자 정보 — 성함·연락처·카카오톡 이름",
+                  "en": "Customer info — name, phone & KakaoTalk ID"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "quote": {
+        "text": {
+          "ko": "\"단순한 리뉴얼을 넘어, 브랜드 운영 방식까지 함께 바뀌었습니다.\"",
+          "en": "\"Beyond a simple refresh — the way the brand operates changed with it.\""
+        },
+        "cite": {
+          "ko": "— Kimchi House AU 운영팀",
+          "en": "— Kimchi House AU team"
+        }
+      }
+    },
+    "updatedAt": "2026-06-30T22:52:47.196Z"
+  },
+  {
+    "id": 8,
+    "tag": {
+      "en": "Photography",
+      "ko": "촬영"
+    },
+    "title": "DOS Taekwondo",
+    "subtitle": "Tournament Event Photography",
+    "date": "2025.12",
+    "client": "DOS Taekwondo",
+    "location": "Sydney",
+    "description": {
+      "en": "On-site photography for a taekwondo tournament — capturing competition moments, focus, and community across multiple clubs on one mat. Delivered as a photodump for SNS and brand storytelling for DOS Taekwondo.",
+      "ko": "태권도 대회 현장 촬영 프로젝트입니다. 한 매트 위에서 펼쳐지는 경기의 긴장감과 집중, 여러 도장이 모인 커뮤니티의 에너지를 담았습니다. DOS Taekwondo SNS 및 브랜드 스토리텔링용 포토덤프로 전달했습니다."
+    },
+    "scope": {
+      "en": [
+        "Event photography (tournament)",
+        "Action & candid coverage",
+        "SNS-ready photo selection",
+        "Edited image delivery"
+      ],
+      "ko": [
+        "대회 현장 촬영",
+        "경기·일상 컷",
+        "SNS용 사진 선별",
+        "보정·납품"
+      ]
+    },
+    "thumb": "/projects/dos-taekwondo/11.jpg",
+    "gallery": [
+      "/projects/dos-taekwondo/01.jpg",
+      "/projects/dos-taekwondo/02.jpg",
+      "/projects/dos-taekwondo/03.jpg",
+      "/projects/dos-taekwondo/04.jpg",
+      "/projects/dos-taekwondo/05.jpg",
+      "/projects/dos-taekwondo/06.jpg",
+      "/projects/dos-taekwondo/07.jpg",
+      "/projects/dos-taekwondo/08.jpg",
+      "/projects/dos-taekwondo/09.jpg",
+      "/projects/dos-taekwondo/10.jpg",
+      "/projects/dos-taekwondo/12.jpg",
+      "/projects/dos-taekwondo/13.jpg",
+      "/projects/dos-taekwondo/14.jpg",
+      "/projects/dos-taekwondo/15.jpg",
+      "/projects/dos-taekwondo/16.jpg",
+      "/projects/dos-taekwondo/17.jpg"
+    ]
+  },
+  {
+    "id": 9,
+    "slug": "choi-co",
+    "tag": {
+      "ko": "디자인",
+      "en": "Design"
+    },
+    "title": "CHOI&CO. GROUP",
+    "subtitle": "Logo & Business Card Design",
+    "date": "2026.04",
+    "client": "CHOI&CO. GROUP",
+    "location": "Rydalmere, NSW",
+    "description": {
+      "ko": "호주 기반 프리미엄 미트 홀세일 브랜드 CHOI&CO. GROUP의 로고 및 명함 디자인. 기하학적 심볼과 워드마크, 명함까지 하나의 브랜드 시스템으로 정리했습니다.",
+      "en": "Logo and business card design for CHOI&CO. GROUP, an Australian premium meat wholesaler. Geometric symbol, wordmark, and business card unified as one brand system."
+    },
+    "scope": {
+      "ko": [
+        "로고 심볼 & 워드마크",
+        "명함 디자인",
+        "컬러 & 타이포 가이드",
+        "인쇄용 파일"
+      ],
+      "en": [
+        "Logo symbol & wordmark",
+        "Business card design",
+        "Colour & typography guide",
+        "Print-ready files"
+      ]
+    },
+    "thumb": "/projects/choi-co/1782861097244-d.jpg",
+    "gallery": [
+      "/projects/choi-co/card.png",
+      "/projects/choi-co/hero.jpg",
+      "/projects/choi-co/symbol.png",
+      "/projects/choi-co/wordmark.jpg"
+    ],
+    "caseStudy": {
+      "accent": "#7A1115",
+      "hero": {
+        "eyebrow": {
+          "ko": "로고 · 명함 디자인 · 2026",
+          "en": "Logo · Business Card · 2026"
+        },
+        "headline": {
+          "ko": "정육 도매업의 신뢰를 마크 하나에 담다.",
+          "en": "Trust in wholesale meat, distilled into one mark."
+        },
+        "lead": {
+          "ko": "프리미엄 정육 도매 브랜드 CHOI&CO.GROUP의 로고와 명함을 처음부터 설계한 작업입니다. 두 개의 'C'가 맞물리는 형태로 'CHOI'와 'CO.'의 결합을 시각화했습니다.",
+          "en": "A from-scratch logo and business card system for CHOI&CO.GROUP, a premium meat wholesaler. Two interlocking C forms visualise the union of CHOI and CO."
+        },
+        "image": "/projects/choi-co/hero.jpg",
+        "meta": [
+          {
+            "label": {
+              "ko": "역할",
+              "en": "Role"
+            },
+            "value": {
+              "ko": "로고 디자인 · 명함 디자인",
+              "en": "Logo design · Business card design"
+            }
+          },
+          {
+            "label": {
+              "ko": "업종",
+              "en": "Industry"
+            },
+            "value": {
+              "ko": "프리미엄 정육 도매",
+              "en": "Premium meat wholesale"
+            }
+          },
+          {
+            "label": {
+              "ko": "산출물",
+              "en": "Deliverables"
+            },
+            "value": {
+              "ko": "로고 · 명함 · 가이드",
+              "en": "Logo · Business card · Guidelines"
+            }
+          },
+          {
+            "label": {
+              "ko": "연도",
+              "en": "Year"
+            },
+            "value": {
+              "ko": "2026",
+              "en": "2026"
+            }
+          }
+        ]
+      },
+      "overview": {
+        "label": {
+          "ko": "Overview",
+          "en": "Overview"
+        },
+        "title": {
+          "ko": "두 개의 'C'가 만나는 지점",
+          "en": "Where two C's meet"
+        },
+        "paragraphs": {
+          "ko": [
+            "CHOI&CO.GROUP은 호주 시드니 기반의 프리미엄 정육 도매 브랜드입니다. 신뢰가 중요한 B2B 시장을 고려해, 화려한 요소보다 견고하고 절제된 브랜드 아이덴티티를 구축하는 데 초점을 맞췄습니다.",
+            "로고는 두 개의 C를 입체적으로 연결해 파트너십과 성장의 의미를 담았으며, 버건디와 차콜 컬러를 통해 브랜드의 전문성과 깊이감을 표현했습니다."
+          ],
+          "en": [
+            "CHOI&CO.GROUP is a premium meat wholesaler based in Sydney. For a B2B market built on trust, we focused on a solid, restrained brand identity rather than flashy elements.",
+            "The logo connects two C forms in three dimensions to convey partnership and growth, while burgundy and charcoal express the brand's professionalism and depth."
+          ]
+        }
+      },
+      "process": {
+        "label": {
+          "ko": "Process",
+          "en": "Process"
+        },
+        "title": {
+          "ko": "네 단계로 마크를 완성하다",
+          "en": "Four stages to the final mark"
+        },
+        "steps": [
+          {
+            "tag": {
+              "ko": "01 · RESEARCH",
+              "en": "01 · RESEARCH"
+            },
+            "title": {
+              "ko": "정육 도매업 레퍼런스 분석",
+              "en": "Wholesale meat category review"
+            },
+            "body": {
+              "ko": "국내외 정육·식자재 도매 브랜드의 로고를 분석해, 업종 특유의 과도한 직관적 표현(칼, 고기 일러스트 등)을 배제할 방향을 정했습니다.",
+              "en": "We reviewed domestic and international meat and food wholesale marks to steer away from overly literal cues—knives, meat illustrations, and similar clichés."
+            }
+          },
+          {
+            "tag": {
+              "ko": "02 · SKETCH",
+              "en": "02 · SKETCH"
+            },
+            "title": {
+              "ko": "이니셜 C 결합 구조 탐색",
+              "en": "Exploring interlocking C structures"
+            },
+            "body": {
+              "ko": "'CHOI'와 'CO.' 두 이니셜을 어떻게 하나의 형태로 맞물리게 할지 손스케치로 다양한 구조를 탐색했습니다.",
+              "en": "Hand sketches explored how CHOI and CO. initials could lock together as a single, memorable form."
+            }
+          },
+          {
+            "tag": {
+              "ko": "03 · REFINE",
+              "en": "03 · REFINE"
+            },
+            "title": {
+              "ko": "육각 그리드 기반 마크 정밀화",
+              "en": "Precision on a hex grid"
+            },
+            "body": {
+              "ko": "최종 형태를 등각(isometric) 육각 그리드 위에서 정밀하게 다듬고, 버건디·차콜·화이트 3색 조합으로 입체감을 완성했습니다.",
+              "en": "The final mark was refined on an isometric hex grid, finished in burgundy, charcoal, and white for dimensional clarity."
+            }
+          },
+          {
+            "tag": {
+              "ko": "04 · APPLICATION",
+              "en": "04 · APPLICATION"
+            },
+            "title": {
+              "ko": "명함 인쇄 및 가이드 제작",
+              "en": "Print application and guidelines"
+            },
+            "body": {
+              "ko": "완성된 마크를 짙은 버건디 명함에 적용하고, 담당자 정보를 담은 실사용 명함과 사용 가이드를 함께 제작했습니다.",
+              "en": "The mark was applied to deep burgundy business cards, with production-ready contact layouts and a concise usage guide."
+            }
+          }
+        ]
+      },
+      "logo": {
+        "label": {
+          "ko": "Logo",
+          "en": "Logo"
+        },
+        "title": {
+          "ko": "버건디 · 차콜 · 화이트, 세 가지 색의 절제",
+          "en": "Burgundy, charcoal, white—three colours, restrained"
+        },
+        "text": {
+          "ko": "로고는 다크 배경, 라이트 배경, 단색 마크 세 가지 버전으로 정리해 패키지·문서·명함 등 어떤 매체에서도 동일한 무게감을 유지하도록 설계했습니다.",
+          "en": "Three logo versions—on dark, on light, and symbol-only—keep the same visual weight across packaging, documents, and stationery."
+        },
+        "cells": [
+          {
+            "image": "/projects/choi-co/logo-dark.jpg",
+            "tag": {
+              "ko": "다크 버전",
+              "en": "Dark version"
+            },
+            "variant": "dark"
+          },
+          {
+            "image": "/projects/choi-co/logo-symbol.jpg",
+            "tag": {
+              "ko": "심볼 단독형",
+              "en": "Symbol only"
+            },
+            "variant": "light"
+          },
+          {
+            "image": "/projects/choi-co/card.png",
+            "tag": {
+              "ko": "명함 적용",
+              "en": "On business card"
+            },
+            "variant": "accent"
+          }
+        ]
+      },
+      "businessCard": {
+        "label": {
+          "ko": "Business Card",
+          "en": "Business Card"
+        },
+        "title": {
+          "ko": "손에 쥐었을 때 느껴지는 신뢰",
+          "en": "Trust you feel in hand"
+        },
+        "text": {
+          "ko": "짙은 버건디 바탕에 화이트 실드 안의 심볼을 배치해, 명함을 건네는 순간 브랜드의 톤이 그대로 전달되도록 설계했습니다. 뒷면에는 심볼을 큼직하게 워터마크 처리했습니다.",
+          "en": "Deep burgundy stock with the symbol in a white shield carries the brand tone the moment the card changes hands. The reverse uses an oversized watermark of the mark."
+        },
+        "mainImage": "/projects/choi-co/card-mock-1.jpg",
+        "miniImages": [
+          "/projects/choi-co/card-mock-2.jpg"
+        ]
+      },
+      "quote": {
+        "text": {
+          "ko": "\"거래처 미팅에서 명함을 건넬 때마다, 이 디자인이 우리 회사를 대신 설명해준다.\"",
+          "en": "\"Every time we hand this card over in a client meeting, the design speaks for the company.\""
+        },
+        "cite": {
+          "ko": "— Hong Choi, Business Development Manager · CHOI&CO.GROUP",
+          "en": "— Hong Choi, Business Development Manager · CHOI&CO.GROUP"
+        }
+      }
+    },
+    "updatedAt": "2026-06-30T23:11:37.262Z"
+  }
+]

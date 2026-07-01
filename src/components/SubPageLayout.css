@@ -1,0 +1,22 @@
+.sub-page {
+  padding-top: var(--header-height);
+}
+
+.sub-page__back {
+  padding-top: 32px;
+  padding-bottom: 12px;
+}
+
+.sub-page__back-link {
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  transition: color 0.2s;
+}
+
+.sub-page__back-link:hover {
+  color: var(--color-text);
+}
+
+.sub-page .section {
+  padding-top: 32px;
+}

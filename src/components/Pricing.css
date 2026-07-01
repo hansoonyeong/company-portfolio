@@ -1,0 +1,432 @@
+.pricing {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.pricing__header {
+  margin-bottom: clamp(56px, 6vw, 80px);
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pricing__year {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+}
+
+.pricing__header h2 {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.pricing__header p {
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.pricing__pillar {
+  margin-bottom: clamp(72px, 9vw, 104px);
+  padding-bottom: clamp(48px, 6vw, 72px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pricing__pillar:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.pricing__pillar-head {
+  margin-bottom: clamp(32px, 4vw, 48px);
+}
+
+.pricing__pillar-title {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+
+.pricing__pillar-tagline {
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.pricing__pillar-intro {
+  max-width: 720px;
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.8;
+}
+
+.pricing__download {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 20px;
+  padding: 14px 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: #fafafa;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.pricing__download:hover {
+  border-color: #111;
+  background: #fff;
+}
+
+.pricing__download-label {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.pricing__download-desc {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.pricing__group {
+  margin-top: clamp(36px, 5vw, 52px);
+}
+
+.pricing__group:first-of-type {
+  margin-top: 0;
+}
+
+.pricing__group-title {
+  font-size: clamp(1.125rem, 2vw, 1.3125rem);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.pricing__group-intro {
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  max-width: 640px;
+}
+
+.pricing__plan-includes {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 14px;
+}
+
+.pricing__section {
+  margin-bottom: clamp(64px, 8vw, 88px);
+}
+
+.pricing__section-title {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 700;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pricing__category {
+  margin-bottom: 36px;
+}
+
+.pricing__category-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-bottom: 14px;
+}
+
+.pricing__plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(20px, 3vw, 32px);
+}
+
+.pricing__plan {
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: clamp(28px, 3vw, 36px) clamp(24px, 3vw, 32px);
+}
+
+.pricing__plan--highlighted {
+  border-color: var(--color-text);
+}
+
+.pricing__plan-name {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.pricing__plan-desc {
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+
+.pricing__plan-price {
+  font-size: clamp(1.75rem, 3vw, 2.125rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+
+.pricing__plan-unit {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.pricing__plan-features {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pricing__plan-features li {
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  padding-left: 14px;
+  position: relative;
+  line-height: 1.55;
+}
+
+.pricing__plan-features li::before {
+  content: '✔';
+  position: absolute;
+  left: 0;
+  font-size: 0.75rem;
+  top: 0.15em;
+}
+
+.pricing__plan-footnote {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  margin: 4px 0 20px;
+  line-height: 1.5;
+}
+
+.pricing__section .pricing__plans {
+  margin-top: 32px;
+}
+
+.pricing__table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+}
+
+.pricing__table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.9375rem;
+}
+
+.pricing__table th,
+.pricing__table td {
+  padding: 16px 22px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pricing__table thead th {
+  background: #fafafa;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.pricing__table tbody th {
+  font-weight: 500;
+  background: #fafafa;
+}
+
+.pricing__table tbody tr:last-child th,
+.pricing__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.pricing__table thead tr:first-child th:first-child {
+  border-top-left-radius: 9px;
+}
+
+.pricing__table thead tr:first-child th:last-child {
+  border-top-right-radius: 9px;
+}
+
+.pricing__table tbody tr:last-child th:first-child {
+  border-bottom-left-radius: 9px;
+}
+
+.pricing__table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 9px;
+}
+
+.pricing__table td {
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.pricing__badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 3px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--color-bg-dark);
+  color: #fff;
+  border-radius: 2px;
+}
+
+.pricing__custom {
+  margin-bottom: clamp(40px, 5vw, 56px);
+  padding: clamp(28px, 4vw, 36px);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.pricing__custom-title {
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+  margin-bottom: 12px;
+}
+
+.pricing__custom-desc {
+  max-width: 640px;
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.pricing__custom-cta {
+  display: inline-flex;
+  padding: 14px 24px;
+  background: var(--color-text);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.pricing__custom-cta:hover {
+  opacity: 0.85;
+}
+
+.pricing__notes {
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  line-height: 1.85;
+  margin-bottom: 0;
+  padding-left: 1.1em;
+  list-style: disc;
+}
+
+.pricing__notes li + li {
+  margin-top: 6px;
+}
+
+.pricing--has-cart {
+  padding-bottom: 120px;
+}
+
+.pricing__add-btn {
+  padding: 8px 16px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border: 1px solid var(--color-border);
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.pricing__add-btn:hover:not(:disabled) {
+  background: var(--color-bg-dark);
+  color: #fff;
+  border-color: var(--color-bg-dark);
+}
+
+.pricing__add-btn--added {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.pricing__table-action-col {
+  width: 96px;
+  text-align: center !important;
+}
+
+.pricing__table-action {
+  text-align: center;
+}
+
+.pricing__social-plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.pricing__social-plan {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 22px;
+  border: 1px solid var(--color-border);
+}
+
+.pricing__social-plan strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.pricing__social-plan span {
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+}
+
+.pricing__table-wrap--compare {
+  margin-top: 12px;
+}
+
+.pricing__plan .pricing__add-btn {
+  margin-top: 24px;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .pricing__table th,
+  .pricing__table td {
+    padding: 12px 14px;
+    font-size: 0.875rem;
+  }
+}

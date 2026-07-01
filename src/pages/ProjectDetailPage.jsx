@@ -1,0 +1,220 @@
+import { useEffect, useState } from 'react'
+import { Link, Navigate, useParams } from 'react-router-dom'
+import { useTranslation } from '../i18n/LanguageContext'
+import { useProjects } from '../context/ProjectsContext'
+import { isVideoSrc } from '../lib/media'
+import { useQuoteCart } from '../context/QuoteCartContext'
+import ProjectLightbox from '../components/ProjectLightbox'
+import ProjectCaseStudy from '../components/ProjectCaseStudy'
+import JustifiedGallery from '../components/JustifiedGallery'
+import {
+  findProject,
+  getProjectNeighbors,
+  projectCartId,
+  projectToCartItem,
+} from '../lib/projects'
+import './ProjectDetailPage.css'
+
+function getProjectMedia(project) {
+  const gallery = project.gallery ?? []
+  if (!project.thumb) return gallery
+  return [project.thumb, ...gallery.filter((src) => src !== project.thumb)]
+}
+
+function ProjectMediaItem({ src, className, loading }) {
+  if (isVideoSrc(src)) {
+    return (
+      <video
+        src={src}
+        className={className}
+        muted
+        playsInline
+        preload="metadata"
+        aria-hidden="true"
+      />
+    )
+  }
+
+  return <img src={src} alt="" className={className} loading={loading} />
+}
+
+export default function ProjectDetailPage() {
+  const { id } = useParams()
+  const { t } = useTranslation()
+  const { projects, quotePriceLabel, loading } = useProjects()
+  const cart = useQuoteCart()
+  const w = t.worksPage
+  const project = findProject(projects, id)
+  const { prev: prevProject, next: nextProject } = getProjectNeighbors(projects, id)
+  const [lightboxIndex, setLightboxIndex] = useState(null)
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [id])
+
+  if (loading) {
+    return (
+      <div className="project-detail project-detail--loading">
+        <div className="container">
+          <p>{t.projects.loading}</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!project) {
+    return <Navigate to="/works" replace />
+  }
+
+  const cartId = projectCartId(project.id)
+  const inCart = cart.hasItem(cartId)
+  const media = project.caseStudy?.media?.length
+    ? project.caseStudy.media
+    : getProjectMedia(project)
+  const heroSrc = project.thumb ?? media.find((src) => !isVideoSrc(src)) ?? media[0] ?? null
+  const gridMedia = heroSrc ? media.filter((src) => src !== heroSrc) : media
+
+  const openLightbox = (src) => {
+    const index = media.indexOf(src)
+    if (index >= 0) setLightboxIndex(index)
+  }
+
+  const handleAddToQuote = () => {
+    cart.addItem(projectToCartItem(project, quotePriceLabel))
+  }
+
+  if (project.caseStudy) {
+    return (
+      <>
+        <ProjectCaseStudy
+          project={project}
+          prevProject={prevProject}
+          nextProject={nextProject}
+          inCart={inCart}
+          onAddToQuote={handleAddToQuote}
+          onImageClick={openLightbox}
+        />
+
+        {lightboxIndex !== null && (
+          <ProjectLightbox
+            items={media}
+            index={lightboxIndex}
+            labels={t.projects.lightbox}
+            onClose={() => setLightboxIndex(null)}
+            onChange={setLightboxIndex}
+          />
+        )}
+      </>
+    )
+  }
+
+  return (
+    <article className="project-detail">
+      <div className="container">
+        <Link to="/works" className="project-detail__back">
+          ← {w.backToList}
+        </Link>
+
+        <div className="project-detail__hero">
+          {heroSrc && (
+            <div className="project-detail__hero-visual">
+              <button
+                type="button"
+                className={`project-detail__hero-btn ${isVideoSrc(heroSrc) ? 'project-detail__hero-btn--video' : ''}`}
+                onClick={() => openLightbox(heroSrc)}
+                aria-label={t.projects.viewPhoto.replace('{n}', '1')}
+              >
+                <ProjectMediaItem src={heroSrc} />
+              </button>
+            </div>
+          )}
+
+          <div className="project-detail__info">
+            <p className="project-detail__tag">{project.tag}</p>
+            <h1>{project.subtitle || project.title}</h1>
+            <p className="project-detail__client">{project.title}</p>
+
+            <dl className="project-detail__meta">
+              <div>
+                <dt>{w.dateLabel}</dt>
+                <dd>{project.date}</dd>
+              </div>
+              <div>
+                <dt>{w.locationLabel}</dt>
+                <dd>{project.location}</dd>
+              </div>
+            </dl>
+
+            <div className="project-detail__section">
+              <h2>{t.projects.overview}</h2>
+              <p>{project.description}</p>
+            </div>
+
+            <div className="project-detail__section">
+              <h2>{t.projects.scopeLabel}</h2>
+              <ul>
+                {project.scope.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+
+            <button
+              type="button"
+              className={`project-detail__quote-btn ${inCart ? 'project-detail__quote-btn--added' : ''}`}
+              onClick={handleAddToQuote}
+              disabled={inCart}
+            >
+              {inCart ? t.projects.addedToQuote : t.projects.addToQuote}
+            </button>
+          </div>
+        </div>
+
+        {gridMedia.length > 0 && (
+          <section className="project-detail__photos" aria-label={t.projects.galleryLabel}>
+            <JustifiedGallery
+              items={gridMedia}
+              rowHeight={360}
+              gap={12}
+              onItemClick={openLightbox}
+              getItemLabel={(src) =>
+                t.projects.viewPhoto.replace('{n}', String(media.indexOf(src) + 1))
+              }
+            />
+          </section>
+        )}
+
+        {(prevProject || nextProject) && (
+          <nav className="project-detail__nav" aria-label={w.title}>
+            {prevProject ? (
+              <Link to={`/works/${prevProject.id}`} className="project-detail__nav-link project-detail__nav-link--prev">
+                <span className="project-detail__nav-label">← {w.prevProject}</span>
+                <span className="project-detail__nav-title">{prevProject.subtitle || prevProject.title}</span>
+              </Link>
+            ) : (
+              <span className="project-detail__nav-spacer" aria-hidden="true" />
+            )}
+            {nextProject ? (
+              <Link to={`/works/${nextProject.id}`} className="project-detail__nav-link project-detail__nav-link--next">
+                <span className="project-detail__nav-label">{w.nextProject} →</span>
+                <span className="project-detail__nav-title">{nextProject.subtitle || nextProject.title}</span>
+              </Link>
+            ) : (
+              <span className="project-detail__nav-spacer" aria-hidden="true" />
+            )}
+          </nav>
+        )}
+      </div>
+
+      {lightboxIndex !== null && (
+        <ProjectLightbox
+          items={media}
+          index={lightboxIndex}
+          labels={t.projects.lightbox}
+          onClose={() => setLightboxIndex(null)}
+          onChange={setLightboxIndex}
+        />
+      )}
+    </article>
+  )
+}

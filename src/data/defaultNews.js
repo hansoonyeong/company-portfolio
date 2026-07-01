@@ -1,0 +1,52 @@
+export const defaultNews = [
+  {
+    id: 'news-kakao-channel-proposal',
+    category: { en: 'Service', ko: '서비스' },
+    title: { en: 'Kakao Channel Marketing Proposal', ko: '카카오 채널 마케팅 제안서' },
+    content: {
+      en: 'Kakao Business Channel is more than messaging — it is a CRM channel for ongoing customer relationships. We design and launch a channel that fits your brand, from setup through day-to-day operations.\n\nOur CONNECT packages support you at every stage: channel launch, Smart FAQ, QR promotions, welcome coupons, and ongoing CRM engagement.\n\nView the proposal below for service overview, package details, and use cases.',
+      ko: '카카오채널은 단순한 메신저가 아니라 고객과 지속적으로 소통할 수 있는 CRM 채널입니다. 브랜드에 맞는 채널 구축부터 운영 기반까지 함께 설계합니다.\n\nCONNECT 패키지는 채널 개설, 스마트 FAQ, QR 홍보물, 친구 추가 쿠폰, 지속적인 CRM 운영까지 단계별로 지원합니다.\n\n아래 제안서에서 서비스 소개, 패키지 구성, 활용 사례를 확인하실 수 있습니다.',
+    },
+    document: {
+      href: '/downloads/kakao-channel-marketing-proposal.pdf',
+      label: { en: 'View proposal (PDF)', ko: '제안서 PDF 보기' },
+    },
+    date: '2026.06.30',
+    createdAt: '2026-06-30T12:00:00.000Z',
+  },
+  {
+    id: 'news-price-2026',
+    category: { en: 'Announcement', ko: '발표' },
+    title: { en: '2026 Services Update', ko: '2026 서비스 안내 업데이트' },
+    content: {
+      en: 'Our 2026 service guide has been updated around four pillars: Brand, Build, Connect, and Grow.\n\nHighlights:\n· Brand packages from AUD $790\n· Website, print design and photography under Build\n· Kakao Business Channel packages under Connect\n· Monthly marketing from AUD $790 / month under Grow\n\nSee the Services page for full details.',
+      ko: '2026 soono 서비스 안내가 Brand · Build · Connect · Grow 네 가지 영역으로 새롭게 정리되었습니다.\n\n주요 내용:\n· BRAND 패키지 AUD $790~\n· BUILD: 웹사이트, 인쇄물, 촬영\n· CONNECT: 카카오 비즈니스 채널 패키지\n· GROW: 월간 마케팅 AUD $790~/월\n\n자세한 내용은 서비스 페이지에서 확인하실 수 있습니다.',
+    },
+    date: '2026.06.30',
+    createdAt: '2026-06-30T00:00:00.000Z',
+  },
+  {
+    id: 'news-1',
+    category: { en: 'News', ko: '소식' },
+    title: { en: 'Launching a new project', ko: '새로운 프로젝트를 시작합니다' },
+    content: { en: '', ko: '' },
+    date: '2026.06.18',
+    createdAt: '2026-06-18T00:00:00.000Z',
+  },
+  {
+    id: 'news-2',
+    category: { en: 'Update', ko: '발표' },
+    title: { en: 'H1 2026 portfolio update', ko: '2026 상반기 포트폴리오 업데이트' },
+    content: { en: '', ko: '' },
+    date: '2026.06.15',
+    createdAt: '2026-06-15T00:00:00.000Z',
+  },
+  {
+    id: 'news-3',
+    category: { en: 'Careers', ko: '채용' },
+    title: { en: 'Now hiring — Marketing', ko: '마케팅 직무 채용 공고' },
+    content: { en: '', ko: '' },
+    date: '2026.06.08',
+    createdAt: '2026-06-08T00:00:00.000Z',
+  },
+]

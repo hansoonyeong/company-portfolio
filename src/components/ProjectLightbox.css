@@ -1,0 +1,108 @@
+.project-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 48px);
+}
+
+.project-lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  border: none;
+  cursor: pointer;
+}
+
+.project-lightbox__close {
+  position: absolute;
+  top: clamp(16px, 3vw, 28px);
+  right: clamp(16px, 3vw, 28px);
+  z-index: 2;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  line-height: 1;
+  color: #fff;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.project-lightbox__close:hover {
+  opacity: 0.7;
+}
+
+.project-lightbox__nav {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.project-lightbox__nav:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.project-lightbox__nav--prev {
+  left: clamp(12px, 3vw, 32px);
+}
+
+.project-lightbox__nav--next {
+  right: clamp(12px, 3vw, 32px);
+}
+
+.project-lightbox__stage {
+  position: relative;
+  z-index: 1;
+  max-width: min(1200px, 100%);
+  max-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-lightbox__media {
+  max-width: 100%;
+  max-height: calc(100vh - 120px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.project-lightbox__counter {
+  position: absolute;
+  bottom: clamp(16px, 3vw, 28px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+@media (max-width: 640px) {
+  .project-lightbox__nav {
+    width: 44px;
+    height: 44px;
+    font-size: 2rem;
+  }
+}

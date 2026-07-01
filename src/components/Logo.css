@@ -1,0 +1,25 @@
+.logo {
+  display: block;
+  height: auto;
+  width: auto;
+}
+
+.logo--mark {
+  object-fit: contain;
+  object-position: left center;
+}
+
+.logo--header.logo--mark,
+.logo--header.logo--animated {
+  height: 48px;
+  max-width: 180px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.logo--footer.logo--full,
+.logo--footer.logo--animated {
+  max-width: 280px;
+  object-fit: contain;
+  object-position: left top;
+}

@@ -1,0 +1,32 @@
+{
+  "images": [
+    "/hero.jpg"
+  ],
+  "headline": {
+    "ko": [
+      "장면을 설계하고",
+      "브랜드를 완성합니다"
+    ],
+    "en": [
+      "Design the scene,",
+      "complete the brand"
+    ]
+  },
+  "desc": {
+    "ko": [
+      "Design · Media · Marketing",
+      "시드니 기반 크리에이티브 스튜디오",
+      "고객과 함께 더 나은 브랜드 경험을"
+    ],
+    "en": [
+      "Design · Media · Marketing",
+      "Sydney-based creative studio",
+      "Building better brand experiences together"
+    ]
+  },
+  "cta": {
+    "ko": "회사 소개 보러가기",
+    "en": "Learn about us"
+  },
+  "link": "/about"
+}

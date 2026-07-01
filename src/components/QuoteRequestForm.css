@@ -1,0 +1,232 @@
+.quote-form {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.quote-form__title {
+  font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.quote-form__desc {
+  font-size: 1.0625rem;
+  color: var(--color-text-muted);
+  line-height: 1.75;
+  margin-bottom: 36px;
+}
+
+.quote-form__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 840px;
+}
+
+.quote-form__row {
+  display: grid;
+  gap: 24px;
+}
+
+@media (min-width: 640px) {
+  .quote-form__row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.quote-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quote-form__field span {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.quote-form__field input,
+.quote-form__field select,
+.quote-form__field textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font: inherit;
+  font-size: 1rem;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+
+.quote-form__field input:focus,
+.quote-form__field select:focus,
+.quote-form__field textarea:focus {
+  outline: none;
+  border-color: var(--color-text);
+}
+
+.quote-form__field textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+.quote-form__submit {
+  align-self: flex-start;
+  padding: 16px 32px;
+  background: var(--color-text);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.quote-form__submit:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.quote-form__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.quote-form__error {
+  color: #c0392b;
+  font-size: 0.9375rem;
+}
+
+.quote-form__success {
+  max-width: 560px;
+  padding: 28px;
+  background: #f6f6f6;
+  border-radius: 4px;
+}
+
+.quote-form__success p {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  margin-bottom: 18px;
+}
+
+.quote-form__reset {
+  font-size: 0.9375rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.quote-form--modal .quote-form__fields {
+  max-width: none;
+}
+
+.quote-form__cart {
+  margin-bottom: 28px;
+  padding: 20px 22px;
+  background: #f6f6f6;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.quote-form__cart-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.quote-form__cart-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.quote-form__cart-count {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.quote-form__cart-empty {
+  margin-bottom: 28px;
+  padding: 16px 18px;
+  background: #fafafa;
+  border: 1px dashed var(--color-border);
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.quote-form__cart-empty a {
+  font-weight: 600;
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.quote-form__cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quote-form__cart-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.quote-form__cart-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.quote-form__cart-item-name {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.quote-form__cart-item-meta {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.quote-form__cart-item-price {
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.quote-form__cart-remove {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  font-size: 1.35rem;
+  line-height: 1;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.quote-form__cart-remove:hover {
+  color: var(--color-text);
+}
