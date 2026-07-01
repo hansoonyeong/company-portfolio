@@ -12,22 +12,22 @@
     "client": "Peek-a-Brew Beverage & Co.",
     "location": "Australia",
     "description": {
-      "ko": "코스트코 입점 음료 브랜드 Peek-a-Brew의 SNS 콘텐츠 관리와 Meta 광고 집행. 리치 우롱 티 제품 홍보를 위한 피드·릴스 콘텐츠와 유통 세일 기간 맞춤 광고를 운영했습니다.",
-      "en": "SNS content management and Meta ad campaigns for a Costco retail beverage brand. Promoted Lychee Oolong Tea with feed creatives, reels, and paid media during warehouse sale periods."
+      "ko": "코스트코에 새롭게 입점한 음료 브랜드 Peek-a-Brew의 SNS 운영과 Meta 광고. 브랜드와 제품을 소개하고, 어디서 만날 수 있는지 알리는 데 집중했습니다.",
+      "en": "SNS management and Meta ads for Peek-a-Brew, a beverage brand newly launched at Costco — focused on introducing the brand, the product, and where to find it."
     },
     "scope": {
       "ko": [
         "SNS 콘텐츠 기획·운영",
-        "제품·코스트코 세일 홍보물",
+        "브랜드·제품 소개 콘텐츠",
         "Meta 광고 세팅·집행",
-        "유통 세일·도달 캠페인",
+        "브랜드 인지·도달 캠페인",
         "성과 리포트"
       ],
       "en": [
         "SNS content planning & publishing",
-        "Product & Costco promo creatives",
+        "Brand & product intro creatives",
         "Meta ads setup & management",
-        "Retail sale & reach campaigns",
+        "Brand awareness & reach campaigns",
         "Performance reporting"
       ]
     },
@@ -48,12 +48,12 @@
           "en": "SNS content · Meta ads · Costco · 2025"
         },
         "headline": {
-          "ko": "코스트코 입점 음료, SNS로 알리고 광고로 전환하다.",
-          "en": "Costco beverage — awareness on SNS, conversion through ads."
+          "ko": "코스트코 입점, 새 음료 브랜드를 SNS와 광고로 알리다.",
+          "en": "New to Costco — introducing a beverage brand through SNS and ads."
         },
         "lead": {
-          "ko": "Peek-a-Brew SNS·Meta 광고 프로젝트. 코스트코 입점 음료를 피드·릴스·광고로 알리고, 세일 기간 구매·매장 방문을 유도했습니다.",
-          "en": "SNS and Meta ads for Peek-a-Brew at Costco — feed and reels for product and sale updates, with paid campaigns during warehouse promotions."
+          "ko": "Peek-a-Brew SNS·Meta 광고 프로젝트. 막 시작하는 브랜드의 제품과 분위기를 전하고, 코스트코에서 만날 수 있다는 점을 자연스럽게 알렸습니다.",
+          "en": "SNS and Meta ads for Peek-a-Brew — sharing the product and brand mood with a new audience, and making Costco availability easy to discover."
         },
         "video": "/projects/peekabrew/hero.mp4",
         "poster": "/projects/peekabrew/hero-poster.jpg",
@@ -107,17 +107,17 @@
           "en": "Overview"
         },
         "title": {
-          "ko": "세일 일정에 맞춘 콘텐츠·광고",
-          "en": "Content and ads for sale windows"
+          "ko": "새 브랜드를 처음 알리는 콘텐츠",
+          "en": "Content that introduces a new brand"
         },
         "paragraphs": {
           "ko": [
-            "Peek-a-Brew는 코스트코 등에서 프리미엄 음료를 판매합니다. SNS에서 어디서·얼마에 살 수 있는지 빠르게 알려야 했습니다.",
-            "soono가 피드·릴스와 Meta 광고를 운영하며 UGC 톤으로 밝고 친근한 이미지를 유지했습니다."
+            "Peek-a-Brew는 코스트코에 새롭게 입점한 프리미엄 음료 브랜드입니다. 아직 이름을 모르는 고객에게 브랜드와 제품을 설명해야 했습니다.",
+            "soono는 피드·릴스와 Meta 광고로 제품 매력과 브랜드 톤을 전달했고, UGC 스타일로 친근하고 밝은 이미지를 유지했습니다."
           ],
           "en": [
-            "Peek-a-Brew sells premium drinks through Costco and major retail. SNS needed to show where and when to buy — quickly.",
-            "soono ran feed, reels, and Meta ads during sales. UGC-style posts kept one bright, approachable tone."
+            "Peek-a-Brew is a premium beverage brand newly available at Costco. The first job was to explain the brand and product to people who had not heard of it yet.",
+            "soono used feed, reels, and Meta ads to share product appeal and brand tone — keeping a bright, approachable feel through UGC-style content."
           ]
         }
       },
@@ -127,8 +127,8 @@
           "en": "Process"
         },
         "title": {
-          "ko": "콘텐츠부터 광고까지, 다섯 단계",
-          "en": "Five stages — content to ads"
+          "ko": "브랜드 소개부터 광고까지, 다섯 단계",
+          "en": "Five stages — brand intro to ads"
         },
         "steps": [
           {
@@ -141,8 +141,8 @@
               "en": "Brand & channel audit"
             },
             "body": {
-              "ko": "제품·세일 일정·SNS 톤을 파악하고 입점·프로모션용 콘텐츠 유형을 정리했습니다.",
-              "en": "Mapped products, Costco calendar, and SNS tone — content types for retail windows."
+              "ko": "제품 특성·브랜드 톤·SNS 현황을 파악하고, 입점 소식과 제품 소개에 맞는 콘텐츠 유형을 정리했습니다.",
+              "en": "Reviewed product, brand tone, and SNS baseline — content types for launch and product introduction."
             }
           },
           {
@@ -155,8 +155,8 @@
               "en": "Content calendar"
             },
             "body": {
-              "ko": "코스트코 일정에 맞춰 피드·릴스·스토리 주제와 광고 시점·예산을 계획했습니다.",
-              "en": "Scheduled feed, reel, and story themes with aligned ad dates and budgets."
+              "ko": "브랜드 소개·제품 하이라이트·유통 안내 주제를 정리하고, 광고 시점과 예산을 함께 계획했습니다.",
+              "en": "Planned themes for brand intro, product highlights, and retail availability — with aligned ad timing and budget."
             }
           },
           {
@@ -165,12 +165,12 @@
               "en": "03 · CREATE"
             },
             "title": {
-              "ko": "홍보물 제작",
+              "ko": "콘텐츠 제작",
               "en": "Creative production"
             },
             "body": {
-              "ko": "제품 컷, 세일 안내, UGC 콘텐츠를 SNS 비율·브랜드 톤에 맞게 제작했습니다.",
-              "en": "Product shots, sale posts, and UGC content in SNS formats and brand tone."
+              "ko": "제품 컷, 브랜드 스토리, UGC 콘텐츠를 SNS 비율과 톤에 맞게 제작했습니다.",
+              "en": "Product shots, brand storytelling, and UGC content in SNS formats and brand tone."
             }
           },
           {
@@ -183,8 +183,8 @@
               "en": "SNS publishing"
             },
             "body": {
-              "ko": "캡션·해시태그·게시 타이밍을 관리하며 세일 전후 안내를 집중 배치했습니다.",
-              "en": "Managed captions, hashtags, and timing — focused sale-window content."
+              "ko": "캡션·해시태그·게시 타이밍을 관리하며 브랜드와 제품 정보가 꾸준히 전달되도록 운영했습니다.",
+              "en": "Managed captions, hashtags, and timing — steady publishing so brand and product info stayed visible."
             }
           },
           {
@@ -197,8 +197,8 @@
               "en": "Meta ads"
             },
             "body": {
-              "ko": "지역·관심사 타겟으로 도달·전환 캠페인을 운영하고, 세일 기간 매장 방문·구매를 유도했습니다.",
-              "en": "Reach and conversion campaigns with local targeting during sales."
+              "ko": "지역·관심사 타겟으로 브랜드 인지와 도달 캠페인을 운영하고, 코스트코 입점 정보를 함께 전달했습니다.",
+              "en": "Reach and awareness campaigns with local targeting — plus clear Costco availability messaging."
             }
           }
         ]
@@ -209,12 +209,12 @@
           "en": "Content"
         },
         "title": {
-          "ko": "제품·세일·UGC 비주얼",
-          "en": "Product, sale & UGC visuals"
+          "ko": "제품과 브랜드 무드를 담은 비주얼",
+          "en": "Visuals for product and brand mood"
         },
         "text": {
-          "ko": "릴스·코스트코 세일·UGC 포스트로 피드 전체에 밝고 친근한 무드를 유지했습니다.",
-          "en": "Reels, Costco sale posts, and UGC — a bright mood across the feed."
+          "ko": "릴스·입점 안내·UGC 포스트로 피드 전체에 밝고 친근한 브랜드 이미지를 유지했습니다.",
+          "en": "Reels, retail availability posts, and UGC — a bright, friendly brand feel across the feed."
         },
         "cells": [
           {
@@ -229,8 +229,8 @@
           {
             "image": "/projects/peekabrew/sns-costco-sale.jpg",
             "tag": {
-              "ko": "코스트코 세일",
-              "en": "Costco sale"
+              "ko": "코스트코 입점 안내",
+              "en": "Costco availability"
             },
             "variant": "light"
           },
@@ -254,8 +254,8 @@
           "en": "Meta ad video creative"
         },
         "text": {
-          "ko": "코스트코 세일 Meta 광고 영상을 제작·집행했습니다. 세일 기간 지역 타겟에 짧은 포맷으로 반복 노출했습니다.",
-          "en": "Produced and ran Meta ad video for Costco sales — short formats for repeated local exposure."
+          "ko": "브랜드와 제품을 소개하는 Meta 광고 영상을 제작·집행했습니다. 짧은 포맷으로 지역 타겟에 반복 노출해 인지도를 높였습니다.",
+          "en": "Produced and ran Meta ad video introducing the brand and product — short formats for repeated local reach and awareness."
         },
         "mainVideo": "/projects/peekabrew/meta-ad.mp4",
         "mainPoster": "/projects/peekabrew/meta-ad-poster.jpg",
