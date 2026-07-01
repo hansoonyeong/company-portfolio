@@ -171,7 +171,7 @@ export default function ProjectCaseStudy({
         </Link>
 
         <header className="case-study__hero">
-          <p className="case-study__eyebrow">{cs.hero.eyebrow}</p>
+          {cs.hero.eyebrow && <p className="case-study__eyebrow">{cs.hero.eyebrow}</p>}
           <h1 className="case-study__headline">{cs.hero.headline}</h1>
           <p className="case-study__lead">{cs.hero.lead}</p>
 
@@ -237,7 +237,7 @@ export default function ProjectCaseStudy({
 
         <section className="case-study__block case-study__block--process">
           <p className="case-study__label">{cs.process.label}</p>
-          <h2 className="case-study__title">{cs.process.title}</h2>
+          {cs.process.title && <h2 className="case-study__title">{cs.process.title}</h2>}
 
           <ol
             className="case-study__process"
@@ -246,7 +246,7 @@ export default function ProjectCaseStudy({
             {cs.process.steps.map((step) => (
               <li key={step.tag} className="case-study__process-step">
                 <span className="case-study__process-tag">{step.tag}</span>
-                <h3>{step.title}</h3>
+                {step.title && <h3>{step.title}</h3>}
                 <p>{step.body}</p>
               </li>
             ))}
@@ -285,6 +285,7 @@ export default function ProjectCaseStudy({
             <h2 className="case-study__title">{cs.touchpoints.title}</h2>
             <p className="case-study__intro">{cs.touchpoints.text}</p>
 
+            {cs.touchpoints.cards?.length > 0 && (
             <div className="case-study__service-row">
               {cs.touchpoints.cards.map((card) => (
                 <article key={card.title} className="case-study__service-card">
@@ -312,6 +313,7 @@ export default function ProjectCaseStudy({
                 </article>
               ))}
             </div>
+            )}
           </section>
         )}
 

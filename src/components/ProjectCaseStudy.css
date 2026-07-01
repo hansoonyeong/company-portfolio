@@ -42,6 +42,7 @@
   letter-spacing: -0.03em;
   max-width: min(720px, 100%);
   text-wrap: balance;
+  white-space: pre-line;
 }
 
 .case-study__lead {
