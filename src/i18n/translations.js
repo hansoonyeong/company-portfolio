@@ -322,6 +322,8 @@ export const translations = {
       contact: 'Contact',
       quoteRequest: 'Request a quote',
       copyright: 'All rights reserved.',
+      privacyPolicy: 'Privacy Policy',
+      terms: 'Terms & Conditions',
     },
     servicesPage: {
       meta: {
@@ -649,6 +651,8 @@ export const translations = {
       contact: '문의',
       quoteRequest: '견적 요청',
       copyright: 'All rights reserved.',
+      privacyPolicy: 'Privacy Policy',
+      terms: 'Terms & Conditions',
     },
     servicesPage: {
       meta: {

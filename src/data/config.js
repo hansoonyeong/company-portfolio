@@ -7,6 +7,7 @@ export const company = {
   logoLight: null,
   email: 'lucy@soono.au',
   phone: '0480 736 307',
+  location: 'Sydney, Australia',
   instagram: 'https://www.instagram.com/soono.au/',
   blog: 'https://blog.naver.com',
 }

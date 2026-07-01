@@ -14,6 +14,7 @@ import WorksPage from './pages/WorksPage'
 import ProjectDetailPage from './pages/ProjectDetailPage'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
+import LegalPage from './pages/LegalPage'
 import AdminPage from './pages/AdminPage'
 import ScrollRevealManager from './components/ScrollRevealManager'
 
@@ -57,6 +58,8 @@ const router = createBrowserRouter([
       { path: 'services', element: <PricingPage />, handle: { page: 'servicesPage' } },
       { path: 'pricing', element: <Navigate to="/services" replace /> },
       { path: 'contact', element: <ContactPage />, handle: { page: 'contactPage' } },
+      { path: 'privacy', element: <LegalPage type="privacy" />, handle: { page: 'meta' } },
+      { path: 'terms', element: <LegalPage type="terms" />, handle: { page: 'meta' } },
     ],
   },
   { path: '/admin', element: <AdminPage /> },

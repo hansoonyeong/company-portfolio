@@ -742,7 +742,7 @@ app.delete('/api/hero/images', authMiddleware, async (req, res) => {
 app.get('/sitemap.xml', async (_req, res) => {
   try {
     const projects = await readProjects()
-    const staticPaths = ['/', '/about', '/works', '/news', '/services', '/contact']
+    const staticPaths = ['/', '/about', '/works', '/news', '/services', '/contact', '/privacy', '/terms']
     const projectPaths = projects.map((project) => `/works/${project.slug || project.id}`)
     const urls = [...staticPaths, ...projectPaths]
     const lastmod = new Date().toISOString().slice(0, 10)

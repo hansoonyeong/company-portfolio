@@ -1,9 +1,8 @@
+import { Link } from 'react-router-dom'
 import { useTranslation } from '../i18n/LanguageContext'
 import { company } from '../data/config'
-import Logo from './Logo'
 import InstagramIcon from './InstagramIcon'
 import './Footer.css'
-import './Logo.css'
 
 export default function Footer() {
   const { t } = useTranslation()
@@ -11,20 +10,30 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="container">
-        <div className="footer__top">
-          <div className="footer__brand">
-            <Logo animated showTagline className="logo logo--footer" />
+        <div className="footer__main">
+          <div className="footer__identity">
+            <a
+              href={company.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer__instagram"
+              aria-label="Instagram"
+            >
+              <InstagramIcon />
+            </a>
+
+            <div className="footer__contact">
+              <a href={`mailto:${company.email}`} className="footer__email">
+                {company.email}
+              </a>
+              <p className="footer__location">{company.location}</p>
+            </div>
           </div>
 
-          <a
-            href={company.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="footer__instagram"
-            aria-label="Instagram"
-          >
-            <InstagramIcon />
-          </a>
+          <nav className="footer__legal" aria-label="Legal">
+            <Link to="/privacy">{t.footer.privacyPolicy}</Link>
+            <Link to="/terms">{t.footer.terms}</Link>
+          </nav>
         </div>
 
         <div className="footer__bottom">
