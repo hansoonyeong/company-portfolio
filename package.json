@@ -11,7 +11,7 @@
     "lint": "oxlint",
     "preview": "npm run build && SERVE_STATIC=1 npm start",
     "start": "node scripts/bootstrap-data.mjs && node server/index.js",
-    "render:build": "npm ci --include=dev && npm run build",
+    "render:build": "npm install --include=dev && npm run build",
     "compress:peekabrew-hero": "node scripts/compress-peekabrew-hero.mjs"
   },
   "engines": {
