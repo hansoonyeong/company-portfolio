@@ -64,6 +64,31 @@ export const servicesEn = {
           highlighted: false,
         },
       ],
+      groups: [
+        {
+          id: 'print',
+          title: 'Print Design',
+          intro: 'Professional marketing materials for both online and offline promotion.',
+          tableHeaders: ['Service', 'From'],
+          items: [
+            { name: 'Flyer', price: 'AUD $300' },
+            { name: 'Poster', price: 'AUD $250' },
+            { name: 'Brochure', price: 'AUD $700' },
+            { name: 'Menu', price: 'AUD $450' },
+          ],
+        },
+        {
+          id: 'photography',
+          title: 'Photography',
+          intro: 'Professional visuals that showcase your business.',
+          tableHeaders: ['Service', 'From'],
+          items: [
+            { name: 'Product Photography', price: 'AUD $350' },
+            { name: 'Restaurant Photography', price: 'AUD $500' },
+            { name: 'Event Photography', price: 'AUD $700' },
+          ],
+        },
+      ],
     },
     {
       id: 'build',
@@ -162,31 +187,6 @@ export const servicesEn = {
             'Creative Direction',
           ],
           highlighted: false,
-        },
-      ],
-      groups: [
-        {
-          id: 'print',
-          title: 'Print Design',
-          intro: 'Professional marketing materials for both online and offline promotion.',
-          tableHeaders: ['Service', 'From'],
-          items: [
-            { name: 'Flyer', price: 'AUD $300' },
-            { name: 'Poster', price: 'AUD $250' },
-            { name: 'Brochure', price: 'AUD $700' },
-            { name: 'Menu', price: 'AUD $450' },
-          ],
-        },
-        {
-          id: 'photography',
-          title: 'Photography',
-          intro: 'Professional visuals that showcase your business.',
-          tableHeaders: ['Service', 'From'],
-          items: [
-            { name: 'Product Photography', price: 'AUD $350' },
-            { name: 'Restaurant Photography', price: 'AUD $500' },
-            { name: 'Event Photography', price: 'AUD $700' },
-          ],
         },
       ],
     },
@@ -330,6 +330,31 @@ export const servicesKo = {
           highlighted: false,
         },
       ],
+      groups: [
+        {
+          id: 'print',
+          title: 'Print Design',
+          intro: 'Professional marketing materials for both online and offline promotion.',
+          tableHeaders: ['Service', 'From'],
+          items: [
+            { name: 'Flyer', price: 'AUD $300' },
+            { name: 'Poster', price: 'AUD $250' },
+            { name: 'Brochure', price: 'AUD $700' },
+            { name: 'Menu', price: 'AUD $450' },
+          ],
+        },
+        {
+          id: 'photography',
+          title: 'Photography',
+          intro: 'Professional visuals that showcase your business.',
+          tableHeaders: ['Service', 'From'],
+          items: [
+            { name: 'Product Photography', price: 'AUD $350' },
+            { name: 'Restaurant Photography', price: 'AUD $500' },
+            { name: 'Event Photography', price: 'AUD $700' },
+          ],
+        },
+      ],
     },
     {
       id: 'build',
@@ -423,31 +448,6 @@ export const servicesKo = {
             '크리에이티브 디렉션',
           ],
           highlighted: false,
-        },
-      ],
-      groups: [
-        {
-          id: 'print',
-          title: 'Print Design',
-          intro: '온·오프라인 홍보를 위한 전문 인쇄물 디자인.',
-          tableHeaders: ['서비스', '시작 가격'],
-          items: [
-            { name: '전단지', price: 'AUD $300' },
-            { name: '포스터', price: 'AUD $250' },
-            { name: '브로셔', price: 'AUD $700' },
-            { name: '메뉴판', price: 'AUD $450' },
-          ],
-        },
-        {
-          id: 'photography',
-          title: 'Photography',
-          intro: '비즈니스를 돋보이게 하는 전문 비주얼.',
-          tableHeaders: ['서비스', '시작 가격'],
-          items: [
-            { name: '제품 촬영', price: 'AUD $350' },
-            { name: '레스토랑 촬영', price: 'AUD $500' },
-            { name: '이벤트 촬영', price: 'AUD $700' },
-          ],
         },
       ],
     },
