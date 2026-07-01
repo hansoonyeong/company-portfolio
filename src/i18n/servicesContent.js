@@ -145,7 +145,7 @@ export const servicesEn = {
           id: 'grow-starter',
           name: 'Starter',
           price: 'AUD $790',
-          unit: '/ Month',
+          unit: '/mo',
           desc: 'Perfect for businesses getting started.',
           features: [
             'Monthly Content Planning',
@@ -159,7 +159,7 @@ export const servicesEn = {
           id: 'grow-growth',
           name: 'Growth ⭐',
           price: 'AUD $1,490',
-          unit: '/ Month',
+          unit: '/mo',
           desc: 'Our most popular marketing package.',
           features: [
             '4 Reels',
@@ -174,7 +174,7 @@ export const servicesEn = {
           id: 'grow-premium',
           name: 'Premium',
           price: 'AUD $2,490',
-          unit: '/ Month',
+          unit: '/mo',
           desc: 'Complete creative partnership.',
           features: [
             'Everything in Growth',
@@ -233,7 +233,7 @@ export const servicesEn = {
           id: 'kakao-premium',
           name: 'Kakao Business Premium ⭐',
           price: 'From AUD $1,900',
-          unit: '/ Month',
+          unit: '/mo',
           desc: 'Our recommended package for ongoing CRM and customer engagement.',
           features: [
             'Monthly Campaign Planning',
