@@ -699,6 +699,79 @@
         "text": {
           "ko": "카카오톡 채널과 모바일 주문 웹사이트를 통해 쉽고 직관적인 주문 경험을 제공했습니다.",
           "en": "Created a seamless ordering journey through KakaoTalk and a mobile-first website."
+        },
+        "cards": [
+          {
+            "title": {
+              "ko": "KakaoTalk Channel",
+              "en": "KakaoTalk Channel"
+            },
+            "text": {
+              "ko": "고객 문의와 주문 안내를 위한 공식 채널로, 브랜드 아이덴티티에 맞춰 프로필과 콘텐츠를 구성했습니다.",
+              "en": "Official channel for customer inquiries and order guidance — profile and content aligned with brand identity."
+            },
+            "linkUrl": "http://pf.kakao.com/_alkDxb",
+            "linkLabel": {
+              "ko": "채널 바로가기 ↗",
+              "en": "Open channel ↗"
+            },
+            "items": []
+          },
+          {
+            "title": {
+              "ko": "Ordering Website",
+              "en": "Ordering Website"
+            },
+            "text": {
+              "ko": "모바일 환경에 최적화된 사전예약 주문 시스템입니다. 간결한 단계 구성으로 주문 과정을 쉽게 만들었습니다.",
+              "en": "A mobile-optimised pre-order system with a simple step flow that makes ordering easy."
+            },
+            "linkUrl": "https://kimchihouse-order.vercel.app/order.html",
+            "linkLabel": {
+              "ko": "웹앱 바로가기 ↗",
+              "en": "Open web app ↗"
+            },
+            "items": [
+              {
+                "label": "·",
+                "text": {
+                  "ko": "상품 선택",
+                  "en": "Product selection"
+                }
+              },
+              {
+                "label": "·",
+                "text": {
+                  "ko": "배송 정보 입력",
+                  "en": "Delivery details"
+                }
+              },
+              {
+                "label": "·",
+                "text": {
+                  "ko": "결제 방법 선택",
+                  "en": "Payment method"
+                }
+              },
+              {
+                "label": "·",
+                "text": {
+                  "ko": "주문자 정보 작성",
+                  "en": "Customer information"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "quote": {
+        "text": {
+          "ko": "\"단순한 리뉴얼을 넘어, 브랜드 운영 방식까지 함께 바뀌었습니다.\"",
+          "en": "\"Beyond a simple refresh — the way the brand operates changed with it.\""
+        },
+        "cite": {
+          "ko": "— Kimchi House AU 운영팀",
+          "en": "— Kimchi House AU team"
         }
       }
     },
