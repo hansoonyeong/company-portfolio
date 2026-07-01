@@ -839,8 +839,8 @@
     "client": "CHOI&CO. GROUP",
     "location": "Rydalmere, NSW",
     "description": {
-      "ko": "호주 기반 프리미엄 미트 홀세일 브랜드 CHOI&CO. GROUP의 로고 및 명함 디자인. 기하학적 심볼과 워드마크, 명함까지 하나의 브랜드 시스템으로 정리했습니다.",
-      "en": "Logo and business card design for CHOI&CO. GROUP, an Australian premium meat wholesaler. Geometric symbol, wordmark, and business card unified as one brand system."
+      "ko": "CHOI&CO.GROUP 브랜드 아이덴티티 설계. 두 개의 C를 연결한 심볼로 신뢰와 파트너십을 표현하고, 명함까지 일관된 브랜드 경험을 완성했습니다.",
+      "en": "Brand identity for CHOI&CO.GROUP — an interlocking double-C symbol for trust and partnership, with business cards as part of one consistent brand experience."
     },
     "scope": {
       "ko": [
@@ -866,17 +866,13 @@
     "caseStudy": {
       "accent": "#7A1115",
       "hero": {
-        "eyebrow": {
-          "ko": "로고 · 명함 디자인 · 2026",
-          "en": "Logo · Business Card · 2026"
-        },
         "headline": {
-          "ko": "정육 도매업의 신뢰를 마크 하나에 담다.",
-          "en": "Trust in wholesale meat, distilled into one mark."
+          "ko": "정육 도매 브랜드의 신뢰를 하나의 심볼에 담다.",
+          "en": "Trust in wholesale meat, captured in one symbol."
         },
         "lead": {
-          "ko": "프리미엄 정육 도매 CHOI&CO.GROUP 로고·명함을 처음부터 설계했습니다. 두 C가 맞물리는 형태로 CHOI와 CO.의 결합을 시각화했습니다.",
-          "en": "From-scratch logo and business card for CHOI&CO.GROUP. Two interlocking C forms visualise CHOI and CO."
+          "ko": "CHOI&CO.GROUP의 브랜드 아이덴티티를 설계했습니다. 두 개의 C를 연결한 심볼로 브랜드의 신뢰와 파트너십을 표현했습니다.",
+          "en": "Designed the brand identity for CHOI&CO.GROUP. An interlocking double-C symbol expresses the brand's trust and partnership."
         },
         "image": "/projects/choi-co/hero.jpg",
         "meta": [
@@ -928,17 +924,17 @@
           "en": "Overview"
         },
         "title": {
-          "ko": "두 개의 'C'가 만나는 지점",
-          "en": "Where two C's meet"
+          "ko": "신뢰를 상징하는 두 개의 C",
+          "en": "Two C's that stand for trust"
         },
         "paragraphs": {
           "ko": [
-            "CHOI&CO.GROUP은 시드니 프리미엄 정육 도매 브랜드입니다. B2B 신뢰를 고려해 견고하고 절제된 아이덴티티를 구축했습니다.",
-            "두 C를 입체적으로 연결해 파트너십과 성장을 담았고, 버건디·차콜로 전문성을 표현했습니다."
+            "CHOI&CO.GROUP은 시드니 기반의 프리미엄 정육 도매 브랜드입니다.",
+            "두 개의 C를 하나의 형태로 연결해 파트너십을 표현하고, 버건디와 차콜 컬러로 절제된 브랜드 이미지를 완성했습니다."
           ],
           "en": [
-            "Premium meat wholesaler in Sydney. For trust-driven B2B, we built a solid, restrained identity.",
-            "Interlocking C forms convey partnership; burgundy and charcoal express professionalism."
+            "CHOI&CO.GROUP is a premium meat wholesaler based in Sydney.",
+            "Two C forms lock into one shape to express partnership — finished with restrained burgundy and charcoal."
           ]
         }
       },
@@ -948,64 +944,48 @@
           "en": "Process"
         },
         "title": {
-          "ko": "네 단계로 마크를 완성하다",
-          "en": "Four stages to the final mark"
+          "ko": "브랜드를 만드는 과정",
+          "en": "Building the brand"
         },
         "steps": [
           {
             "tag": {
-              "ko": "01 · RESEARCH",
-              "en": "01 · RESEARCH"
-            },
-            "title": {
-              "ko": "정육 도매업 레퍼런스 분석",
-              "en": "Wholesale meat category review"
+              "ko": "01 · Research",
+              "en": "01 · Research"
             },
             "body": {
-              "ko": "정육·식자재 도매 로고를 분석해 칼·고기 일러스트 등 클리셰를 배제할 방향을 정했습니다.",
-              "en": "Reviewed wholesale marks to avoid knives, meat illustrations, and clichés."
+              "ko": "정육 도매 브랜드를 분석하고 차별화된 방향을 설정했습니다.",
+              "en": "Analysed meat wholesale brands and set a differentiated direction."
             }
           },
           {
             "tag": {
-              "ko": "02 · SKETCH",
-              "en": "02 · SKETCH"
-            },
-            "title": {
-              "ko": "이니셜 C 결합 구조 탐색",
-              "en": "Exploring interlocking C structures"
+              "ko": "02 · Sketch",
+              "en": "02 · Sketch"
             },
             "body": {
-              "ko": "CHOI·CO. 이니셜이 맞물리도록 손스케치로 구조를 탐색했습니다.",
-              "en": "Sketches explored how CHOI and CO. initials lock together."
+              "ko": "두 개의 C를 다양한 형태로 탐색하며 심볼을 발전시켰습니다.",
+              "en": "Explored the double-C form in sketches and developed the symbol."
             }
           },
           {
             "tag": {
-              "ko": "03 · REFINE",
-              "en": "03 · REFINE"
-            },
-            "title": {
-              "ko": "육각 그리드 기반 마크 정밀화",
-              "en": "Precision on a hex grid"
+              "ko": "03 · Refine",
+              "en": "03 · Refine"
             },
             "body": {
-              "ko": "육각 그리드에서 마크를 다듬고, 버건디·차콜·화이트 3색으로 입체감을 완성했습니다.",
-              "en": "Refined on hex grid in burgundy, charcoal, and white."
+              "ko": "형태와 컬러를 정리해 완성도 높은 브랜드 아이덴티티를 구축했습니다.",
+              "en": "Refined form and colour into a polished brand identity."
             }
           },
           {
             "tag": {
-              "ko": "04 · APPLICATION",
-              "en": "04 · APPLICATION"
-            },
-            "title": {
-              "ko": "명함 인쇄 및 가이드 제작",
-              "en": "Print application and guidelines"
+              "ko": "04 · Application",
+              "en": "04 · Application"
             },
             "body": {
-              "ko": "마크를 버건디 명함에 적용하고 담당자 정보·가이드를 제작했습니다.",
-              "en": "Applied mark to burgundy cards with contacts and usage guide."
+              "ko": "명함과 브랜드 가이드에 적용해 일관된 브랜드 경험을 만들었습니다.",
+              "en": "Applied across business cards and brand guidelines for one consistent experience."
             }
           }
         ]
@@ -1016,12 +996,12 @@
           "en": "Logo"
         },
         "title": {
-          "ko": "버건디·차콜·화이트",
-          "en": "Burgundy, charcoal, white"
+          "ko": "어디에서나 일관된 브랜드",
+          "en": "Consistent brand, everywhere"
         },
         "text": {
-          "ko": "다크·라이트·단색 마크 세 버전으로 매체 전반에서 동일한 무게감을 유지했습니다.",
-          "en": "Three versions keep consistent visual weight across packaging, documents, and stationery."
+          "ko": "다크, 라이트, 심볼 버전으로 구성해 다양한 환경에서도 일관성을 유지했습니다.",
+          "en": "Dark, light, and symbol versions — consistent across every application."
         },
         "cells": [
           {
@@ -1035,16 +1015,16 @@
           {
             "image": "/projects/choi-co/logo-symbol.jpg",
             "tag": {
-              "ko": "심볼 단독형",
-              "en": "Symbol only"
+              "ko": "심볼 버전",
+              "en": "Symbol version"
             },
             "variant": "light"
           },
           {
             "image": "/projects/choi-co/card.png",
             "tag": {
-              "ko": "명함 적용",
-              "en": "On business card"
+              "ko": "라이트 버전",
+              "en": "Light version"
             },
             "variant": "accent"
           }
@@ -1056,12 +1036,12 @@
           "en": "Business Card"
         },
         "title": {
-          "ko": "손에 쥐었을 때 느껴지는 신뢰",
-          "en": "Trust you feel in hand"
+          "ko": "브랜드의 첫인상을 완성하다.",
+          "en": "Completing the brand's first impression"
         },
         "text": {
-          "ko": "버건디 바탕·화이트 실드 심볼로 명함을 건네는 순간 브랜드 톤이 전달되도록 했습니다. 뒷면은 워터마크 처리했습니다.",
-          "en": "Burgundy stock, white shield symbol — brand tone at hand-off. Oversized watermark reverse."
+          "ko": "버건디 컬러와 심플한 레이아웃으로 브랜드의 신뢰와 전문성을 담았습니다.",
+          "en": "Burgundy colour and a simple layout carry the brand's trust and professionalism."
         },
         "mainImage": "/projects/choi-co/card-mock-1.jpg",
         "miniImages": [
@@ -1070,12 +1050,12 @@
       },
       "quote": {
         "text": {
-          "ko": "\"명함을 건넬 때마다, 이 디자인이 우리 회사를 대신 설명해준다.\"",
-          "en": "\"Every time we hand this card over, the design speaks for the company.\""
+          "ko": "\"명함을 건네는 순간, 브랜드가 함께 전달됩니다.\"",
+          "en": "\"The moment you hand over the card, the brand comes with it.\""
         },
         "cite": {
-          "ko": "— Hong Choi · CHOI&CO.GROUP",
-          "en": "— Hong Choi · CHOI&CO.GROUP"
+          "ko": "— CHOI&CO.GROUP",
+          "en": "— CHOI&CO.GROUP"
         }
       }
     },
