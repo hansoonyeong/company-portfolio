@@ -5,13 +5,15 @@ services:
     runtime: node
     plan: starter
     region: singapore
-    buildCommand: npm install && npm run build
+    buildCommand: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm ci --include=dev && npm run build
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production
       - key: SERVE_STATIC
+        value: '1'
+      - key: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD
         value: '1'
       - key: ADMIN_PASSWORD
         sync: false

@@ -9,8 +9,9 @@
     "dev:server": "node server/index.js",
     "build": "vite build",
     "lint": "oxlint",
-    "preview": "npm run build && npm start",
-    "start": "node scripts/bootstrap-data.mjs && SERVE_STATIC=1 node server/index.js"
+    "preview": "npm run build && SERVE_STATIC=1 npm start",
+    "start": "node scripts/bootstrap-data.mjs && node server/index.js",
+    "render:build": "npm ci --include=dev && npm run build"
   },
   "engines": {
     "node": ">=20"
