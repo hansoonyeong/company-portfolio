@@ -2,6 +2,7 @@ export const servicesEn = {
   yearLabel: '2026',
   title: 'Services',
   subtitle: 'Brand · Build · Connect · Grow — end-to-end creative partnership for your business.',
+  tabHint: 'Click a tab below to browse our service packages.',
   notes: [
     'All prices are starting prices.',
     'Final quotations depend on project scope and timeline.',
@@ -265,6 +266,7 @@ export const servicesKo = {
   yearLabel: '2026',
   title: '서비스',
   subtitle: 'Brand · Build · Connect · Grow — 비즈니스 성장을 위한 통합 크리에이티브 파트너십.',
+  tabHint: '아래 탭을 클릭해 서비스 패키지를 확인해보세요.',
   notes: [
     '모든 가격은 시작가 기준입니다.',
     '최종 견적은 프로젝트 범위와 일정에 따라 달라질 수 있습니다.',
