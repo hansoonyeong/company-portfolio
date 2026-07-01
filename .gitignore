@@ -16,6 +16,9 @@ dist-ssr
 # Quote submissions (local data)
 server/data/quotes.json
 
+# Large video backups (keep locally, do not deploy)
+public/projects/**/hero-original.mp4
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
