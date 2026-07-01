@@ -15,25 +15,25 @@
     "compress:peekabrew-hero": "node scripts/compress-peekabrew-hero.mjs"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=20.19.0"
   },
   "dependencies": {
+    "@vitejs/plugin-react": "^6.0.2",
     "concurrently": "^10.0.3",
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "multer": "^2.2.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "react-router-dom": "^7.18.1"
+    "react-router-dom": "^7.18.1",
+    "vite": "^8.1.0"
   },
   "devDependencies": {
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.2",
     "ffmpeg-static": "^5.3.0",
     "oxlint": "^1.69.0",
     "playwright": "^1.61.1",
-    "sharp": "^0.35.2",
-    "vite": "^8.1.0"
+    "sharp": "^0.35.2"
   }
 }
