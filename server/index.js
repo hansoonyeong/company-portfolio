@@ -769,18 +769,19 @@ ${urls
   }
 })
 
-app.get('/works/:id(\\d+)', async (req, res) => {
-  const projects = await readProjects()
-  const numericId = Number(req.params.id)
-  const project = projects.find((item) => Number(item.id) === numericId)
-  if (!project) {
-    return res.redirect(301, '/works')
-  }
-  return res.redirect(301, getProjectPath(project))
-})
+app.get('/works/:slug', async (req, res) => {
+  const { slug } = req.params
 
-app.get('/works/:slug', (req, res) => {
-  return res.redirect(301, `/work/${req.params.slug}`)
+  if (/^\d+$/.test(slug)) {
+    const projects = await readProjects()
+    const project = projects.find((item) => Number(item.id) === Number(slug))
+    if (!project) {
+      return res.redirect(301, '/works')
+    }
+    return res.redirect(301, getProjectPath(project))
+  }
+
+  return res.redirect(301, `/work/${slug}`)
 })
 
 app.use(express.static(path.join(__dirname, '..', 'public')))

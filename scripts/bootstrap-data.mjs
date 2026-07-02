@@ -46,8 +46,17 @@ async function syncProjectsCaseStudies() {
 
     let changed = false
     for (const project of projects) {
-      const seedProject = seedBySlug[project.slug]
-      if (!seedProject?.caseStudy) continue
+      const seedProject =
+        seedBySlug[project.slug] || seed.find((item) => Number(item.id) === Number(project.id))
+
+      if (!seedProject) continue
+
+      if (seedProject.slug && project.slug !== seedProject.slug) {
+        project.slug = seedProject.slug
+        changed = true
+      }
+
+      if (!seedProject.caseStudy) continue
 
       const next = JSON.stringify(seedProject.caseStudy)
       const prev = JSON.stringify(project.caseStudy)
@@ -59,7 +68,7 @@ async function syncProjectsCaseStudies() {
 
     if (changed) {
       await fs.writeFile(dest, JSON.stringify(projects, null, 2))
-      console.log('[bootstrap] Synced caseStudy fields from data-seed')
+      console.log('[bootstrap] Synced project slug and caseStudy fields from data-seed')
     }
   } catch (err) {
     console.warn('[bootstrap] Could not sync caseStudy:', err.message)
