@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from '../i18n/LanguageContext'
 import { isVideoSrc } from '../lib/media'
+import { getProjectPath } from '../lib/projects'
 import './ProjectCaseStudy.css'
 
 function CaseStudyMedia({
@@ -340,7 +341,7 @@ export default function ProjectCaseStudy({
         {(prevProject || nextProject) && (
           <nav className="case-study__nav" aria-label={w.title}>
             {prevProject ? (
-              <Link to={`/works/${prevProject.id}`} className="case-study__nav-link case-study__nav-link--prev">
+              <Link to={getProjectPath(prevProject)} className="case-study__nav-link case-study__nav-link--prev">
                 <span className="case-study__nav-label">← {w.prevProject}</span>
                 <span className="case-study__nav-title">{prevProject.subtitle || prevProject.title}</span>
               </Link>
@@ -348,7 +349,7 @@ export default function ProjectCaseStudy({
               <span className="case-study__nav-spacer" aria-hidden="true" />
             )}
             {nextProject ? (
-              <Link to={`/works/${nextProject.id}`} className="case-study__nav-link case-study__nav-link--next">
+              <Link to={getProjectPath(nextProject)} className="case-study__nav-link case-study__nav-link--next">
                 <span className="case-study__nav-label">{w.nextProject} →</span>
                 <span className="case-study__nav-title">{nextProject.subtitle || nextProject.title}</span>
               </Link>

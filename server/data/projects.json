@@ -423,7 +423,7 @@
       ]
     },
     "thumb": "/projects/gmgp-kiosk/1782843539167--2026-07-01-4.17.19.png",
-    "slug": "gmgp-kiosk",
+    "slug": "gmgp",
     "updatedAt": "2026-06-30T18:19:51.917Z",
     "gallery": [
       "/projects/gmgp-kiosk/1782843107772--2026-06-30-4.22.51.png",
@@ -460,7 +460,7 @@
         "Print-ready files"
       ]
     },
-    "slug": "project-6",
+    "slug": "bornga-gift-voucher",
     "updatedAt": "2026-06-30T18:30:13.270Z",
     "thumb": "/projects/project-6/1782844213255--2026-07-01-4.29.02.png",
     "gallery": [
@@ -824,11 +824,12 @@
       "/projects/dos-taekwondo/15.jpg",
       "/projects/dos-taekwondo/16.jpg",
       "/projects/dos-taekwondo/17.jpg"
-    ]
+    ],
+    "slug": "dos-taekwondo"
   },
   {
     "id": 9,
-    "slug": "choi-co",
+    "slug": "choi-co-group",
     "tag": {
       "ko": "디자인",
       "en": "Design"

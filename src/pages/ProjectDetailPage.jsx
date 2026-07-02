@@ -10,6 +10,7 @@ import ProjectCaseStudy from '../components/ProjectCaseStudy'
 import JustifiedGallery from '../components/JustifiedGallery'
 import {
   findProject,
+  getProjectPath,
   getProjectNeighbors,
   projectCartId,
   projectToCartItem,
@@ -40,19 +41,19 @@ function ProjectMediaItem({ src, className, loading }) {
 }
 
 export default function ProjectDetailPage() {
-  const { id } = useParams()
+  const { slug } = useParams()
   const { t, lang } = useTranslation()
   const { projects, quotePriceLabel, loading } = useProjects()
   const cart = useQuoteCart()
   const w = t.worksPage
-  const project = findProject(projects, id)
-  const { prev: prevProject, next: nextProject } = getProjectNeighbors(projects, id)
+  const project = findProject(projects, slug)
+  const { prev: prevProject, next: nextProject } = getProjectNeighbors(projects, slug)
   const [lightboxIndex, setLightboxIndex] = useState(null)
 
   const pageSeo = useMemo(() => {
     if (!project) return null
 
-    const path = `/works/${project.slug || project.id}`
+    const path = getProjectPath(project)
     const description =
       project.description?.[lang] ||
       project.description?.en ||
@@ -76,7 +77,7 @@ export default function ProjectDetailPage() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [id])
+  }, [slug])
 
   if (loading) {
     return (
@@ -90,6 +91,11 @@ export default function ProjectDetailPage() {
 
   if (!project) {
     return <Navigate to="/works" replace />
+  }
+
+  const canonicalPath = getProjectPath(project)
+  if (slug !== project.slug) {
+    return <Navigate to={canonicalPath} replace />
   }
 
   const cartId = projectCartId(project.id)
@@ -213,7 +219,7 @@ export default function ProjectDetailPage() {
         {(prevProject || nextProject) && (
           <nav className="project-detail__nav" aria-label={w.title}>
             {prevProject ? (
-              <Link to={`/works/${prevProject.id}`} className="project-detail__nav-link project-detail__nav-link--prev">
+              <Link to={getProjectPath(prevProject)} className="project-detail__nav-link project-detail__nav-link--prev">
                 <span className="project-detail__nav-label">← {w.prevProject}</span>
                 <span className="project-detail__nav-title">{prevProject.subtitle || prevProject.title}</span>
               </Link>
@@ -221,7 +227,7 @@ export default function ProjectDetailPage() {
               <span className="project-detail__nav-spacer" aria-hidden="true" />
             )}
             {nextProject ? (
-              <Link to={`/works/${nextProject.id}`} className="project-detail__nav-link project-detail__nav-link--next">
+              <Link to={getProjectPath(nextProject)} className="project-detail__nav-link project-detail__nav-link--next">
                 <span className="project-detail__nav-label">{w.nextProject} →</span>
                 <span className="project-detail__nav-title">{nextProject.subtitle || nextProject.title}</span>
               </Link>

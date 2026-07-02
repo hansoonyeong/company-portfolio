@@ -134,6 +134,16 @@ export function localizeProject(item, lang) {
   }
 }
 
+export function getProjectSlug(project) {
+  if (!project) return ''
+  if (project.slug) return project.slug
+  return String(project.id)
+}
+
+export function getProjectPath(project) {
+  return `/work/${getProjectSlug(project)}`
+}
+
 export function getProjectSortKey(date) {
   if (!date) return 0
   const [yearPart, monthPart] = String(date).split('.')
@@ -168,13 +178,22 @@ export function getProjectFilterKey(tag) {
   return map[tag] ?? 'all'
 }
 
-export function findProject(projects, id) {
-  const numId = Number(id)
-  return projects.find((p) => p.id === numId) ?? null
+export function findProject(projects, identifier) {
+  if (!identifier) return null
+  const value = String(identifier)
+  const numId = Number(value)
+  if (Number.isFinite(numId)) {
+    const byId = projects.find((p) => p.id === numId)
+    if (byId) return byId
+  }
+
+  return projects.find((p) => p.slug === value) ?? null
 }
 
-export function getProjectNeighbors(projects, id) {
-  const index = projects.findIndex((p) => p.id === Number(id))
+export function getProjectNeighbors(projects, identifier) {
+  const current = findProject(projects, identifier)
+  if (!current) return { prev: null, next: null }
+  const index = projects.findIndex((p) => p.id === current.id)
   if (index < 0) return { prev: null, next: null }
 
   return {

@@ -1,4 +1,13 @@
-import { createBrowserRouter, RouterProvider, Outlet, useMatches, ScrollRestoration, Navigate, useLocation } from 'react-router-dom'
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+  useMatches,
+  ScrollRestoration,
+  Navigate,
+  useLocation,
+  useParams,
+} from 'react-router-dom'
 import { LanguageProvider } from './i18n/LanguageContext'
 import { QuoteCartProvider, useQuoteCart } from './context/QuoteCartContext'
 import { ProjectsProvider } from './context/ProjectsContext'
@@ -27,6 +36,11 @@ function CartShell() {
   return <QuoteCartBar items={cart.items} />
 }
 
+function LegacyWorkRedirect() {
+  const { slug } = useParams()
+  return <Navigate to={`/work/${slug}`} replace />
+}
+
 function RootLayout() {
   const matches = useMatches()
   const page = [...matches].reverse().find((match) => match.handle?.page)?.handle?.page ?? 'meta'
@@ -53,7 +67,8 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage />, handle: { page: 'meta' } },
       { path: 'news', element: <NewsPage />, handle: { page: 'newsPage' } },
       { path: 'works', element: <WorksPage />, handle: { page: 'worksPage' } },
-      { path: 'works/:id', element: <ProjectDetailPage />, handle: { page: 'worksPage' } },
+      { path: 'work/:slug', element: <ProjectDetailPage />, handle: { page: 'worksPage' } },
+      { path: 'works/:slug', element: <LegacyWorkRedirect />, handle: { page: 'worksPage' } },
       { path: 'about', element: <AboutPage />, handle: { page: 'aboutPage' } },
       { path: 'services', element: <PricingPage />, handle: { page: 'servicesPage' } },
       { path: 'pricing', element: <Navigate to="/services" replace /> },

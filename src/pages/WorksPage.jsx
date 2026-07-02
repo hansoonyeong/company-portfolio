@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useProjects } from '../context/ProjectsContext'
 import { useTranslation } from '../i18n/LanguageContext'
-import { getProjectFilterKey } from '../lib/projects'
+import { getProjectFilterKey, getProjectPath } from '../lib/projects'
 import './WorksPage.css'
 
 const FILTER_KEYS = ['all', 'marketing', 'design', 'content', 'photography']
@@ -50,7 +50,7 @@ export default function WorksPage() {
           <ul className="works-page__grid">
             {filtered.map((project) => (
               <li key={project.id}>
-                <Link to={`/works/${project.id}`} className="works-page__card">
+                <Link to={getProjectPath(project)} className="works-page__card">
                   <div className="works-page__cover">
                     {project.thumb ? (
                       <img src={project.thumb} alt="" />

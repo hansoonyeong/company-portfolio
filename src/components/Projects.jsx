@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useProjects } from '../context/ProjectsContext'
 import { useTranslation } from '../i18n/LanguageContext'
+import { getProjectPath } from '../lib/projects'
 import './Projects.css'
 
 const HOME_PREVIEW_LIMIT = 3
@@ -15,7 +16,7 @@ function getSlidesPerView(width) {
 
 function ProjectCard({ project }) {
   return (
-    <Link to={`/works/${project.id}`} className="projects__card">
+    <Link to={getProjectPath(project)} className="projects__card">
       <div className="projects__thumb">
         {project.thumb ? (
           <img src={project.thumb} alt="" className="projects__thumb-img" />

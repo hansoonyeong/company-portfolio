@@ -225,6 +225,10 @@ function getProjectSlug(project) {
   return match ? match[1] : null
 }
 
+function getProjectPath(project) {
+  return `/work/${getProjectSlug(project) || project.id}`
+}
+
 async function removeProjectFolder(slug) {
   if (!slug) return
   const dir = path.join(PROJECTS_PUBLIC, slug)
@@ -743,7 +747,7 @@ app.get('/sitemap.xml', async (_req, res) => {
   try {
     const projects = await readProjects()
     const staticPaths = ['/', '/about', '/works', '/news', '/services', '/contact', '/privacy', '/terms']
-    const projectPaths = projects.map((project) => `/works/${project.slug || project.id}`)
+    const projectPaths = projects.map((project) => getProjectPath(project))
     const urls = [...staticPaths, ...projectPaths]
     const lastmod = new Date().toISOString().slice(0, 10)
 
@@ -763,6 +767,20 @@ ${urls
   } catch (err) {
     res.status(500).type('text/plain').send('Failed to generate sitemap')
   }
+})
+
+app.get('/works/:id(\\d+)', async (req, res) => {
+  const projects = await readProjects()
+  const numericId = Number(req.params.id)
+  const project = projects.find((item) => Number(item.id) === numericId)
+  if (!project) {
+    return res.redirect(301, '/works')
+  }
+  return res.redirect(301, getProjectPath(project))
+})
+
+app.get('/works/:slug', (req, res) => {
+  return res.redirect(301, `/work/${req.params.slug}`)
 })
 
 app.use(express.static(path.join(__dirname, '..', 'public')))

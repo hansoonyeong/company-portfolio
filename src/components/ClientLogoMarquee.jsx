@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { getProjectPath } from '../lib/projects'
 import './ClientLogoMarquee.css'
 
 function ClientLogoItem({ client }) {
@@ -8,7 +9,7 @@ function ClientLogoItem({ client }) {
 
   return (
     <Link
-      to={`/works/${client.id}`}
+      to={getProjectPath(client)}
       className={`client-marquee__link${client.logoStyle?.maxWidth ? ' client-marquee__link--wide' : ''}`}
       aria-label={client.name}
       style={{
