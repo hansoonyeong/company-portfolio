@@ -6,20 +6,22 @@
   position: relative;
   border-radius: 12px;
   border: 1px solid var(--color-border);
-  min-height: clamp(280px, 42vw, 520px);
+  min-height: clamp(320px, 45vw, 560px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(32px, 6vw, 72px);
+  padding: clamp(48px, 10vw, 112px);
   transition: background 320ms ease;
   overflow: hidden;
 }
 
 .logo-switcher__preview-btn {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  max-width: 760px;
-  margin: 0 auto;
+  height: 100%;
+  min-height: inherit;
   padding: 0;
   border: none;
   background: transparent;
@@ -28,8 +30,10 @@
 
 .logo-switcher__image {
   display: block;
-  width: 100%;
-  max-height: clamp(220px, 34vw, 420px);
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: clamp(220px, 36vw, 460px);
   margin: 0 auto;
   object-fit: contain;
   opacity: 0;
@@ -38,22 +42,6 @@
 
 .logo-switcher__image--visible {
   opacity: 1;
-}
-
-.logo-switcher__active-label {
-  position: absolute;
-  left: 16px;
-  bottom: 14px;
-  margin: 0;
-  font-size: 0.6875rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.72);
-}
-
-.logo-switcher__preview[style*='#fafafa'] .logo-switcher__active-label,
-.logo-switcher__preview[style*='#f3f3f3'] .logo-switcher__active-label {
-  color: var(--color-text-muted);
 }
 
 .logo-switcher__swatches {
@@ -114,8 +102,12 @@
 
 @media (max-width: 640px) {
   .logo-switcher__preview {
-    min-height: 240px;
-    padding: 24px 20px 40px;
+    min-height: 260px;
+    padding: 40px 28px;
+  }
+
+  .logo-switcher__image {
+    max-height: clamp(180px, 42vw, 320px);
   }
 
   .logo-switcher__swatches {

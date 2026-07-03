@@ -2,6 +2,7 @@
 export const CLIENT_LOGO_BY_SLUG = {
   'kimchi-house-au': '/projects/kimchi-house-au/logo-white.jpg',
   peekabrew: '/clients/peekabrew.png',
+  'choi-co-group': '/clients/choiandco.png',
   'choi-co': '/clients/choiandco.png',
 }
 
@@ -27,6 +28,11 @@ export const CLIENT_LOGO_STYLE_BY_SLUG = {
     maxWidth: 'clamp(240px, 30vw, 360px)',
     maxHeight: 'clamp(44px, 6vw, 68px)',
     scale: 1.05,
+  },
+  'choi-co-group': {
+    maxWidth: 'clamp(200px, 24vw, 300px)',
+    maxHeight: 'clamp(36px, 5vw, 54px)',
+    scale: 1,
   },
   'choi-co': {
     maxWidth: 'clamp(200px, 24vw, 300px)',

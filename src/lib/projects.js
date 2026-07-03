@@ -181,6 +181,12 @@ export function getProjectFilterKey(tag) {
   return map[tag] ?? 'all'
 }
 
+const SLUG_ALIASES = {
+  'choi-co': 'choi-co-group',
+  'gmgp-kiosk': 'gmgp',
+  'project-6': 'bornga-gift-voucher',
+}
+
 export function findProject(projects, identifier) {
   if (!identifier) return null
   const value = String(identifier)
@@ -190,7 +196,15 @@ export function findProject(projects, identifier) {
     if (byId) return byId
   }
 
-  return projects.find((p) => p.slug === value) ?? null
+  const direct = projects.find((p) => p.slug === value)
+  if (direct) return direct
+
+  const alias = SLUG_ALIASES[value]
+  if (alias) {
+    return projects.find((p) => p.slug === alias) ?? null
+  }
+
+  return null
 }
 
 export function getProjectNeighbors(projects, identifier) {

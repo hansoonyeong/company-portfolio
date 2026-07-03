@@ -29,7 +29,32 @@ async function ensureFile(name) {
   }
 }
 
-async function syncProjectsCaseStudies() {
+function syncProjectFields(project, seedProject) {
+  let changed = false
+
+  for (const field of ['slug', 'thumb', 'gallery']) {
+    if (seedProject[field] === undefined) continue
+    const next = JSON.stringify(seedProject[field])
+    const prev = JSON.stringify(project[field])
+    if (next !== prev) {
+      project[field] = seedProject[field]
+      changed = true
+    }
+  }
+
+  if (seedProject.caseStudy) {
+    const next = JSON.stringify(seedProject.caseStudy)
+    const prev = JSON.stringify(project.caseStudy)
+    if (next !== prev) {
+      project.caseStudy = seedProject.caseStudy
+      changed = true
+    }
+  }
+
+  return changed
+}
+
+async function syncProjectsFromSeed() {
   const dest = path.join(dataDir, 'projects.json')
   const src = path.join(seedDir, 'projects.json')
 
@@ -40,38 +65,21 @@ async function syncProjectsCaseStudies() {
     ])
     const projects = JSON.parse(destRaw)
     const seed = JSON.parse(srcRaw)
-    const seedBySlug = Object.fromEntries(
-      seed.filter((p) => p.slug).map((p) => [p.slug, p]),
-    )
+    const seedById = Object.fromEntries(seed.map((item) => [Number(item.id), item]))
 
     let changed = false
     for (const project of projects) {
-      const seedProject =
-        seedBySlug[project.slug] || seed.find((item) => Number(item.id) === Number(project.id))
-
+      const seedProject = seedById[Number(project.id)]
       if (!seedProject) continue
-
-      if (seedProject.slug && project.slug !== seedProject.slug) {
-        project.slug = seedProject.slug
-        changed = true
-      }
-
-      if (!seedProject.caseStudy) continue
-
-      const next = JSON.stringify(seedProject.caseStudy)
-      const prev = JSON.stringify(project.caseStudy)
-      if (next !== prev) {
-        project.caseStudy = seedProject.caseStudy
-        changed = true
-      }
+      if (syncProjectFields(project, seedProject)) changed = true
     }
 
     if (changed) {
-      await fs.writeFile(dest, JSON.stringify(projects, null, 2))
-      console.log('[bootstrap] Synced project slug and caseStudy fields from data-seed')
+      await fs.writeFile(dest, `${JSON.stringify(projects, null, 2)}\n`)
+      console.log('[bootstrap] Synced project slugs, media paths, and case studies from data-seed')
     }
   } catch (err) {
-    console.warn('[bootstrap] Could not sync caseStudy:', err.message)
+    console.warn('[bootstrap] Could not sync projects:', err.message)
   }
 }
 
@@ -79,4 +87,4 @@ for (const name of SEED_FILES) {
   await ensureFile(name)
 }
 
-await syncProjectsCaseStudies()
+await syncProjectsFromSeed()

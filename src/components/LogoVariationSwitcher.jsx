@@ -48,7 +48,7 @@ export default function LogoVariationSwitcher({
     }, FADE_MS)
   }
 
-  const preview = (
+  const image = (
     <img
       src={withAssetVersion(active.image, assetVersion)}
       alt={active.alt}
@@ -71,12 +71,11 @@ export default function LogoVariationSwitcher({
             onClick={() => onImageClick(active.image)}
             aria-label={active.alt}
           >
-            {preview}
+            {image}
           </button>
         ) : (
-          preview
+          image
         )}
-        <p className="logo-switcher__active-label">{active.label}</p>
       </div>
 
       <div className="logo-switcher__swatches" role="tablist" aria-label="Logo variations">

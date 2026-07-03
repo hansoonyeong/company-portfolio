@@ -423,7 +423,7 @@
       ]
     },
     "thumb": "/projects/gmgp-kiosk/gmgp-kiosk-pamphlet-cover.png",
-    "slug": "gmgp-kiosk",
+    "slug": "gmgp",
     "updatedAt": "2026-06-30T18:19:51.917Z",
     "gallery": [
       "/projects/gmgp-kiosk/gmgp-kiosk-pamphlet-spread-1.png",
@@ -794,6 +794,7 @@
   },
   {
     "id": 8,
+    "slug": "dos-taekwondo",
     "tag": {
       "en": "Photography",
       "ko": "촬영"
@@ -843,7 +844,7 @@
   },
   {
     "id": 9,
-    "slug": "choi-co",
+    "slug": "choi-co-group",
     "tag": {
       "ko": "디자인",
       "en": "Design"
@@ -1046,7 +1047,7 @@
             "swatchColor": "#f3f3f3"
           },
           {
-            "image": "/projects/choi-co/wordmark.jpg",
+            "image": "/projects/choi-co/logo-text.jpg",
             "tag": {
               "ko": "텍스트 로고",
               "en": "Text Logo"
