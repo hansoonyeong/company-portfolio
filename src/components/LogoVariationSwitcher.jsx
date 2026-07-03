@@ -1,13 +1,8 @@
 import { useState } from 'react'
-import { LOGO_VARIANT_BACKGROUNDS, withAssetVersion } from '../lib/imageSeo'
+import { withAssetVersion } from '../lib/imageSeo'
 import './LogoVariationSwitcher.css'
 
 const FADE_MS = 300
-
-function getBackground(variation) {
-  if (variation.background) return variation.background
-  return LOGO_VARIANT_BACKGROUNDS[variation.variant] || LOGO_VARIANT_BACKGROUNDS.light
-}
 
 function getSwatchStyle(variation) {
   if (variation.swatchColor) {
@@ -60,10 +55,7 @@ export default function LogoVariationSwitcher({
 
   return (
     <div className={`logo-switcher ${className}`.trim()}>
-      <div
-        className="logo-switcher__preview"
-        style={{ background: getBackground(active) }}
-      >
+      <div className="logo-switcher__preview">
         {onImageClick ? (
           <button
             type="button"
