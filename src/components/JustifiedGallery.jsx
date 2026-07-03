@@ -62,7 +62,7 @@ function buildRows(sources, ratios, containerWidth, targetHeight, gap, maxItemsP
   return rows
 }
 
-function GalleryMedia({ src, onRatio }) {
+function GalleryMedia({ src, alt, onRatio }) {
   const handleLoad = useCallback(
     (event) => {
       const el = event.currentTarget
@@ -88,7 +88,7 @@ function GalleryMedia({ src, onRatio }) {
     )
   }
 
-  return <img src={src} alt="" loading="lazy" onLoad={handleLoad} />
+  return <img src={src} alt={alt} loading="lazy" onLoad={handleLoad} />
 }
 
 export default function JustifiedGallery({
@@ -174,7 +174,7 @@ export default function JustifiedGallery({
               onClick={() => onItemClick(item.src)}
               aria-label={getItemLabel(item.src)}
             >
-              <GalleryMedia src={item.src} onRatio={handleRatio} />
+              <GalleryMedia src={item.src} alt={getItemLabel(item.src)} onRatio={handleRatio} />
             </button>
           ))}
         </div>

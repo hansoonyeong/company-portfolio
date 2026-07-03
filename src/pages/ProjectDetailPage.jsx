@@ -15,6 +15,7 @@ import {
   projectCartId,
   projectToCartItem,
 } from '../lib/projects'
+import { buildProjectImageAlt } from '../lib/imageSeo'
 import './ProjectDetailPage.css'
 
 function getProjectMedia(project) {
@@ -23,7 +24,7 @@ function getProjectMedia(project) {
   return [project.thumb, ...gallery.filter((src) => src !== project.thumb)]
 }
 
-function ProjectMediaItem({ src, className, loading }) {
+function ProjectMediaItem({ src, className, loading, alt }) {
   if (isVideoSrc(src)) {
     return (
       <video
@@ -37,7 +38,7 @@ function ProjectMediaItem({ src, className, loading }) {
     )
   }
 
-  return <img src={src} alt="" className={className} loading={loading} />
+  return <img src={src} alt={alt} className={className} loading={loading} />
 }
 
 export default function ProjectDetailPage() {
@@ -156,7 +157,14 @@ export default function ProjectDetailPage() {
                 onClick={() => openLightbox(heroSrc)}
                 aria-label={t.projects.viewPhoto.replace('{n}', '1')}
               >
-                <ProjectMediaItem src={heroSrc} />
+                <ProjectMediaItem
+                  src={heroSrc}
+                  alt={buildProjectImageAlt({
+                    title: project.title,
+                    subtitle: project.subtitle,
+                    section: 'Hero',
+                  })}
+                />
               </button>
             </div>
           )}
@@ -210,7 +218,12 @@ export default function ProjectDetailPage() {
               gap={12}
               onItemClick={openLightbox}
               getItemLabel={(src) =>
-                t.projects.viewPhoto.replace('{n}', String(media.indexOf(src) + 1))
+                buildProjectImageAlt({
+                  title: project.title,
+                  subtitle: project.subtitle,
+                  section: t.projects.galleryLabel,
+                  index: media.indexOf(src),
+                })
               }
             />
           </section>

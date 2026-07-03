@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useProjects } from '../context/ProjectsContext'
 import { useTranslation } from '../i18n/LanguageContext'
 import { getProjectFilterKey, getProjectPath } from '../lib/projects'
+import { buildProjectImageAlt } from '../lib/imageSeo'
 import './WorksPage.css'
 
 const FILTER_KEYS = ['all', 'marketing', 'design', 'content', 'photography']
@@ -53,7 +54,14 @@ export default function WorksPage() {
                 <Link to={getProjectPath(project)} className="works-page__card">
                   <div className="works-page__cover">
                     {project.thumb ? (
-                      <img src={project.thumb} alt="" />
+                      <img
+                        src={project.thumb}
+                        alt={buildProjectImageAlt({
+                          title: project.title,
+                          subtitle: project.subtitle,
+                          tag: project.tag,
+                        })}
+                      />
                     ) : (
                       <span className="works-page__cover-placeholder">{project.title.charAt(0)}</span>
                     )}

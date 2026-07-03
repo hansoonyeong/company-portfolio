@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from '../i18n/LanguageContext'
 import { isVideoSrc } from '../lib/media'
 import { getProjectPath } from '../lib/projects'
+import { buildProjectImageAlt, isLogoVariationSection } from '../lib/imageSeo'
+import LogoVariationSwitcher from './LogoVariationSwitcher'
 import './ProjectCaseStudy.css'
 
 function CaseStudyMedia({
@@ -96,7 +98,10 @@ export default function ProjectCaseStudy({
           src={businessCard.mainImage}
           video={businessCard.mainVideo}
           poster={businessCard.mainPoster}
-          alt={businessCard.title}
+          alt={buildProjectImageAlt({
+            title: project.title,
+            section: businessCard.title,
+          })}
           className="case-study__card-shot"
           autoplay={Boolean(businessCard.mainVideo)}
           assetVersion={project.assetVersion}
@@ -111,7 +116,10 @@ export default function ProjectCaseStudy({
           <CaseStudyImage
             key={src}
             src={src}
-            alt={businessCard.title}
+            alt={buildProjectImageAlt({
+            title: project.title,
+            section: businessCard.title,
+          })}
             className="case-study__card-shot"
             onClick={onImageClick ? () => openImage(src) : undefined}
             label={t.projects.viewPhoto.replace('{n}', String(cs.media.indexOf(src) + 1))}
@@ -135,7 +143,10 @@ export default function ProjectCaseStudy({
             src={businessCard.mainImage}
             video={businessCard.mainVideo}
             poster={businessCard.mainPoster}
-            alt={businessCard.title}
+            alt={buildProjectImageAlt({
+            title: project.title,
+            section: businessCard.title,
+          })}
             className="case-study__print-shot"
             autoplay={Boolean(businessCard.mainVideo)}
             assetVersion={project.assetVersion}
@@ -150,7 +161,10 @@ export default function ProjectCaseStudy({
             <CaseStudyImage
               key={src}
               src={src}
-              alt={businessCard.title}
+              alt={buildProjectImageAlt({
+            title: project.title,
+            section: businessCard.title,
+          })}
               className="case-study__print-shot"
               onClick={onImageClick ? () => openImage(src) : undefined}
               label={t.projects.viewPhoto.replace('{n}', String(cs.media.indexOf(src) + 1))}
@@ -213,7 +227,11 @@ export default function ProjectCaseStudy({
             cs.hero.image && (
               <CaseStudyImage
                 src={cs.hero.image}
-                alt={project.title}
+                alt={buildProjectImageAlt({
+                  title: project.title,
+                  subtitle: project.subtitle,
+                  section: 'Hero',
+                })}
                 className="case-study__hero-image"
                 onClick={onImageClick ? () => openImage(cs.hero.image) : undefined}
                 label={t.projects.viewPhoto.replace('{n}', '1')}
@@ -259,23 +277,53 @@ export default function ProjectCaseStudy({
           <h2 className="case-study__title">{cs.logo.title}</h2>
           <p className="case-study__intro">{cs.logo.text}</p>
 
-          <div className="case-study__logo-grid">
-            {cs.logo.cells.map((cell) => (
-              <div key={cell.tag} className={`case-study__logo-cell case-study__logo-cell--${cell.variant}`}>
-                <CaseStudyMedia
-                  src={cell.image}
-                  video={cell.video}
-                  poster={cell.poster}
-                  alt={cell.tag}
-                  autoplay={Boolean(cell.video)}
-                  assetVersion={project.assetVersion}
-                  onClick={onImageClick ? () => openImage(cell.video || cell.image) : undefined}
-                  label={cell.tag}
-                />
-                <span className="case-study__cell-tag">{cell.tag}</span>
-              </div>
-            ))}
-          </div>
+          {isLogoVariationSection(cs.logo) ? (
+            <LogoVariationSwitcher
+              variations={cs.logo.cells.map((cell) => ({
+                id: cell.tag,
+                label: cell.tag,
+                image: cell.image,
+                alt:
+                  cell.alt ||
+                  buildProjectImageAlt({
+                    title: project.title,
+                    section: 'Logo',
+                    tag: cell.tag,
+                  }),
+                variant: cell.variant,
+                background: cell.background,
+                swatchColor: cell.swatchColor,
+              }))}
+              onImageClick={onImageClick ? openImage : undefined}
+              assetVersion={project.assetVersion}
+            />
+          ) : (
+            <div className="case-study__logo-grid">
+              {cs.logo.cells.map((cell) => (
+                <div key={cell.tag} className={`case-study__logo-cell case-study__logo-cell--${cell.variant}`}>
+                  <CaseStudyMedia
+                    src={cell.image}
+                    video={cell.video}
+                    poster={cell.poster}
+                    alt={
+                      cell.alt ||
+                      buildProjectImageAlt({
+                        title: project.title,
+                        section: cs.logo.label,
+                        tag: cell.tag,
+                      })
+                    }
+                    className="case-study__img"
+                    autoplay={Boolean(cell.video)}
+                    assetVersion={project.assetVersion}
+                    onClick={onImageClick ? () => openImage(cell.video || cell.image) : undefined}
+                    label={cell.tag}
+                  />
+                  <span className="case-study__cell-tag">{cell.tag}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
 
         {businessCard && !isSplitPrint && renderBusinessCardCards()}

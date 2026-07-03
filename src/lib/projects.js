@@ -63,7 +63,10 @@ function localizeCaseStudy(caseStudy, lang) {
         video: cell.video || '',
         poster: cell.poster || cell.image || '',
         tag: pick(cell.tag),
+        alt: pick(cell.alt) || pick(cell.tag),
         variant: cell.variant || 'dark',
+        background: cell.background || '',
+        swatchColor: cell.swatchColor || '',
       })),
     },
     businessCard:

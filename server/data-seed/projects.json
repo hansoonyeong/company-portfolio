@@ -31,7 +31,7 @@
         "Performance reporting"
       ]
     },
-    "thumb": "/projects/peekabrew/1782865427474-43.jpg",
+    "thumb": "/projects/peekabrew/peekabrew-brand-campaign.jpg",
     "gallery": [
       "/projects/peekabrew/thumb.jpg",
       "/projects/peekabrew/hero-poster.jpg",
@@ -386,8 +386,8 @@
     "thumb": "/projects/bornga/drink-menu.jpg",
     "gallery": [
       "/projects/bornga/lunch-special.jpg",
-      "/projects/bornga/1782848100445--2026-07-01-5.34.37.png",
-      "/projects/bornga/1782848155060--2026-07-01-5.30.51.png",
+      "/projects/bornga/bornga-menu-spread-1.png",
+      "/projects/bornga/bornga-menu-spread-2.png",
       "/projects/bornga/1782848155065-soono-sns.mp4"
     ],
     "slug": "bornga",
@@ -422,13 +422,13 @@
         "Print-ready files"
       ]
     },
-    "thumb": "/projects/gmgp-kiosk/1782843539167--2026-07-01-4.17.19.png",
+    "thumb": "/projects/gmgp-kiosk/gmgp-kiosk-pamphlet-cover.png",
     "slug": "gmgp",
     "updatedAt": "2026-06-30T18:19:51.917Z",
     "gallery": [
-      "/projects/gmgp-kiosk/1782843107772--2026-06-30-4.22.51.png",
-      "/projects/gmgp-kiosk/1782843539171--2026-07-01-4.17.40.png",
-      "/projects/gmgp-kiosk/1782843539176--2026-07-01-4.17.51.png"
+      "/projects/gmgp-kiosk/gmgp-kiosk-pamphlet-spread-1.png",
+      "/projects/gmgp-kiosk/gmgp-kiosk-pamphlet-spread-2.png",
+      "/projects/gmgp-kiosk/gmgp-kiosk-pamphlet-spread-3.png"
     ]
   },
   {
@@ -462,10 +462,10 @@
     },
     "slug": "bornga-gift-voucher",
     "updatedAt": "2026-06-30T18:30:13.270Z",
-    "thumb": "/projects/project-6/1782844213255--2026-07-01-4.29.02.png",
+    "thumb": "/projects/bornga-gift-voucher/bornga-gift-voucher-front.png",
     "gallery": [
-      "/projects/project-6/1782844213262--2026-07-01-4.28.21.png",
-      "/projects/project-6/1782844213266--2026-07-01-4.28.40.png"
+      "/projects/bornga-gift-voucher/bornga-gift-voucher-detail-1.png",
+      "/projects/bornga-gift-voucher/bornga-gift-voucher-detail-2.png"
     ]
   },
   {
@@ -498,7 +498,7 @@
         "Print Design"
       ]
     },
-    "thumb": "/projects/kimchi-house-au/1782856260445--.jpg",
+    "thumb": "/projects/kimchi-house-au/kimchi-house-au-branding.jpg",
     "gallery": [
       "/projects/kimchi-house-au/hero-poster.jpg",
       "/projects/kimchi-house-au/logo-dark.jpg",
@@ -648,26 +648,41 @@
           {
             "image": "/projects/kimchi-house-au/logo-dark.jpg",
             "tag": {
-              "ko": "다크 버전",
-              "en": "Dark version"
+              "ko": "프라이머리 로고",
+              "en": "Primary Logo"
             },
-            "variant": "dark"
+            "alt": {
+              "ko": "Kimchi House AU 프라이머리 로고",
+              "en": "Kimchi House AU primary logo on dark background"
+            },
+            "variant": "dark",
+            "swatchColor": "#123524"
           },
           {
             "image": "/projects/kimchi-house-au/logo-white.jpg",
             "tag": {
-              "ko": "라이트 버전",
-              "en": "Light version"
+              "ko": "네거티브 로고",
+              "en": "Negative Logo"
             },
-            "variant": "light"
+            "alt": {
+              "ko": "Kimchi House AU 네거티브 로고",
+              "en": "Kimchi House AU negative logo on light background"
+            },
+            "variant": "light",
+            "swatchColor": "#ffffff"
           },
           {
             "image": "/projects/kimchi-house-au/logo-eng.jpg",
             "tag": {
-              "ko": "영문 강조형",
-              "en": "English version"
+              "ko": "영문 로고",
+              "en": "English Logo"
             },
-            "variant": "dark"
+            "alt": {
+              "ko": "Kimchi House AU 영문 로고",
+              "en": "Kimchi House AU English logo lockup"
+            },
+            "variant": "dark",
+            "swatchColor": "#123524"
           }
         ]
       },
@@ -806,24 +821,24 @@
         "보정·납품"
       ]
     },
-    "thumb": "/projects/dos-taekwondo/11.jpg",
+    "thumb": "/projects/dos-taekwondo/dos-taekwondo-tournament-11.jpg",
     "gallery": [
-      "/projects/dos-taekwondo/01.jpg",
-      "/projects/dos-taekwondo/02.jpg",
-      "/projects/dos-taekwondo/03.jpg",
-      "/projects/dos-taekwondo/04.jpg",
-      "/projects/dos-taekwondo/05.jpg",
-      "/projects/dos-taekwondo/06.jpg",
-      "/projects/dos-taekwondo/07.jpg",
-      "/projects/dos-taekwondo/08.jpg",
-      "/projects/dos-taekwondo/09.jpg",
-      "/projects/dos-taekwondo/10.jpg",
-      "/projects/dos-taekwondo/12.jpg",
-      "/projects/dos-taekwondo/13.jpg",
-      "/projects/dos-taekwondo/14.jpg",
-      "/projects/dos-taekwondo/15.jpg",
-      "/projects/dos-taekwondo/16.jpg",
-      "/projects/dos-taekwondo/17.jpg"
+      "/projects/dos-taekwondo/dos-taekwondo-tournament-01.jpg",
+      "/projects/dos-taekwondo/dos-taekwondo-tournament-02.jpg",
+      "/projects/dos-taekwondo/dos-taekwondo-tournament-03.jpg",
+      "/projects/dos-taekwondo/dos-taekwondo-tournament-04.jpg",
+      "/projects/dos-taekwondo/dos-taekwondo-tournament-05.jpg",
+      "/projects/dos-taekwondo/dos-taekwondo-tournament-06.jpg",
+      "/projects/dos-taekwondo/dos-taekwondo-tournament-07.jpg",
+      "/projects/dos-taekwondo/dos-taekwondo-tournament-08.jpg",
+      "/projects/dos-taekwondo/dos-taekwondo-tournament-09.jpg",
+      "/projects/dos-taekwondo/dos-taekwondo-tournament-10.jpg",
+      "/projects/dos-taekwondo/dos-taekwondo-tournament-12.jpg",
+      "/projects/dos-taekwondo/dos-taekwondo-tournament-13.jpg",
+      "/projects/dos-taekwondo/dos-taekwondo-tournament-14.jpg",
+      "/projects/dos-taekwondo/dos-taekwondo-tournament-15.jpg",
+      "/projects/dos-taekwondo/dos-taekwondo-tournament-16.jpg",
+      "/projects/dos-taekwondo/dos-taekwondo-tournament-17.jpg"
     ],
     "slug": "dos-taekwondo"
   },
@@ -857,7 +872,7 @@
         "Print-ready files"
       ]
     },
-    "thumb": "/projects/choi-co/1782861097244-d.jpg",
+    "thumb": "/projects/choi-co/choi-co-group-primary-logo.jpg",
     "gallery": [
       "/projects/choi-co/card.png",
       "/projects/choi-co/hero.jpg",
@@ -1001,33 +1016,48 @@
           "en": "Consistent brand, everywhere"
         },
         "text": {
-          "ko": "다크, 라이트, 심볼 버전으로 구성해 다양한 환경에서도 일관성을 유지했습니다.",
-          "en": "Dark, light, and symbol versions — consistent across every application."
+          "ko": "다크, 라이트, 텍스트 버전으로 구성해 다양한 환경에서도 일관성을 유지했습니다.",
+          "en": "Dark, light, and text versions — consistent across every application."
         },
         "cells": [
           {
             "image": "/projects/choi-co/logo-dark.jpg",
             "tag": {
-              "ko": "다크 버전",
-              "en": "Dark version"
+              "ko": "다크 로고",
+              "en": "Dark Logo"
             },
-            "variant": "dark"
+            "alt": {
+              "ko": "CHOI&CO.GROUP 다크 로고",
+              "en": "CHOI&CO.GROUP dark logo on burgundy background"
+            },
+            "variant": "dark",
+            "swatchColor": "#1a1214"
           },
           {
             "image": "/projects/choi-co/logo-symbol.jpg",
             "tag": {
-              "ko": "심볼 버전",
-              "en": "Symbol version"
+              "ko": "라이트 로고",
+              "en": "Light Logo"
             },
-            "variant": "light"
+            "alt": {
+              "ko": "CHOI&CO.GROUP 라이트 로고",
+              "en": "CHOI&CO.GROUP symbol logo on light background"
+            },
+            "variant": "light",
+            "swatchColor": "#f3f3f3"
           },
           {
-            "image": "/projects/choi-co/card.png",
+            "image": "/projects/choi-co/wordmark.jpg",
             "tag": {
-              "ko": "라이트 버전",
-              "en": "Light version"
+              "ko": "텍스트 로고",
+              "en": "Text Logo"
             },
-            "variant": "accent"
+            "alt": {
+              "ko": "CHOI&CO.GROUP 텍스트 로고",
+              "en": "CHOI&CO.GROUP text logo on white background"
+            },
+            "variant": "light",
+            "swatchColor": "#ffffff"
           }
         ]
       },
@@ -1044,9 +1074,9 @@
           "ko": "버건디 컬러와 심플한 레이아웃으로 브랜드의 신뢰와 전문성을 담았습니다.",
           "en": "Burgundy colour and a simple layout carry the brand's trust and professionalism."
         },
-        "mainImage": "/projects/choi-co/card-mock-1.jpg",
+        "mainImage": "/projects/choi-co/choi-co-group-business-card.jpg",
         "miniImages": [
-          "/projects/choi-co/card-mock-2.jpg"
+          "/projects/choi-co/choi-co-group-business-card-detail.jpg"
         ]
       },
       "quote": {

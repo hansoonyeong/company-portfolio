@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useProjects } from '../context/ProjectsContext'
 import { useTranslation } from '../i18n/LanguageContext'
 import { getProjectPath } from '../lib/projects'
+import { buildProjectImageAlt } from '../lib/imageSeo'
 import './Projects.css'
 
 const HOME_PREVIEW_LIMIT = 3
@@ -19,7 +20,15 @@ function ProjectCard({ project }) {
     <Link to={getProjectPath(project)} className="projects__card">
       <div className="projects__thumb">
         {project.thumb ? (
-          <img src={project.thumb} alt="" className="projects__thumb-img" />
+          <img
+            src={project.thumb}
+            alt={buildProjectImageAlt({
+              title: project.title,
+              subtitle: project.subtitle,
+              tag: project.tag,
+            })}
+            className="projects__thumb-img"
+          />
         ) : (
           <span>{project.title.charAt(0)}</span>
         )}
