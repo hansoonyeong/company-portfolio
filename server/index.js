@@ -326,6 +326,15 @@ function buildProjectPayload(body, slug, files, existing = null) {
   return { project, removeGallery, replacedThumb: Boolean(thumbFile) }
 }
 
+function runMulter(middleware, req, res) {
+  return new Promise((resolve, reject) => {
+    middleware(req, res, (err) => {
+      if (err) reject(err)
+      else resolve()
+    })
+  })
+}
+
 function createProjectUpload(slug) {
   return multer({
     storage: multer.diskStorage({
@@ -519,22 +528,24 @@ app.get('/api/projects', async (_req, res) => {
   res.json(projects)
 })
 
-app.post('/api/projects', authMiddleware, (req, res, next) => {
-  const slug = slugify(req.headers['x-project-slug']) || `project-${Date.now()}`
-  req.projectSlug = slug
-  const upload = createProjectUpload(slug)
-  upload.fields([
-    { name: 'thumb', maxCount: 1 },
-    { name: 'gallery', maxCount: 30 },
-  ])(req, res, (err) => {
-    if (err) {
+app.post('/api/projects', authMiddleware, async (req, res) => {
+  try {
+    const slug = slugify(req.headers['x-project-slug']) || `project-${Date.now()}`
+    const upload = createProjectUpload(slug)
+
+    try {
+      await runMulter(
+        upload.fields([
+          { name: 'thumb', maxCount: 1 },
+          { name: 'gallery', maxCount: 30 },
+        ]),
+        req,
+        res,
+      )
+    } catch (err) {
       return res.status(400).json({ error: err.message || 'Upload failed' })
     }
-    next()
-  })
-}, async (req, res) => {
-  try {
-    const slug = req.projectSlug
+
     const payload = buildProjectPayload(req.body, slug, req.files)
     if (payload.error) {
       return res.status(400).json({ error: payload.error })
@@ -559,7 +570,7 @@ app.post('/api/projects', authMiddleware, (req, res, next) => {
   }
 })
 
-app.patch('/api/projects/:id', authMiddleware, async (req, res, next) => {
+app.patch('/api/projects/:id', authMiddleware, async (req, res) => {
   try {
     const projectId = Number(req.params.id)
     const projects = await readProjects()
@@ -573,27 +584,21 @@ app.patch('/api/projects/:id', authMiddleware, async (req, res, next) => {
       slugify(req.headers['x-project-slug']) ||
       getProjectSlug(existing) ||
       `project-${existing.id}`
-    req.projectSlug = slug
-    req.existingProject = existing
-    req.projectIndex = index
 
     const upload = createProjectUpload(slug)
-    upload.fields([
-      { name: 'thumb', maxCount: 1 },
-      { name: 'gallery', maxCount: 30 },
-    ])(req, res, (err) => {
-      if (err) {
-        return res.status(400).json({ error: err.message || 'Upload failed' })
-      }
-      next()
-    })
-  } catch (err) {
-    res.status(500).json({ error: err.message || 'Update failed' })
-  }
-}, async (req, res) => {
-  try {
-    const existing = req.existingProject
-    const slug = req.projectSlug
+    try {
+      await runMulter(
+        upload.fields([
+          { name: 'thumb', maxCount: 1 },
+          { name: 'gallery', maxCount: 30 },
+        ]),
+        req,
+        res,
+      )
+    } catch (err) {
+      return res.status(400).json({ error: err.message || 'Upload failed' })
+    }
+
     const payload = buildProjectPayload(req.body, slug, req.files, existing)
     if (payload.error) {
       return res.status(400).json({ error: payload.error })
@@ -619,8 +624,7 @@ app.patch('/api/projects/:id', authMiddleware, async (req, res, next) => {
       createdAt: existing.createdAt,
     }
 
-    const projects = await readProjects()
-    projects[req.projectIndex] = updated
+    projects[index] = updated
     await writeProjects(projects)
     res.json(updated)
   } catch (err) {

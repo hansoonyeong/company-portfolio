@@ -132,6 +132,7 @@ export default function AdminPage() {
   const [projectThumb, setProjectThumb] = useState(null)
   const [projectGallery, setProjectGallery] = useState([])
   const [projectError, setProjectError] = useState('')
+  const [projectSuccess, setProjectSuccess] = useState('')
   const [projectSubmitting, setProjectSubmitting] = useState(false)
   const [heroForm, setHeroForm] = useState(() => heroToForm(rawHero))
   const [heroError, setHeroError] = useState('')
@@ -376,6 +377,7 @@ export default function AdminPage() {
     setProjectThumb(null)
     setProjectGallery([])
     setProjectError('')
+    setProjectSuccess('')
   }
 
   const handleProjectField = (field, value) => {
@@ -391,6 +393,7 @@ export default function AdminPage() {
     setProjectThumb(null)
     setProjectGallery([])
     setProjectError('')
+    setProjectSuccess('')
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -403,6 +406,7 @@ export default function AdminPage() {
   const handleProjectSubmit = async (e) => {
     e.preventDefault()
     setProjectError('')
+    setProjectSuccess('')
 
     const tags = tagsFromKey(projectForm.tagKey)
     if (!tags) {
@@ -433,15 +437,24 @@ export default function AdminPage() {
           projectForm.slug.trim(),
         )
         setProjects((prev) => prev.map((item) => (item.id === editingProjectId ? updated : item)))
+        setProjectSuccess('프로젝트가 저장되었습니다.')
+        resetProjectForm()
       } else {
         const created = await createProject(token, formData, projectForm.slug.trim())
         setProjects((prev) => [created, ...prev])
+        setProjectSuccess('프로젝트가 등록되었습니다.')
+        resetProjectForm()
       }
 
-      await refreshProjects()
-      resetProjectForm()
+      refreshProjects().catch(() => {})
     } catch (err) {
-      setProjectError(err.message || '프로젝트 저장에 실패했습니다.')
+      if (err.message === 'Unauthorized') {
+        setProjectError('로그인이 만료되었습니다. 다시 로그인해 주세요.')
+        sessionStorage.removeItem(TOKEN_KEY)
+        setToken('')
+      } else {
+        setProjectError(err.message || '프로젝트 저장에 실패했습니다.')
+      }
     } finally {
       setProjectSubmitting(false)
     }
@@ -1143,6 +1156,7 @@ export default function AdminPage() {
               )}
             </div>
             {projectError && <p className="admin__error">{projectError}</p>}
+            {projectSuccess && <p className="admin__success">{projectSuccess}</p>}
             <div className="admin__form-actions">
               <button type="submit" className="admin__news-submit" disabled={projectSubmitting}>
                 {projectSubmitting

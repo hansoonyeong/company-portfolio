@@ -1,5 +1,27 @@
 const API_BASE = '/api'
 
+async function parseApiError(res, fallback) {
+  const text = await res.text().catch(() => '')
+  if (!text) return fallback
+  try {
+    const err = JSON.parse(text)
+    return err.error || fallback
+  } catch {
+    return text.slice(0, 200) || fallback
+  }
+}
+
+async function apiFetch(url, options) {
+  let res
+  try {
+    res = await fetch(url, options)
+  } catch {
+    throw new Error('서버에 연결할 수 없습니다. 네트워크 연결을 확인해 주세요.')
+  }
+
+  return res
+}
+
 export async function submitQuote(data) {
   const res = await fetch(`${API_BASE}/quotes`, {
     method: 'POST',
@@ -140,15 +162,16 @@ export async function createProject(token, formData, slug = '') {
   const headers = { Authorization: `Bearer ${token}` }
   if (slug) headers['X-Project-Slug'] = slug
 
-  const res = await fetch(`${API_BASE}/projects`, {
+  const res = await apiFetch(`${API_BASE}/projects`, {
     method: 'POST',
     headers,
     body: formData,
   })
 
   if (!res.ok) {
-    const err = await res.json().catch(() => ({}))
-    throw new Error(err.error || 'Create failed')
+    const message = await parseApiError(res, 'Create failed')
+    if (res.status === 401) throw new Error('Unauthorized')
+    throw new Error(message)
   }
 
   return res.json()
@@ -158,15 +181,16 @@ export async function updateProject(token, id, formData, slug = '') {
   const headers = { Authorization: `Bearer ${token}` }
   if (slug) headers['X-Project-Slug'] = slug
 
-  const res = await fetch(`${API_BASE}/projects/${id}`, {
+  const res = await apiFetch(`${API_BASE}/projects/${id}`, {
     method: 'PATCH',
     headers,
     body: formData,
   })
 
   if (!res.ok) {
-    const err = await res.json().catch(() => ({}))
-    throw new Error(err.error || 'Update failed')
+    const message = await parseApiError(res, 'Update failed')
+    if (res.status === 401) throw new Error('Unauthorized')
+    throw new Error(message)
   }
 
   return res.json()

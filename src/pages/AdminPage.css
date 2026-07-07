@@ -76,6 +76,12 @@
   margin-bottom: 12px;
 }
 
+.admin__success {
+  color: #1e7e34;
+  font-size: 0.875rem;
+  margin-bottom: 12px;
+}
+
 .admin__header {
   display: flex;
   align-items: center;
