@@ -241,17 +241,46 @@ export default function ProjectCaseStudy({
         </header>
 
         <section className="case-study__block">
-          <div className="case-study__two-col">
-            <div>
-              <p className="case-study__label">{cs.overview.label}</p>
-              <h2 className="case-study__title">{cs.overview.title}</h2>
+          {cs.overview.image ? (
+            <div className="case-study__overview-layout">
+              <div className="case-study__overview-copy">
+                <p className="case-study__label">{cs.overview.label}</p>
+                <h2 className="case-study__title">{cs.overview.title}</h2>
+                <div className="case-study__prose">
+                  {cs.overview.paragraphs.map((paragraph) => (
+                    <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+                  ))}
+                </div>
+              </div>
+              <CaseStudyImage
+                src={cs.overview.image}
+                alt={
+                  cs.overview.alt ||
+                  buildProjectImageAlt({
+                    title: project.title,
+                    subtitle: project.subtitle,
+                    section: cs.overview.label,
+                  })
+                }
+                className="case-study__overview-image"
+                onClick={onImageClick ? () => openImage(cs.overview.image) : undefined}
+                label={t.projects.viewPhoto.replace('{n}', '1')}
+                assetVersion={project.assetVersion}
+              />
             </div>
-            <div className="case-study__prose">
-              {cs.overview.paragraphs.map((paragraph) => (
-                <p key={paragraph.slice(0, 24)}>{paragraph}</p>
-              ))}
+          ) : (
+            <div className="case-study__two-col">
+              <div>
+                <p className="case-study__label">{cs.overview.label}</p>
+                <h2 className="case-study__title">{cs.overview.title}</h2>
+              </div>
+              <div className="case-study__prose">
+                {cs.overview.paragraphs.map((paragraph) => (
+                  <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </section>
 
         <section className="case-study__block case-study__block--process">

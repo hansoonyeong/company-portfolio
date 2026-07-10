@@ -44,6 +44,8 @@ function localizeCaseStudy(caseStudy, lang) {
       label: pick(caseStudy.overview?.label),
       title: pick(caseStudy.overview?.title),
       paragraphs: pickList(caseStudy.overview?.paragraphs),
+      image: caseStudy.overview?.image || '',
+      alt: pick(caseStudy.overview?.alt) || pick(caseStudy.overview?.title),
     },
     process: {
       label: pick(caseStudy.process?.label),
