@@ -66,12 +66,22 @@ async function syncProjectsFromSeed() {
     const projects = JSON.parse(destRaw)
     const seed = JSON.parse(srcRaw)
     const seedById = Object.fromEntries(seed.map((item) => [Number(item.id), item]))
+    const existingIds = new Set(projects.map((item) => Number(item.id)))
 
     let changed = false
     for (const project of projects) {
       const seedProject = seedById[Number(project.id)]
       if (!seedProject) continue
       if (syncProjectFields(project, seedProject)) changed = true
+    }
+
+    for (const seedProject of seed) {
+      const id = Number(seedProject.id)
+      if (existingIds.has(id)) continue
+      projects.unshift(seedProject)
+      existingIds.add(id)
+      changed = true
+      console.log(`[bootstrap] Added missing project id ${id} (${seedProject.slug}) from data-seed`)
     }
 
     if (changed) {

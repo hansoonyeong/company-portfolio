@@ -1,5 +1,47 @@
 [
   {
+    "id": 10,
+    "slug": "an-ba-ul-sydney-seminar",
+    "tag": {
+      "ko": "디자인",
+      "en": "Design"
+    },
+    "title": "Private Commission",
+    "subtitle": "An Ba-ul Sydney Seminar Banner Design",
+    "date": "2025.05",
+    "client": "Private Commission",
+    "location": "Sydney",
+    "description": {
+      "ko": "한국 국가대표 유도 선수 안바울의 시드니 세미나를 위해 제작한 대형 롤업 배너 디자인 프로젝트입니다.\n\n세미나 일정과 선수 정보를 명확하게 전달하면서도, 선수의 전문성과 브랜드 이미지를 효과적으로 표현할 수 있도록 레이아웃과 타이포그래피를 설계했습니다. 행사 현장에서는 안내 배너뿐 아니라 포토존 및 이벤트 브랜딩 요소로도 활용되었습니다.",
+      "en": "A large-format roll-up banner designed for South Korean National Team judoka An Ba-ul's Sydney Seminar.\n\nThe design combines clear event information with strong visual branding, creating a professional presence while ensuring readability in a busy event environment. The banner also served as a key branding element and photo backdrop throughout the seminar."
+    },
+    "scope": {
+      "ko": [
+        "행사 배너 디자인",
+        "레이아웃 설계",
+        "선수 이미지 편집 및 합성",
+        "인쇄용 파일 제작",
+        "목업 제작"
+      ],
+      "en": [
+        "Event Banner Design",
+        "Layout Design",
+        "Image Editing & Composition",
+        "Print Production Artwork",
+        "Mockup Presentation"
+      ]
+    },
+    "thumb": "/projects/an-ba-ul-sydney-seminar/an-ba-ul-sydney-seminar-banner.png",
+    "gallery": [
+      "/projects/an-ba-ul-sydney-seminar/an-ba-ul-sydney-seminar-mockup-1.png",
+      "/projects/an-ba-ul-sydney-seminar/an-ba-ul-sydney-seminar-mockup-2.png",
+      "/projects/an-ba-ul-sydney-seminar/an-ba-ul-sydney-seminar-mockup-3.png",
+      "/projects/an-ba-ul-sydney-seminar/an-ba-ul-sydney-seminar-event.jpg"
+    ],
+    "createdAt": "2026-07-07T05:29:40.415Z",
+    "updatedAt": "2026-07-13T01:45:00.000Z"
+  },
+  {
     "id": 3,
     "slug": "peekabrew",
     "tag": {
@@ -840,8 +882,7 @@
       "/projects/dos-taekwondo/dos-taekwondo-tournament-15.jpg",
       "/projects/dos-taekwondo/dos-taekwondo-tournament-16.jpg",
       "/projects/dos-taekwondo/dos-taekwondo-tournament-17.jpg"
-    ],
-    "slug": "dos-taekwondo"
+    ]
   },
   {
     "id": 9,

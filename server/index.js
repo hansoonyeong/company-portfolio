@@ -13,9 +13,12 @@ const DATA_FILE = path.join(__dirname, 'data', 'quotes.json')
 const NEWS_FILE = path.join(__dirname, 'data', 'news.json')
 const PROJECTS_FILE = path.join(__dirname, 'data', 'projects.json')
 const HERO_FILE = path.join(__dirname, 'data', 'hero.json')
-const PROJECTS_PUBLIC = path.join(__dirname, '..', 'public', 'projects')
-const HERO_PUBLIC = path.join(__dirname, '..', 'public', 'hero')
 const PUBLIC_ROOT = path.join(__dirname, '..', 'public')
+const PROJECTS_PUBLIC = path.join(PUBLIC_ROOT, 'projects')
+const HERO_PUBLIC = path.join(PUBLIC_ROOT, 'hero')
+// Persist admin uploads on the Render disk (server/data), not ephemeral public/
+const PROJECTS_UPLOAD = path.join(__dirname, 'data', 'uploads', 'projects')
+const HERO_UPLOAD = path.join(__dirname, 'data', 'uploads', 'hero')
 const PORT = process.env.PORT || 3001
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'soono2026'
 const SITE_URL = (process.env.SITE_URL || 'https://soono.au').replace(/\/$/, '')
@@ -147,6 +150,13 @@ function resolvePublicPath(webPath) {
 }
 
 async function removePublicFile(webPath) {
+  if (!webPath?.startsWith('/')) return
+  if (webPath.startsWith('/hero/')) {
+    const relative = webPath.replace(/^\/hero\//, '')
+    await fs.unlink(path.join(HERO_UPLOAD, relative)).catch(() => {})
+    await fs.unlink(path.join(HERO_PUBLIC, relative)).catch(() => {})
+    return
+  }
   const filePath = resolvePublicPath(webPath)
   if (!filePath) return
   await fs.unlink(filePath).catch(() => {})
@@ -186,8 +196,8 @@ function normalizeHeroContent(body, existing) {
 const heroUpload = multer({
   storage: multer.diskStorage({
     destination: (_req, _file, cb) => {
-      fs.mkdir(HERO_PUBLIC, { recursive: true })
-        .then(() => cb(null, HERO_PUBLIC))
+      fs.mkdir(HERO_UPLOAD, { recursive: true })
+        .then(() => cb(null, HERO_UPLOAD))
         .catch(cb)
     },
     filename: (_req, file, cb) => {
@@ -231,15 +241,15 @@ function getProjectPath(project) {
 
 async function removeProjectFolder(slug) {
   if (!slug) return
-  const dir = path.join(PROJECTS_PUBLIC, slug)
-  await fs.rm(dir, { recursive: true, force: true })
+  await fs.rm(path.join(PROJECTS_UPLOAD, slug), { recursive: true, force: true })
+  // Keep git-tracked assets in public/projects; only wipe upload copies.
 }
 
 async function removeProjectImage(imagePath) {
   if (!imagePath?.startsWith('/projects/')) return
   const relative = imagePath.replace(/^\/projects\//, '')
-  const filePath = path.join(PROJECTS_PUBLIC, relative)
-  await fs.unlink(filePath).catch(() => {})
+  await fs.unlink(path.join(PROJECTS_UPLOAD, relative)).catch(() => {})
+  await fs.unlink(path.join(PROJECTS_PUBLIC, relative)).catch(() => {})
 }
 
 function parseRemoveGallery(value) {
@@ -339,7 +349,7 @@ function createProjectUpload(slug) {
   return multer({
     storage: multer.diskStorage({
       destination: (_req, _file, cb) => {
-        const dir = path.join(PROJECTS_PUBLIC, slug)
+        const dir = path.join(PROJECTS_UPLOAD, slug)
         fs.mkdir(dir, { recursive: true })
           .then(() => cb(null, dir))
           .catch(cb)
@@ -788,12 +798,20 @@ app.get('/works/:slug', async (req, res) => {
   return res.redirect(301, `/work/${slug}`)
 })
 
-app.use(express.static(path.join(__dirname, '..', 'public')))
+app.use('/projects', express.static(PROJECTS_UPLOAD))
+app.use('/projects', express.static(PROJECTS_PUBLIC))
+app.use('/hero', express.static(HERO_UPLOAD))
+app.use('/hero', express.static(HERO_PUBLIC))
+app.use(express.static(PUBLIC_ROOT))
 
 const distPath = path.join(__dirname, '..', 'dist')
 if (process.env.SERVE_STATIC === '1') {
   app.use(express.static(distPath))
-  app.get(/^(?!\/api).*/, (_req, res) => {
+  app.get(/^(?!\/api).*/, (req, res) => {
+    // Missing asset files should 404 — not fall through to the SPA shell.
+    if (path.extname(req.path)) {
+      return res.status(404).send('Not found')
+    }
     res.sendFile(path.join(distPath, 'index.html'))
   })
 }

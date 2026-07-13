@@ -187,6 +187,7 @@ const SLUG_ALIASES = {
   'choi-co': 'choi-co-group',
   'gmgp-kiosk': 'gmgp',
   'project-6': 'bornga-gift-voucher',
+  'project-1783402178385': 'an-ba-ul-sydney-seminar',
 }
 
 export function findProject(projects, identifier) {
