@@ -14,19 +14,17 @@
   },
   "desc": {
     "ko": [
-      "Design · Media · Marketing",
-      "시드니 기반 크리에이티브 스튜디오",
-      "고객과 함께 더 나은 브랜드 경험을"
+      "브랜드 아이덴티티, 웹사이트, 콘텐츠, 촬영을 돕는 시드니 크리에이티브 파트너.",
+      "전략이 먼저, 그다음 현실에서 작동하는 디자인."
     ],
     "en": [
-      "Design · Media · Marketing",
-      "Sydney-based creative studio",
-      "Building better brand experiences together"
+      "A Sydney creative partner for brand identity, websites, content, and photography.",
+      "Strategy first — then design that works in the real world."
     ]
   },
   "cta": {
     "ko": "회사 소개 보러가기",
-    "en": "Learn about us"
+    "en": "About the studio"
   },
   "link": "/about"
 }

@@ -8,7 +8,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const rootDir = path.join(__dirname, '..')
 const outDir = path.join(rootDir, 'public/projects/kimchi-house-au')
 const projectsPath = path.join(rootDir, 'server/data/projects.json')
-const orderUrl = 'https://kimchihouse-order.vercel.app/order.html'
+const orderUrl = 'https://kimchihouse-order.vercel.app/index.html'
 
 const DESKTOP = { width: 1280, height: 800 }
 const MOBILE = { width: 390, height: 835 }
@@ -37,16 +37,69 @@ function scrollProgress(t) {
 async function injectCaptureStyles(page) {
   await page.addStyleTag({
     content: `
-      .catalog-tabs,
-      .checkout-stack {
-        position: static !important;
+      .shop-server-hint,
+      .shop-preorder-closed,
+      .shop-fixed-cta,
+      .order-mobile-cart,
+      .cart-sheet-overlay,
+      .product-search-overlay,
+      .product-modal-overlay,
+      .checkout-overlay,
+      .shop-mobile-nav,
+      [class*="fixed-cta"],
+      [class*="mobile-nav"] {
+        display: none !important;
+      }
+      /* Avoid sticky header repeating across strip chunks */
+      .shop-site-header,
+      header,
+      [class*="site-header"],
+      [class*="ShopHeader"] {
+        position: relative !important;
         top: auto !important;
       }
-      .sumbar {
-        display: none !important;
+      /* Freeze carousel/hero slide mid-transition artifacts */
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+      [class*="hero"] [class*="track"],
+      [class*="banner"] [class*="track"],
+      [class*="slider"] [class*="track"],
+      [class*="carousel"] [class*="track"] {
+        transform: none !important;
       }
     `,
   })
+}
+
+async function stabilizeHeroSlider(page) {
+  await page.evaluate(() => {
+    // Prefer the first banner control if present
+    const firstDot =
+      document.querySelector('button[aria-label="배너 1"]') ||
+      document.querySelector('[data-slide="0"]') ||
+      document.querySelector('.hero-dot, .banner-dot, .swiper-pagination-bullet')
+    firstDot?.click?.()
+
+    // Pause video backgrounds if any
+    document.querySelectorAll('video').forEach((video) => {
+      try {
+        video.pause()
+        video.currentTime = 0
+      } catch {
+        /* ignore */
+      }
+    })
+
+    // Clear common autoplay timers attached to window
+    for (let i = 1; i < 50000; i += 1) {
+      window.clearInterval(i)
+      window.clearTimeout(i)
+    }
+  })
+  await page.waitForTimeout(700)
 }
 
 async function preparePage(page) {
@@ -62,33 +115,53 @@ async function preparePage(page) {
 
     window.scrollTo(0, 0)
   })
-  await page.waitForTimeout(600)
+  await page.waitForTimeout(400)
+  await stabilizeHeroSlider(page)
 }
 
-async function findBestsellerCropHeight(page) {
+async function findShowcaseCropHeight(page) {
   return page.evaluate((padding) => {
     const scrollHeight = Math.max(
       document.documentElement.scrollHeight,
       document.body.scrollHeight,
     )
-    const titles = [...document.querySelectorAll('h3.section-title')]
-    const bestIdx = titles.findIndex((title) => title.textContent.includes('베스트셀러'))
+    const titles = [...document.querySelectorAll('h2.shop-section-title, h3.section-title, h2')]
+    const popularIdx = titles.findIndex((title) =>
+      /지금 가장 많이 찾는 상품|베스트셀러|인기|카테고리 추천|추천 상품|BEST/.test(
+        title.textContent || '',
+      ),
+    )
 
-    if (bestIdx === -1) {
-      return Math.min(scrollHeight, Math.round(window.innerHeight * 2.8))
+    if (popularIdx === -1) {
+      // Renewed homepage: include schedule + benefits + category + first product grid.
+      const why = titles.find((title) =>
+        /김치하우스를 선택하는 이유|주문 방법|특별한 약속/.test(title.textContent || ''),
+      )
+      if (why) {
+        const top = why.getBoundingClientRect().top + window.scrollY
+        return Math.min(scrollHeight, Math.max(Math.round(window.innerHeight * 2.4), Math.ceil(top - 24)))
+      }
+      return Math.min(scrollHeight, Math.round(window.innerHeight * 3.2))
     }
 
-    const best = titles[bestIdx]
-    const next = titles[bestIdx + 1]
-    let bottom = best.getBoundingClientRect().bottom + window.scrollY
+    const popular = titles[popularIdx]
+    const next = titles[popularIdx + 1]
+    let bottom = popular.getBoundingClientRect().bottom + window.scrollY
 
-    let el = best.nextElementSibling
+    let el = popular.nextElementSibling
     while (el && el !== next) {
       const rect = el.getBoundingClientRect()
       if (rect.height > 0) {
         bottom = Math.max(bottom, rect.bottom + window.scrollY)
       }
       el = el.nextElementSibling
+    }
+
+    // Include the popular products section fully, then a little breathing room.
+    const section = popular.closest('section') || popular.parentElement
+    if (section) {
+      const rect = section.getBoundingClientRect()
+      bottom = Math.max(bottom, rect.bottom + window.scrollY)
     }
 
     const padded = Math.ceil(bottom + padding)
@@ -147,11 +220,17 @@ async function captureVerticalStrip(page, viewportWidth, viewportHeight, totalHe
 async function captureStrip(page, viewport, stripName, mobile = false) {
   await page.setViewportSize(viewport)
   await page.goto(orderUrl, { waitUntil: 'networkidle' })
-  await page.waitForTimeout(1200)
+  await page.waitForTimeout(800)
   await injectCaptureStyles(page)
+  await stabilizeHeroSlider(page)
   await preparePage(page)
+  await stabilizeHeroSlider(page)
 
-  const cropHeight = Math.round(await findBestsellerCropHeight(page))
+  // Ensure first slide is painted before stitching strip chunks
+  await page.evaluate(() => window.scrollTo(0, 0))
+  await page.waitForTimeout(500)
+
+  const cropHeight = Math.round(await findShowcaseCropHeight(page))
   const stripPath = path.join(outDir, stripName)
   const actualHeight = await captureVerticalStrip(
     page,

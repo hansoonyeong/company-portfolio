@@ -154,7 +154,8 @@
 }
 
 .project-detail__quote-btn {
-  margin-top: 12px;
+  display: block;
+  margin: 12px auto 0;
   padding: 18px 36px;
   background: var(--color-bg-dark);
   color: #fff;

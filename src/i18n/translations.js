@@ -18,11 +18,98 @@ export const translations = {
     hero: {
       headline: ['Design the scene,', 'complete the brand'],
       desc: [
-        'Design · Media · Marketing',
-        'Sydney-based creative studio',
-        'Building better brand experiences together',
+        'A Sydney creative partner for brand identity, websites, content, and photography.',
+        'Strategy first — then design that works in the real world.',
       ],
-      cta: 'Learn about us',
+      cta: 'About the studio',
+    },
+    home: {
+      studio: {
+        label: 'Studio',
+        title: 'A creative partner, not just a design service.',
+        paragraphs: [
+          'We design so brands become clearer,\nand the customer experience flows as one.',
+          'Design is the result.\nWe define direction first, then make the choices the brand needs — together.',
+          'Identity, website, content, and photography are not separate jobs.\nWe connect them as one brand experience.',
+        ],
+        cta: 'About the studio',
+      },
+      featured: {
+        title: 'Featured Projects',
+        more: 'View all works',
+        viewCase: 'View Case Study',
+      },
+      capabilities: {
+        label: 'Capabilities',
+        title: 'What we bring to a brand.',
+        more: 'Explore services',
+        items: [
+          {
+            title: 'Brand Identity',
+            text: 'Clear visual systems that make a brand feel consistent and recognisable.',
+          },
+          {
+            title: 'Website Design',
+            text: 'Digital experiences that explain the offer and make next steps effortless.',
+          },
+          {
+            title: 'Content Creation',
+            text: 'Feed, reels, and campaign assets shaped for the platforms where customers pay attention.',
+          },
+          {
+            title: 'Photography',
+            text: 'Product, event, and brand photography with a calm, commercial eye.',
+          },
+          {
+            title: 'Print Design',
+            text: 'Menus, flyers, cards, and collateral that carry the brand into physical spaces.',
+          },
+        ],
+      },
+      process: {
+        label: 'Process',
+        title: 'How we work together.',
+        steps: [
+          {
+            tag: '01',
+            title: 'Discover',
+            text: 'We listen to your brand, audience, and goals before setting a direction.',
+          },
+          {
+            tag: '02',
+            title: 'Strategy',
+            text: 'Positioning, messaging, and creative priorities are shaped first — so design stays intentional.',
+          },
+          {
+            tag: '03',
+            title: 'Design',
+            text: 'Identity, interfaces, content, and assets are crafted as one connected system.',
+          },
+          {
+            tag: '04',
+            title: 'Launch',
+            text: 'We help bring the work into market — refined, ready, and ready to grow.',
+          },
+        ],
+      },
+      selected: {
+        title: 'Selected Work',
+        more: 'All projects',
+      },
+      clients: {
+        label: 'Selected Clients',
+        title: 'Brands we have worked with.',
+      },
+      testimonials: {
+        label: 'Voices',
+        title: 'What partners notice.',
+      },
+      cta: {
+        title: "Let's build something\nclear and lasting.",
+        text: 'Tell us about your brand, timeline, and what needs to feel stronger.',
+        primary: 'Start a Project',
+        secondary: "Let's Talk",
+      },
     },
     news: {
       title: 'News',
@@ -41,6 +128,9 @@ export const translations = {
       title: 'Works',
       more: 'View all',
       overview: 'Overview',
+      challenge: 'Challenge',
+      solution: 'Solution',
+      outcome: 'Outcome',
       scopeLabel: 'Scope',
       addToQuote: 'Add to quote',
       addedToQuote: 'Added to quote',
@@ -48,6 +138,7 @@ export const translations = {
       loading: 'Loading...',
       galleryLabel: 'Project images',
       viewPhoto: 'View photo {n}',
+      viewCaseStudy: 'View Case Study',
       lightbox: {
         title: 'Image viewer',
         close: 'Close',
@@ -356,11 +447,98 @@ export const translations = {
     hero: {
       headline: ['장면을 설계하고', '브랜드를 완성합니다'],
       desc: [
-        'Design · Media · Marketing',
-        '시드니 기반 크리에이티브 스튜디오',
-        '고객과 함께 더 나은 브랜드 경험을',
+        '브랜드 아이덴티티, 웹사이트, 콘텐츠, 촬영을 돕는 시드니 크리에이티브 파트너.',
+        '전략이 먼저, 그다음 현실에서 작동하는 디자인.',
       ],
       cta: '회사 소개 보러가기',
+    },
+    home: {
+      studio: {
+        label: 'Studio',
+        title: '디자인 외주가 아니라, 크리에이티브 파트너.',
+        paragraphs: [
+          '브랜드가 더 분명해지고,\n고객 경험이 하나의 흐름으로 이어지도록 설계합니다.',
+          '디자인은 결과입니다.\n먼저 방향을 정의하고, 브랜드에 필요한 선택을 함께 만듭니다.',
+          '아이덴티티, 웹사이트, 콘텐츠, 사진을 각각의 작업으로 보지 않습니다.\n하나의 브랜드 경험으로 연결합니다.',
+        ],
+        cta: '스튜디오 소개',
+      },
+      featured: {
+        title: '주요 프로젝트',
+        more: '전체 보기',
+        viewCase: '케이스 스터디 보기',
+      },
+      capabilities: {
+        label: 'Capabilities',
+        title: '브랜드에 더하는 것.',
+        more: '서비스 살펴보기',
+        items: [
+          {
+            title: 'Brand Identity',
+            text: '브랜드가 어디서나 일관되고 분명하게 보이도록 아이덴티티 시스템을 설계합니다.',
+          },
+          {
+            title: 'Website Design',
+            text: '제안과 다음 행동을 명확히 하는 디지털 경험을 만듭니다.',
+          },
+          {
+            title: 'Content Creation',
+            text: '고객이 실제로 머무는 플랫폼에 맞춘 피드·릴스·캠페인 콘텐츠를 만듭니다.',
+          },
+          {
+            title: 'Photography',
+            text: '제품, 행사, 브랜드 촬영을 차분하고 상업적인 시선으로 담습니다.',
+          },
+          {
+            title: 'Print Design',
+            text: '메뉴, 전단지, 명함 등 오프라인에서도 브랜드가 이어지도록 설계합니다.',
+          },
+        ],
+      },
+      process: {
+        label: 'Process',
+        title: '함께 일하는 방식.',
+        steps: [
+          {
+            tag: '01',
+            title: 'Discover',
+            text: '브랜드, 고객, 목표를 먼저 듣고 방향을 잡습니다.',
+          },
+          {
+            tag: '02',
+            title: 'Strategy',
+            text: '포지셔닝과 메시지, 우선순위를 먼저 정리해 디자인이 흔들리지 않게 합니다.',
+          },
+          {
+            tag: '03',
+            title: 'Design',
+            text: '아이덴티티, 화면, 콘텐츠, 제작물을 하나의 시스템으로 설계합니다.',
+          },
+          {
+            tag: '04',
+            title: 'Launch',
+            text: '시장에 자연스럽게 들어가도록, 완성도 있게 출시까지 함께합니다.',
+          },
+        ],
+      },
+      selected: {
+        title: '선정 작업',
+        more: '전체 프로젝트',
+      },
+      clients: {
+        label: 'Selected Clients',
+        title: '함께한 브랜드.',
+      },
+      testimonials: {
+        label: 'Voices',
+        title: '파트너가 느낀 점.',
+      },
+      cta: {
+        title: '분명하고 오래가는\n브랜드를 함께 만듭시다.',
+        text: '브랜드, 일정, 지금 더 단단해져야 할 부분을 알려주세요.',
+        primary: '프로젝트 시작하기',
+        secondary: '이야기하기',
+      },
     },
     news: {
       title: '새소식',
@@ -379,6 +557,9 @@ export const translations = {
       title: '프로젝트',
       more: '더보기',
       overview: '프로젝트 소개',
+      challenge: '과제',
+      solution: '해결',
+      outcome: '결과',
       scopeLabel: '진행 범위',
       addToQuote: '견적서에 담기',
       addedToQuote: '견적서에 담김',
@@ -386,6 +567,7 @@ export const translations = {
       loading: '불러오는 중...',
       galleryLabel: '프로젝트 이미지',
       viewPhoto: '사진 {n} 보기',
+      viewCaseStudy: '케이스 스터디 보기',
       lightbox: {
         title: '이미지 보기',
         close: '닫기',

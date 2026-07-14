@@ -1,0 +1,12 @@
+.clients-band__label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+}
+
+.clients-band__header {
+  align-items: flex-end;
+}

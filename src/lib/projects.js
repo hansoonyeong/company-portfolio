@@ -16,18 +16,51 @@ function localizeCaseStudy(caseStudy, lang) {
     return Array.isArray(field) ? field : []
   }
 
+  const localizeStorySection = (section) =>
+    section
+      ? {
+          label: pick(section.label) || '',
+          title: pick(section.title),
+          paragraphs: pickList(section.paragraphs),
+          image: section.image || '',
+          alt: pick(section.alt) || pick(section.title),
+          caption: pick(section.caption),
+          layout: section.layout || 'text',
+        }
+      : null
+
+  const featureVisuals = (caseStudy.featureVisuals || []).map((visual) => ({
+    id: visual.id || visual.image || '',
+    placement: visual.placement || '',
+    layout: visual.layout || 'wide',
+    image: visual.image || '',
+    images: visual.images || [],
+    video: visual.video || '',
+    poster: visual.poster || '',
+    alt: pick(visual.alt),
+    caption: pick(visual.caption),
+  }))
+
   const media = [
     caseStudy.hero?.video || null,
     caseStudy.hero?.video ? null : caseStudy.hero?.image,
+    caseStudy.overview?.image,
+    ...featureVisuals.flatMap((visual) => [visual.image, visual.video, ...(visual.images || [])]),
     ...(caseStudy.logo?.cells?.flatMap((cell) => [cell.video, cell.image].filter(Boolean)) || []),
     caseStudy.businessCard?.mainVideo,
     caseStudy.businessCard?.mainImage,
     ...(caseStudy.businessCard?.miniImages || []),
+    ...(caseStudy.touchpoints?.cards || []).flatMap((card) => [card.image, ...(card.images || [])]),
+    caseStudy.challenge?.image,
+    caseStudy.solution?.image,
+    caseStudy.outcome?.image,
   ].filter(Boolean)
 
   return {
     accent: caseStudy.accent || '#111111',
     media: [...new Set(media)],
+    sectionOrder: Array.isArray(caseStudy.sectionOrder) ? caseStudy.sectionOrder : null,
+    featureVisuals,
     hero: {
       eyebrow: pick(caseStudy.hero?.eyebrow),
       headline: pick(caseStudy.hero?.headline),
@@ -35,6 +68,7 @@ function localizeCaseStudy(caseStudy, lang) {
       image: caseStudy.hero?.poster || caseStudy.hero?.image || '',
       video: caseStudy.hero?.video || '',
       poster: caseStudy.hero?.poster || caseStudy.hero?.image || '',
+      variant: caseStudy.hero?.variant || '',
       meta: (caseStudy.hero?.meta || []).map((item) => ({
         label: pick(item.label),
         value: pick(item.value),
@@ -46,7 +80,11 @@ function localizeCaseStudy(caseStudy, lang) {
       paragraphs: pickList(caseStudy.overview?.paragraphs),
       image: caseStudy.overview?.image || '',
       alt: pick(caseStudy.overview?.alt) || pick(caseStudy.overview?.title),
+      layout: caseStudy.overview?.layout || (caseStudy.overview?.image ? 'split' : 'text'),
     },
+    challenge: localizeStorySection(caseStudy.challenge),
+    solution: localizeStorySection(caseStudy.solution),
+    outcome: localizeStorySection(caseStudy.outcome),
     process: {
       label: pick(caseStudy.process?.label),
       title: pick(caseStudy.process?.title),
@@ -90,9 +128,14 @@ function localizeCaseStudy(caseStudy, lang) {
           label: pick(caseStudy.touchpoints.label),
           title: pick(caseStudy.touchpoints.title),
           text: pick(caseStudy.touchpoints.text),
+          layout: caseStudy.touchpoints.layout || 'cards',
           cards: (caseStudy.touchpoints.cards || []).map((card) => ({
             title: pick(card.title),
             text: pick(card.text),
+            image: card.image || '',
+            images: card.images || [],
+            imageAlt: pick(card.imageAlt) || pick(card.title),
+            preview: card.preview || '',
             linkUrl: card.linkUrl || '',
             linkLabel: pick(card.linkLabel),
             items: (card.items || []).map((item) => ({

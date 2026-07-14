@@ -27,6 +27,9 @@ export default function Footer() {
                 {company.email}
               </a>
               <p className="footer__location">{company.location}</p>
+              <Link to="/contact" className="footer__cta">
+                {t.footer.quoteRequest}
+              </Link>
             </div>
           </div>
 

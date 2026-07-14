@@ -8,6 +8,20 @@
 
 .case-study__inner {
   max-width: 1180px;
+  overflow-x: clip;
+}
+
+.case-study__prose {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: clamp(1rem, 1.15vw + 0.55rem, 1.0625rem);
+  color: var(--color-text-muted);
+  line-height: 1.75;
+}
+
+.case-study__prose p {
+  margin: 0;
 }
 
 .case-study__back {
@@ -77,12 +91,39 @@
   line-height: 1.45;
 }
 
+.case-study__hero-stage {
+  margin-top: clamp(40px, 6vw, 64px);
+  width: min(100vw - 16px, 1480px);
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+.case-study__hero--dominant .case-study__hero-stage {
+  width: min(100vw, 1600px);
+}
+
+.case-study__hero--dominant .case-study__hero-image,
+.case-study__hero--dominant .case-study__hero-video {
+  min-height: clamp(280px, 46vw, 640px);
+  border-radius: 0;
+}
+
+.case-study__hero--dominant .case-study__hero-stage {
+  width: min(100vw - 24px, 1400px);
+}
+
+.case-study__hero--dominant .case-study__hero-video,
+.case-study__hero--dominant .case-study__hero-image {
+  min-height: clamp(280px, 46vw, 640px);
+}
+
 .case-study__hero-image {
-  margin-top: 56px;
   aspect-ratio: 16 / 9;
-  border-radius: 8px;
+  min-height: clamp(240px, 38vw, 560px);
+  border-radius: 12px;
   overflow: hidden;
-  border: 1px solid var(--color-border);
+  border: none;
+  background: #f3f3f3;
 }
 
 .case-study__hero-image img {
@@ -92,12 +133,12 @@
 }
 
 .case-study__hero-video {
-  margin-top: 56px;
   aspect-ratio: 16 / 9;
-  border-radius: 8px;
+  min-height: clamp(240px, 38vw, 560px);
+  border-radius: 12px;
   overflow: hidden;
-  border: 1px solid var(--color-border);
-  background: #f7f7f7;
+  border: none;
+  background: #f3f3f3;
 }
 
 .case-study__hero-video video {
@@ -149,29 +190,543 @@
   align-items: start;
 }
 
-.case-study__prose {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  font-size: 1.0625rem;
+.case-study__two-col--compact {
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
+  align-items: start;
+  gap: clamp(28px, 4vw, 56px);
+  margin-bottom: 8px;
+}
+
+.case-study__two-col--reverse {
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+}
+
+.case-study__two-col--reverse > :first-child {
+  order: 2;
+}
+
+.case-study__two-col--compact .case-study__title,
+.case-study__block--story-compact .case-study__title {
+  max-width: 14ch;
+  margin-bottom: 0;
+}
+
+.case-study__two-col--compact .case-study__prose--story {
+  padding-top: 2px;
+  max-width: 34rem;
+}
+
+.case-study__story-stack {
+  max-width: 40rem;
+}
+
+.case-study__story-stack .case-study__title {
+  max-width: none;
+  margin-bottom: 16px;
+  white-space: nowrap;
+}
+
+.case-study__story-stack .case-study__prose--story {
+  max-width: none;
+}
+
+.case-study__story-stack .case-study__prose--story p {
+  white-space: nowrap;
+}
+
+.case-study__block--story-stack {
+  padding-top: 56px;
+  padding-bottom: 40px;
+}
+
+.case-study__block--story-stack + .case-study__block,
+.case-study__block--story-stack + div > .case-study__block:first-child {
+  border-top: none;
+}
+
+.case-study--kimchi-house-au .case-study__block--process {
+  border-top: none;
+  padding-top: 8px;
+}
+
+.case-study__intro--inline {
+  margin: 0;
+  max-width: 36rem;
+}
+
+.case-study__visual {
+  margin: 0;
+  padding: 24px 0 56px;
+}
+
+.case-study__visual-shot {
+  display: block;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f5f5f5;
+  line-height: 0;
+}
+
+.case-study__visual-shot img,
+.case-study__visual-shot video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.case-study__visual--wide .case-study__visual-shot,
+.case-study__visual--portrait .case-study__visual-shot--portrait {
+  width: min(100%, 920px);
+  margin-inline: auto;
+}
+
+.case-study__visual--portrait .case-study__visual-shot--portrait {
+  width: min(100%, 680px);
+}
+
+.case-study__visual--full .case-study__visual-shot {
+  width: min(100vw - 32px, 1320px);
+  margin-left: 50%;
+  transform: translateX(-50%);
+  border-radius: 12px;
+}
+
+.case-study__visual--duo-scroll {
+  padding: clamp(12px, 2vw, 24px) 0 clamp(48px, 6vw, 72px);
+}
+
+.case-study__visual--duo-scroll .case-study__visual-duo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 0.55fr);
+  gap: clamp(20px, 3vw, 36px);
+  align-items: end;
+  background: linear-gradient(180deg, #f4f3f0 0%, #ebe9e4 100%);
+  border-radius: 24px;
+  padding: clamp(28px, 4.5vw, 52px);
+}
+
+.case-study__device--desktop {
+  width: 100%;
+  background: #171717;
+  border-radius: 16px;
+  padding: 11px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 28px 56px -30px rgba(0, 0, 0, 0.45);
+}
+
+.case-study__device--desktop .case-study__visual-scroll {
+  border: none;
+  border-radius: 8px;
+  background: #fff;
+  max-height: min(64vh, 620px);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.case-study__device--phone {
+  width: min(100%, 248px);
+  justify-self: center;
+  background: #111;
+  border-radius: 30px;
+  padding: 11px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.1) inset,
+    0 28px 56px -28px rgba(0, 0, 0, 0.5);
+}
+
+.case-study__device--phone .case-study__visual-scroll,
+.case-study__device--phone .case-study__visual-scroll--phone {
+  width: 100%;
+  margin: 0;
+  border: none;
+  border-radius: 22px;
+  background: #fff;
+  max-height: min(60vh, 560px);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.case-study__visual--duo-scroll .case-study__visual-shot,
+.case-study__visual--duo-scroll .case-study__visual-shot--secondary {
+  max-width: none;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+.case-study__visual--duo-scroll .case-study__visual-caption {
+  margin-top: 18px;
   color: var(--color-text-muted);
-  line-height: 1.85;
-  max-width: 100%;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.case-study__visual--duo-scroll .case-study__visual-shot--secondary {
+  max-width: none;
+  margin-inline: 0;
+}
+
+.case-study__visual-shot.case-study__img-btn,
+.case-study__visual-shot.case-study__img {
+  height: auto;
+}
+
+.case-study__visual-shot img,
+.case-study__visual-shot video,
+.case-study__visual-shot.case-study__img-btn img,
+.case-study__visual-shot.case-study__img-btn video,
+.case-study__service-media img,
+.case-study__service-media.case-study__img-btn img,
+.case-study__print-shot img,
+.case-study__print-shot.case-study__img-btn img,
+.case-study__story-follow-image img,
+.case-study__story-follow-image.case-study__img-btn img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.case-study__visual-duo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.7fr);
+  gap: clamp(12px, 2vw, 20px);
+  align-items: start;
+}
+
+.case-study__visual-shot--secondary {
+  max-width: 280px;
+  margin-inline: auto;
+}
+
+.case-study__visual--duo-scroll .case-study__visual-shot--secondary {
+  max-width: 300px;
+  border-radius: 20px;
+}
+
+.case-study__block--touchpoints-links .case-study__service-row {
+  gap: clamp(24px, 4vw, 48px);
+  margin-top: 28px;
+  border-top: 1px solid var(--color-border);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.case-study__block--touchpoints-links .case-study__service-card {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid var(--color-border);
+  padding: 24px 0;
+  display: grid;
+  gap: 8px;
+}
+
+@media (max-width: 760px) {
+  .case-study__block--touchpoints-links .case-study__service-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+.case-study__block--touchpoints-links .case-study__service-card h3 {
+  margin-bottom: 4px;
+}
+
+.case-study__block--touchpoints-links .case-study__service-card p {
+  margin-bottom: 8px;
+}
+
+.case-study__block--touchpoints-links .case-study__service-card ul {
+  display: none;
+}
+
+.case-study__block--overview.case-study__overview-stack {
+  padding-top: 40px;
+  padding-bottom: 8px;
+}
+
+.case-study__block--overview {
+  padding-top: 56px;
+  padding-bottom: 56px;
+}
+
+.case-study__overview-copy .case-study__title {
+  margin-bottom: 16px;
+}
+
+.case-study__overview-copy .case-study__prose {
+  margin-top: 0;
+}
+
+.case-study__prose--story {
+  gap: 12px;
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  line-height: 1.7;
+}
+
+.case-study--kimchi-house-au .logo-switcher__preview {
+  width: min(100%, 720px);
+}
+
+.case-study--kimchi-house-au .logo-switcher__image {
+  width: 100%;
+}
+
+.case-study__visual-scroll,
+.case-study__service-media--scroll {
+  max-height: min(78vh, 860px);
+  overflow: auto;
+  border-radius: 12px;
+  border: none;
+  background: #f5f5f5;
+  -webkit-overflow-scrolling: touch;
+}
+
+.case-study__visual-scroll--phone {
+  width: min(100%, 320px);
+  margin-inline: auto;
+  max-height: min(72vh, 720px);
+}
+
+.case-study__visual-shot--scroll img,
+.case-study__service-media--scroll img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.case-study__visual-caption {
+  margin-top: 14px;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.case-study__overview-stack {
+  padding-top: 40px;
+  padding-bottom: 0;
+}
+
+.case-study__story-follow {
+  margin: 36px 0 0;
+}
+
+.case-study__story-follow-image {
+  border-radius: 12px;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.case-study__story-follow-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.case-study__story-aside {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+}
+
+.case-study__story-aside-image {
+  border-radius: 12px;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.case-study__story-aside-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.case-study__block--story {
+  padding-top: 56px;
+  padding-bottom: 56px;
+}
+
+.case-study__block--story-compact {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.case-study__service-row--visual {
+  gap: clamp(28px, 4vw, 48px);
+  margin-top: 40px;
+}
+
+.case-study__service-card--media {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  display: grid;
+  gap: 20px;
+}
+
+.case-study__service-card--text {
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--color-border);
+  border-radius: 0;
+  padding: 28px 0 8px;
+}
+
+.case-study__service-media {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f7f7f7;
+  line-height: 0;
+}
+
+.case-study__service-shot,
+.case-study__service-shot.case-study__img-btn,
+.case-study__service-shot.case-study__img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.case-study__service-shot img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.case-study__service-body h3 {
+  margin-bottom: 8px;
+}
+
+.case-study__service-body p {
+  margin-bottom: 12px;
+}
+
+.case-study__service-card--media .case-study__service-body ul {
+  margin-top: 4px;
+}
+
+.case-study__service-card--media .case-study__service-body li {
+  border-top: none;
+  padding: 4px 0;
+}
+
+.case-study__print-layout--finale {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  justify-items: stretch;
+  align-items: center;
+  text-align: left;
+  gap: clamp(40px, 6vw, 72px);
+}
+
+.case-study__print-layout--finale .case-study__print-copy {
+  max-width: 28rem;
+  justify-self: start;
+}
+
+.case-study__print-layout--finale .case-study__print-copy .case-study__title {
+  max-width: 12ch;
+}
+
+.case-study__print-layout--finale .case-study__intro {
+  margin-inline: 0;
+  max-width: 28rem;
+}
+
+.case-study__print-layout--finale .case-study__print-media {
+  justify-self: end;
+  width: 100%;
+  max-width: 440px;
+}
+
+.case-study__print-shot--finale {
+  max-width: none;
+  margin-inline: 0;
+  width: 100%;
+  box-shadow: 0 28px 56px -24px rgba(0, 0, 0, 0.28);
+}
+
+.case-study__block--finale {
+  padding-top: 56px;
+  padding-bottom: 56px;
+  border-top: none;
+}
+
+.case-study__block--story .case-study__title {
+  max-width: 12ch;
 }
 
 .case-study__overview-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
   gap: clamp(32px, 5vw, 64px);
-  align-items: start;
+  align-items: center;
 }
 
-.case-study__overview-copy .case-study__title {
-  margin-bottom: 24px;
+.case-study--kimchi-house-au .case-study__overview-layout {
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
 }
 
-.case-study__overview-copy .case-study__prose {
-  margin-top: 0;
+.case-study--kimchi-house-au .case-study__block--overview {
+  padding-top: clamp(56px, 7vw, 80px);
+  padding-bottom: clamp(56px, 7vw, 80px);
+}
+
+.case-study--kimchi-house-au .case-study__overview-copy {
+  max-width: 30rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.case-study--kimchi-house-au .case-study__overview-copy .case-study__label {
+  margin-bottom: 18px;
+}
+
+.case-study--kimchi-house-au .case-study__overview-copy .case-study__title {
+  max-width: none;
+  white-space: nowrap;
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+}
+
+.case-study--kimchi-house-au .case-study__overview-copy .case-study__prose {
+  max-width: 28rem;
+}
+
+.case-study--kimchi-house-au .case-study__overview-copy .case-study__prose p {
+  color: var(--color-text);
+  font-size: clamp(1.0625rem, 1.35vw, 1.1875rem);
+  line-height: 1.75;
+  opacity: 0.78;
+}
+
+.case-study--kimchi-house-au .case-study__overview-image {
+  border: none;
+  border-radius: 16px;
+  max-height: min(56vh, 540px);
+  box-shadow: 0 28px 56px -32px rgba(18, 53, 36, 0.35);
+  background: #f4f4f2;
+}
+
+.case-study--kimchi-house-au .case-study__overview-image img,
+.case-study--kimchi-house-au .case-study__overview-image.case-study__img-btn img {
+  width: 100%;
+  height: 100%;
+  max-height: min(56vh, 540px);
+  object-fit: cover;
+  object-position: center 20%;
 }
 
 .case-study__overview-image {
@@ -489,6 +1044,8 @@
 
 .case-study__actions {
   padding-top: 8px;
+  display: flex;
+  justify-content: center;
 }
 
 .case-study__quote-btn {
@@ -645,13 +1202,16 @@
   }
 
   .case-study__hero-image {
-    margin-top: 40px;
-    border-radius: 6px;
+    border-radius: 8px;
   }
 
   .case-study__hero-video {
-    margin-top: 40px;
-    border-radius: 6px;
+    border-radius: 8px;
+  }
+
+  .case-study__hero-stage {
+    width: min(100vw - 24px, 1320px);
+    margin-top: 32px;
   }
 
   .case-study__block {
@@ -676,6 +1236,65 @@
     grid-template-columns: 1fr;
   }
 
+  .case-study__overview-copy .case-study__title,
+  .case-study--kimchi-house-au .case-study__block--overview .case-study__title,
+  .case-study--kimchi-house-au .case-study__overview-copy .case-study__title {
+    white-space: normal;
+  }
+
+  .case-study--kimchi-house-au .case-study__overview-layout {
+    gap: 28px;
+  }
+
+  .case-study--kimchi-house-au .case-study__overview-image,
+  .case-study--kimchi-house-au .case-study__overview-image img,
+  .case-study--kimchi-house-au .case-study__overview-image.case-study__img-btn img {
+    max-height: min(52vh, 420px);
+  }
+
+  .case-study--kimchi-house-au .case-study__overview-copy .case-study__prose p {
+    opacity: 0.84;
+  }
+
+  .case-study__story-stack .case-study__title,
+  .case-study__story-stack .case-study__prose--story p {
+    white-space: normal;
+  }
+
+  .case-study__two-col--reverse > :first-child {
+    order: 0;
+  }
+
+  .case-study__story-aside {
+    grid-template-columns: 1fr;
+  }
+
+  .case-study__visual-duo {
+    grid-template-columns: 1fr;
+  }
+
+  .case-study__visual--duo-scroll .case-study__visual-duo {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    padding: clamp(24px, 5vw, 36px);
+  }
+
+  .case-study__device--phone {
+    width: min(100%, 220px);
+  }
+
+  .case-study__visual-shot--secondary {
+    max-width: 220px;
+  }
+
+  .case-study__visual--full .case-study__visual-shot {
+    width: min(100vw - 24px, 1320px);
+  }
+
+  .case-study__service-row--visual {
+    grid-template-columns: 1fr;
+  }
+
   .case-study__logo-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -690,6 +1309,15 @@
 
   .case-study__print-layout {
     grid-template-columns: 1fr;
+  }
+
+  .case-study__print-layout--finale .case-study__print-copy {
+    max-width: none;
+  }
+
+  .case-study__print-layout--finale .case-study__print-media {
+    justify-self: center;
+    max-width: 320px;
   }
 
   .case-study__print-media {
@@ -717,7 +1345,7 @@
   object-position: center 9%;
 }
 
-/* Kimchi House — brand green cells, compact 3-up on mobile */
+/* Kimchi House — brand green cells, compact 3-up on mobile, larger logo stage */
 .case-study--kimchi-house-au {
   --kimchi-green: #123524;
 }
@@ -735,6 +1363,39 @@
 .case-study--kimchi-house-au .case-study__logo-cell .case-study__img img,
 .case-study--kimchi-house-au .case-study__logo-cell .case-study__img-btn img {
   object-fit: cover;
+}
+
+.case-study--kimchi-house-au .logo-switcher__preview {
+  width: min(100%, 720px);
+  border: none;
+  background: var(--kimchi-green);
+}
+
+.case-study--kimchi-house-au .logo-switcher__image {
+  width: 100%;
+  height: auto;
+}
+
+.case-study--kimchi-house-au .case-study__service-row--visual {
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.9fr);
+  align-items: start;
+}
+
+.case-study--kimchi-house-au .case-study__service-card--text {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.case-study--kimchi-house-au .case-study__block--story + .case-study__visual {
+  padding-top: 8px;
+}
+
+@media (max-width: 900px) {
+  .case-study--kimchi-house-au .case-study__service-row--visual {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {

@@ -139,20 +139,30 @@ function ProjectsCarousel({ items }) {
   )
 }
 
-export default function Projects({ limit = HOME_PREVIEW_LIMIT, showMore = false }) {
+export default function Projects({
+  limit = HOME_PREVIEW_LIMIT,
+  carousel = false,
+  showMore = false,
+  title,
+  moreLabel,
+  offset = 0,
+  id = 'works',
+}) {
   const { t } = useTranslation()
   const { projects } = useProjects()
-  const items = showMore ? projects : projects.slice(0, limit)
+  const items = projects.slice(offset, offset + (limit || projects.length))
+
+  if (items.length === 0) return null
 
   return (
-    <section className="projects section" id="works">
+    <section className="projects section section--calm" id={id}>
       <div className="container">
         <div className="section-header">
-          <h2>{t.projects.title}</h2>
-          {showMore && <Link to="/works">{t.projects.more}</Link>}
+          <h2>{title || t.projects.title}</h2>
+          {(showMore || moreLabel) && <Link to="/works">{moreLabel || t.projects.more}</Link>}
         </div>
 
-        {showMore ? (
+        {carousel ? (
           <ProjectsCarousel items={items} />
         ) : (
           <ul className="projects__grid">

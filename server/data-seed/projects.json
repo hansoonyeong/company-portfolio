@@ -390,6 +390,60 @@
           "ko": "— Peek-a-Brew Beverage & Co.",
           "en": "— Peek-a-Brew Beverage & Co."
         }
+      },
+      "challenge": {
+        "label": {
+          "ko": "Challenge",
+          "en": "Challenge"
+        },
+        "title": {
+          "ko": "이름을 모르는 브랜드를 어떻게 알릴까.",
+          "en": "How do you introduce a brand no one knows yet?"
+        },
+        "paragraphs": {
+          "ko": [
+            "코스트코에 막 입점한 새 음료 브랜드였습니다. 제품도, 브랜드도, 어디서 살 수 있는지도 동시에 알려야 했습니다."
+          ],
+          "en": [
+            "A new Costco beverage brand needed people to understand the product, the tone, and where to find it — all at once."
+          ]
+        }
+      },
+      "solution": {
+        "label": {
+          "ko": "Solution",
+          "en": "Solution"
+        },
+        "title": {
+          "ko": "SNS와 광고로 브랜드를 소개하다.",
+          "en": "Introduce the brand through SNS and ads."
+        },
+        "paragraphs": {
+          "ko": [
+            "UGC 톤의 피드·릴스와 Meta 광고로 제품 매력과 유통 정보를 자연스럽게 연결했습니다."
+          ],
+          "en": [
+            "UGC-style feed, reels, and Meta ads connected product appeal with retail availability."
+          ]
+        }
+      },
+      "outcome": {
+        "label": {
+          "ko": "Outcome",
+          "en": "Outcome"
+        },
+        "title": {
+          "ko": "브랜드와 제품을 더 쉽게 발견하게.",
+          "en": "Make the brand easier to discover."
+        },
+        "paragraphs": {
+          "ko": [
+            "입점 소식과 제품 이미지가 하나의 톤으로 전달되며, 새 고객이 브랜드를 빠르게 이해하도록 도왔습니다."
+          ],
+          "en": [
+            "Launch messaging and product imagery landed in one clear tone — helping new audiences understand the brand quickly."
+          ]
+        }
       }
     },
     "updatedAt": "2026-07-01T01:09:49.229Z"
@@ -523,8 +577,8 @@
     "client": "Kimchi House AU",
     "location": "Sydney",
     "description": {
-      "ko": "브랜드 리뉴얼부터 로고, 주문 웹사이트, 카카오톡 채널, 인쇄물까지 하나의 브랜드 경험으로 연결했습니다.",
-      "en": "A full rebrand covering the visual identity, ordering website, KakaoTalk channel, and print materials."
+      "ko": "브랜드부터 주문 웹·카카오톡·인쇄물까지, 하나의 경험으로 이었습니다.",
+      "en": "From brand identity to ordering web, KakaoTalk, and print — one connected experience."
     },
     "scope": {
       "ko": [
@@ -543,9 +597,10 @@
     "thumb": "/projects/kimchi-house-au/kimchi-house-au-branding.jpg",
     "gallery": [
       "/projects/kimchi-house-au/hero-poster.jpg",
+      "/projects/kimchi-house-au/kimchi-house-au-branding.jpg",
       "/projects/kimchi-house-au/logo-dark.jpg",
-      "/projects/kimchi-house-au/logo-white.jpg",
-      "/projects/kimchi-house-au/logo-eng.jpg",
+      "/projects/kimchi-house-au/desktop-strip.jpg",
+      "/projects/kimchi-house-au/mobile-strip.jpg",
       "/projects/kimchi-house-au/flyer.png"
     ],
     "caseStudy": {
@@ -556,8 +611,8 @@
           "en": "From Lee Kim Kimchi to Kimchi House AU,\na complete brand and ordering experience."
         },
         "lead": {
-          "ko": "브랜드 리뉴얼부터 로고, 주문 웹사이트, 카카오톡 채널, 인쇄물까지 하나의 브랜드 경험으로 연결했습니다.",
-          "en": "A full rebrand covering the visual identity, ordering website, KakaoTalk channel, and print materials."
+          "ko": "브랜드부터 로고, 주문 웹, 카카오톡 채널, 인쇄물까지 — 하나의 경험으로 이었습니다.",
+          "en": "Identity, ordering web, KakaoTalk, and print — rebuilt as one experience."
         },
         "video": "/projects/kimchi-house-au/hero.webm",
         "poster": "/projects/kimchi-house-au/hero-poster.jpg",
@@ -603,7 +658,8 @@
               "en": "2026"
             }
           }
-        ]
+        ],
+        "variant": "dominant"
       },
       "overview": {
         "label": {
@@ -612,17 +668,21 @@
         },
         "title": {
           "ko": "하나의 브랜드, 하나의 경험.",
-          "en": "One Brand. One Experience."
+          "en": "One brand. One experience."
         },
         "paragraphs": {
           "ko": [
-            "기존 이킴김치를 Kimchi House AU로 리브랜딩하며 브랜드 아이덴티티와 주문 경험을 함께 재구성했습니다.",
-            "고객이 브랜드를 처음 만나는 순간부터 주문을 완료하는 과정까지 일관된 경험을 만드는 데 집중했습니다."
+            "이킴김치를 Kimchi House AU로 바꾸며, 아이덴티티와 주문 경험을 하나의 흐름으로 다시 짰습니다."
           ],
           "en": [
-            "Kimchi House AU was rebranded from its previous identity, creating a consistent experience across branding, digital ordering, and print.",
-            "Every customer touchpoint was designed to feel connected and easy to use."
+            "Lee Kim Kimchi became Kimchi House AU — identity and ordering rebuilt as one continuous flow."
           ]
+        },
+        "layout": "split",
+        "image": "/projects/kimchi-house-au/kimchi-house-au-branding.jpg",
+        "alt": {
+          "ko": "Kimchi House AU 브랜드 비주얼",
+          "en": "Kimchi House AU brand visual"
         }
       },
       "process": {
@@ -679,12 +739,12 @@
           "en": "Logo"
         },
         "title": {
-          "ko": "따뜻함을 담은 브랜드 아이덴티티",
-          "en": "A flexible identity system"
+          "ko": "따뜻함을 담은 아이덴티티",
+          "en": "A warm, flexible identity"
         },
         "text": {
-          "ko": "다양한 환경에서도 일관되게 사용할 수 있도록 로고 시스템을 설계했습니다.",
-          "en": "Designed for consistent use across digital platforms, print, and marketing materials."
+          "ko": "온·오프라인에서 같은 인상을 유지하도록 로고 시스템을 정리했습니다.",
+          "en": "A flexible logo system built for digital and print consistency."
         },
         "cells": [
           {
@@ -734,29 +794,30 @@
           "en": "Print"
         },
         "title": {
-          "ko": "브랜드 경험의 마지막 접점",
-          "en": "Bringing the brand offline"
+          "ko": "오프라인으로 이어지는 브랜드.",
+          "en": "The brand, offline."
         },
         "text": {
-          "ko": "브랜드 컬러와 톤을 반영한 전단지를 제작해 온·오프라인 경험을 연결했습니다.",
-          "en": "Applied the same visual language to printed materials for a consistent brand experience."
+          "ko": "같은 컬러와 톤으로 전단지를 구성해, 온라인 경험을 매장 밖까지 이었습니다.",
+          "en": "Print carries the same colour and tone — extending the digital experience offline."
         },
         "mainImage": "/projects/kimchi-house-au/flyer.png",
-        "layout": "split"
+        "layout": "finale"
       },
       "touchpoints": {
         "label": {
-          "ko": "Digital Experience",
-          "en": "Digital Experience"
+          "ko": "Outcome",
+          "en": "Outcome"
         },
         "title": {
-          "ko": "주문까지 이어지는 고객 경험",
-          "en": "Designed for simple ordering"
+          "ko": "첫인상부터 주문까지.",
+          "en": "From first glance to order."
         },
         "text": {
-          "ko": "카카오톡 채널과 모바일 주문 웹사이트를 통해 쉽고 직관적인 주문 경험을 제공했습니다.",
-          "en": "Created a seamless ordering journey through KakaoTalk and a mobile-first website."
+          "ko": "브랜드를 만난 순간부터 예약 주문까지, 흐름이 끊기지 않도록 만들었습니다.",
+          "en": "From first brand encounter to pre-order, the experience now stays connected."
         },
+        "layout": "links",
         "cards": [
           {
             "title": {
@@ -764,15 +825,14 @@
               "en": "KakaoTalk Channel"
             },
             "text": {
-              "ko": "고객 문의와 주문 안내를 위한 공식 채널로, 브랜드 아이덴티티에 맞춰 프로필과 콘텐츠를 구성했습니다.",
-              "en": "Official channel for customer inquiries and order guidance — profile and content aligned with brand identity."
+              "ko": "문의와 주문 안내를 위한 공식 채널. 프로필과 톤을 브랜드에 맞췄습니다.",
+              "en": "The official channel for inquiries and order guidance — profile and tone aligned to the brand."
             },
             "linkUrl": "http://pf.kakao.com/_alkDxb",
             "linkLabel": {
               "ko": "채널 바로가기 ↗",
               "en": "Open channel ↗"
-            },
-            "items": []
+            }
           },
           {
             "title": {
@@ -780,44 +840,14 @@
               "en": "Ordering Website"
             },
             "text": {
-              "ko": "모바일 환경에 최적화된 사전예약 주문 시스템입니다. 간결한 단계 구성으로 주문 과정을 쉽게 만들었습니다.",
-              "en": "A mobile-optimised pre-order system with a simple step flow that makes ordering easy."
+              "ko": "모바일 중심의 사전예약 주문. 단계를 줄여 결제를 쉽게 만들었습니다.",
+              "en": "A mobile-first pre-order flow — fewer steps, clearer checkout."
             },
-            "linkUrl": "https://kimchihouse-order.vercel.app/order.html",
+            "linkUrl": "https://kimchihouse-order.vercel.app/index.html",
             "linkLabel": {
               "ko": "웹앱 바로가기 ↗",
               "en": "Open web app ↗"
-            },
-            "items": [
-              {
-                "label": "·",
-                "text": {
-                  "ko": "상품 선택",
-                  "en": "Product selection"
-                }
-              },
-              {
-                "label": "·",
-                "text": {
-                  "ko": "배송 정보 입력",
-                  "en": "Delivery details"
-                }
-              },
-              {
-                "label": "·",
-                "text": {
-                  "ko": "결제 방법 선택",
-                  "en": "Payment method"
-                }
-              },
-              {
-                "label": "·",
-                "text": {
-                  "ko": "주문자 정보 작성",
-                  "en": "Customer information"
-                }
-              }
-            ]
+            }
           }
         ]
       },
@@ -830,9 +860,95 @@
           "ko": "— Kimchi House AU 운영팀",
           "en": "— Kimchi House AU team"
         }
-      }
+      },
+      "challenge": {
+        "label": {
+          "ko": "Challenge",
+          "en": "Challenge"
+        },
+        "title": {
+          "ko": "브랜드와 주문이 따로 있었다.",
+          "en": "Brand and ordering felt separate."
+        },
+        "paragraphs": {
+          "ko": [
+            "아이덴티티와 주문 방식이 이어지지 않아, 처음 온 고객이 브랜드를 한눈에 읽기 어려웠습니다."
+          ],
+          "en": [
+            "Identity and ordering did not connect, so first-time customers struggled to read the brand at a glance."
+          ]
+        },
+        "layout": "stack"
+      },
+      "solution": {
+        "label": {
+          "ko": "Solution",
+          "en": "Solution"
+        },
+        "title": {
+          "ko": "브랜드부터 주문까지 하나로.",
+          "en": "Connect brand to order."
+        },
+        "paragraphs": {
+          "ko": [
+            "로고, 주문 웹, 카카오톡, 인쇄물을 같은 톤과 시스템으로 맞춰 다시 연결했습니다."
+          ],
+          "en": [
+            "Logo, ordering web, KakaoTalk, and print were aligned into one visual and service system."
+          ]
+        },
+        "layout": "stack"
+      },
+      "outcome": {
+        "label": {
+          "ko": "Outcome",
+          "en": "Outcome"
+        },
+        "title": {
+          "ko": "첫인상부터 주문까지.",
+          "en": "From first glance to order."
+        },
+        "paragraphs": {
+          "ko": [
+            "브랜드를 만난 순간부터 예약 주문까지, 흐름이 끊기지 않도록 만들었습니다."
+          ],
+          "en": [
+            "From first brand encounter to pre-order, the experience now stays connected."
+          ]
+        },
+        "layout": "stack"
+      },
+      "featureVisuals": [
+        {
+          "id": "ordering",
+          "layout": "duo-scroll",
+          "images": [
+            "/projects/kimchi-house-au/desktop-strip.jpg",
+            "/projects/kimchi-house-au/mobile-strip.jpg"
+          ],
+          "alt": {
+            "ko": "Kimchi House AU 주문 웹사이트",
+            "en": "Kimchi House AU ordering website"
+          },
+          "caption": {
+            "ko": "Ordering website",
+            "en": "Ordering website"
+          }
+        }
+      ],
+      "sectionOrder": [
+        "overview",
+        "logo",
+        "challenge",
+        "process",
+        "solution",
+        "feature:ordering",
+        "touchpoints",
+        "businessCard",
+        "quote"
+      ]
     },
-    "updatedAt": "2026-06-30T22:52:47.196Z"
+    "updatedAt": "2026-07-14T00:32:12.656Z"
   },
   {
     "id": 8,
@@ -1134,6 +1250,60 @@
         "cite": {
           "ko": "— CHOI&CO.GROUP",
           "en": "— CHOI&CO.GROUP"
+        }
+      },
+      "challenge": {
+        "label": {
+          "ko": "Challenge",
+          "en": "Challenge"
+        },
+        "title": {
+          "ko": "신뢰감 있는 B2B 브랜드가 필요했다.",
+          "en": "A trustworthy B2B brand was needed."
+        },
+        "paragraphs": {
+          "ko": [
+            "프리미엄 정육 도매 브랜드로서, 파트너십과 전문성을 한눈에 보여주는 아이덴티티가 필요했습니다."
+          ],
+          "en": [
+            "As a premium meat wholesale brand, the identity needed to signal partnership and professionalism at a glance."
+          ]
+        }
+      },
+      "solution": {
+        "label": {
+          "ko": "Solution",
+          "en": "Solution"
+        },
+        "title": {
+          "ko": "두 개의 C로 파트너십을 형태화하다.",
+          "en": "Shape partnership into two interlocking C's."
+        },
+        "paragraphs": {
+          "ko": [
+            "버건디와 차콜의 절제된 컬러로, 연결되는 심볼과 명함 시스템을 설계했습니다."
+          ],
+          "en": [
+            "A restrained burgundy-and-charcoal system locked the symbol and business card materials into one mark."
+          ]
+        }
+      },
+      "outcome": {
+        "label": {
+          "ko": "Outcome",
+          "en": "Outcome"
+        },
+        "title": {
+          "ko": "신뢰와 파트너십이 남는 인상.",
+          "en": "An impression of trust and partnership."
+        },
+        "paragraphs": {
+          "ko": [
+            "심볼, 워드마크, 명함이 하나의 브랜드 목소리로 정리되어 비즈니스 접점에서 안정감을 줍니다."
+          ],
+          "en": [
+            "Symbol, wordmark, and cards now speak with one brand voice — giving business touchpoints a steadier presence."
+          ]
         }
       }
     },

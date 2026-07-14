@@ -1,5 +1,10 @@
 const REVEAL_SELECTORS = [
   'main section',
+  'main .studio-intro__grid',
+  'main .capabilities__item',
+  'main .process__step',
+  'main .testimonials__item',
+  'main .home-cta__panel',
   'main .works-page__head',
   'main .works-page__filters',
   'main .works-page__grid > li',

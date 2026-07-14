@@ -18,6 +18,7 @@
   --font-main: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --max-width: 1760px;
   --header-height: 72px;
+  --section-space: clamp(80px, 10vw, 128px);
 }
 
 html {
@@ -63,6 +64,10 @@ img {
 
 .section {
   padding: clamp(64px, 8vw, 96px) 0;
+}
+
+.section--calm {
+  padding: var(--section-space) 0;
 }
 
 .page-heading {
