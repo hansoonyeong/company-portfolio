@@ -886,15 +886,15 @@
           "en": "Solution"
         },
         "title": {
-          "ko": "브랜드부터 주문까지 하나로.",
-          "en": "Connect brand to order."
+          "ko": "카톡에서 주문까지, 끊기지 않게.",
+          "en": "From KakaoTalk to checkout, without a break."
         },
         "paragraphs": {
           "ko": [
-            "로고, 주문 웹, 카카오톡, 인쇄물을 같은 톤과 시스템으로 맞춰 다시 연결했습니다."
+            "채널 안내부터 주문 완료까지 이어지도록, 카카오톡과 주문 웹을 하나의 고객 여정으로 설계했습니다."
           ],
           "en": [
-            "Logo, ordering web, KakaoTalk, and print were aligned into one visual and service system."
+            "We designed KakaoTalk and the ordering web as one continuous journey — from channel alert to a completed order."
           ]
         },
         "layout": "stack"
@@ -942,7 +942,6 @@
         "challenge",
         "process",
         "solution",
-        "feature:ordering",
         "touchpoints",
         "businessCard",
         "quote"

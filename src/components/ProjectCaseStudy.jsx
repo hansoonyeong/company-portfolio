@@ -4,6 +4,7 @@ import { isVideoSrc } from '../lib/media'
 import { getProjectPath } from '../lib/projects'
 import { buildProjectImageAlt, isLogoVariationSection } from '../lib/imageSeo'
 import LogoVariationSwitcher from './LogoVariationSwitcher'
+import OrderJourneyDemo from './OrderJourneyDemo'
 import './ProjectCaseStudy.css'
 
 const DEFAULT_SECTION_ORDER = [
@@ -678,6 +679,16 @@ export default function ProjectCaseStudy({
           />
         )
       case 'solution':
+        if (project.slug === 'kimchi-house-au') {
+          return (
+            <OrderJourneyDemo
+              key={key}
+              section={cs.solution}
+              fallbackLabel={t.projects.solution}
+              accent={cs.accent || '#123524'}
+            />
+          )
+        }
         return (
           <StoryBlock
             key={key}
