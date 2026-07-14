@@ -445,6 +445,36 @@
   display: none;
 }
 
+.case-study__block--touchpoints-cards-only {
+  padding-top: 0;
+  border-top: none;
+}
+
+.case-study__block--touchpoints-cards-only .case-study__service-row {
+  margin-top: 1.5rem;
+  border-top: none;
+}
+
+@media (max-width: 760px) {
+  .case-study__block--touchpoints-cards-only {
+    padding-top: 0;
+    padding-bottom: 32px;
+  }
+
+  .case-study__block--touchpoints-cards-only .case-study__service-row {
+    margin-top: 0.5rem;
+  }
+
+  .case-study__block--touchpoints-cards-only .case-study__service-card {
+    padding-top: 16px;
+    padding-bottom: 20px;
+  }
+
+  .case-study__block--touchpoints-cards-only .case-study__service-card:first-child {
+    padding-top: 4px;
+  }
+}
+
 .case-study__block--overview.case-study__overview-stack {
   padding-top: 40px;
   padding-bottom: 8px;
@@ -656,6 +686,36 @@
 .case-study__block--finale {
   padding-top: 56px;
   padding-bottom: 56px;
+  border-top: none;
+}
+
+.case-study__block--outcome-print {
+  display: grid;
+  gap: clamp(28px, 4vw, 40px);
+}
+
+.case-study__block--outcome-print .case-study__outcome-print-intro {
+  max-width: 40rem;
+}
+
+.case-study__block--outcome-print .case-study__outcome-print-intro .case-study__title {
+  max-width: none;
+  margin-bottom: 16px;
+}
+
+.case-study__block--outcome-print .case-study__outcome-print-intro .case-study__prose--story {
+  max-width: none;
+}
+
+.case-study__block--outcome-print .case-study__outcome-print-intro .case-study__prose--story p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 1.0625rem;
+  line-height: 1.8;
+}
+
+.case-study--kimchi-house-au .case-study__block--outcome-print .case-study__print-layout--finale {
+  padding-top: 8px;
   border-top: none;
 }
 
@@ -1216,6 +1276,11 @@
 
   .case-study__block {
     padding: 48px 0;
+  }
+
+  .case-study__block--touchpoints-cards-only {
+    padding-top: 0;
+    padding-bottom: 32px;
   }
 
   .case-study__title {

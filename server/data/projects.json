@@ -810,8 +810,8 @@
           "en": "Outcome"
         },
         "title": {
-          "ko": "첫인상부터 주문까지.",
-          "en": "From first glance to order."
+          "ko": "첫인상부터 배송받기까지.",
+          "en": "From first glance to delivery."
         },
         "text": {
           "ko": "브랜드를 만난 순간부터 예약 주문까지, 흐름이 끊기지 않도록 만들었습니다.",
@@ -905,8 +905,8 @@
           "en": "Outcome"
         },
         "title": {
-          "ko": "첫인상부터 주문까지.",
-          "en": "From first glance to order."
+          "ko": "첫인상부터 배송받기까지.",
+          "en": "From first glance to delivery."
         },
         "paragraphs": {
           "ko": [
@@ -942,7 +942,7 @@
         "challenge",
         "process",
         "solution",
-        "touchpoints",
+        "outcome",
         "businessCard",
         "quote"
       ]

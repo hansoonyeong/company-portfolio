@@ -383,11 +383,59 @@ export default function ProjectCaseStudy({
     </section>
   )
 
-  const renderBusinessCardPrint = () => {
+  const renderBusinessCardPrint = ({ embedded = false } = {}) => {
     const layoutClass =
       businessCard.layout === 'finale'
         ? 'case-study__print-layout case-study__print-layout--finale'
         : 'case-study__print-layout'
+
+    const body = (
+      <div className={layoutClass}>
+        <div className="case-study__print-copy">
+          <p className="case-study__label">{businessCard.label}</p>
+          <h2 className="case-study__title">{businessCard.title}</h2>
+          <p className="case-study__intro">{businessCard.text}</p>
+        </div>
+
+        <div className="case-study__print-media">
+          <CaseStudyMedia
+            src={businessCard.mainImage}
+            video={businessCard.mainVideo}
+            poster={businessCard.mainPoster}
+            alt={buildProjectImageAlt({
+              title: project.title,
+              section: businessCard.title,
+            })}
+            className={`case-study__print-shot${
+              businessCard.layout === 'finale' ? ' case-study__print-shot--finale' : ''
+            }`}
+            autoplay={Boolean(businessCard.mainVideo)}
+            assetVersion={project.assetVersion}
+            onClick={
+              onImageClick
+                ? () => openImage(businessCard.mainVideo || businessCard.mainImage)
+                : undefined
+            }
+            label={businessCard.title}
+          />
+          {businessCard.miniImages?.map((src) => (
+            <CaseStudyImage
+              key={src}
+              src={src}
+              alt={buildProjectImageAlt({
+                title: project.title,
+                section: businessCard.title,
+              })}
+              className="case-study__print-shot"
+              onClick={onImageClick ? () => openImage(src) : undefined}
+              label={t.projects.viewPhoto.replace('{n}', String(cs.media.indexOf(src) + 1))}
+            />
+          ))}
+        </div>
+      </div>
+    )
+
+    if (embedded) return body
 
     return (
       <section
@@ -395,49 +443,30 @@ export default function ProjectCaseStudy({
           businessCard.layout === 'finale' ? ' case-study__block--finale' : ''
         }`}
       >
-        <div className={layoutClass}>
-          <div className="case-study__print-copy">
-            <p className="case-study__label">{businessCard.label}</p>
-            <h2 className="case-study__title">{businessCard.title}</h2>
-            <p className="case-study__intro">{businessCard.text}</p>
-          </div>
+        {body}
+      </section>
+    )
+  }
 
-          <div className="case-study__print-media">
-            <CaseStudyMedia
-              src={businessCard.mainImage}
-              video={businessCard.mainVideo}
-              poster={businessCard.mainPoster}
-              alt={buildProjectImageAlt({
-                title: project.title,
-                section: businessCard.title,
-              })}
-              className={`case-study__print-shot${
-                businessCard.layout === 'finale' ? ' case-study__print-shot--finale' : ''
-              }`}
-              autoplay={Boolean(businessCard.mainVideo)}
-              assetVersion={project.assetVersion}
-              onClick={
-                onImageClick
-                  ? () => openImage(businessCard.mainVideo || businessCard.mainImage)
-                  : undefined
-              }
-              label={businessCard.title}
-            />
-            {businessCard.miniImages?.map((src) => (
-              <CaseStudyImage
-                key={src}
-                src={src}
-                alt={buildProjectImageAlt({
-                  title: project.title,
-                  section: businessCard.title,
-                })}
-                className="case-study__print-shot"
-                onClick={onImageClick ? () => openImage(src) : undefined}
-                label={t.projects.viewPhoto.replace('{n}', String(cs.media.indexOf(src) + 1))}
-              />
-            ))}
+  const renderOutcomePrint = () => {
+    if (!cs.outcome && !businessCard) return null
+
+    return (
+      <section className="case-study__block case-study__block--outcome-print">
+        {cs.outcome && (
+          <div className="case-study__story-stack case-study__outcome-print-intro">
+            <p className="case-study__label">{cs.outcome.label || t.projects.outcome}</p>
+            {cs.outcome.title && <h2 className="case-study__title">{cs.outcome.title}</h2>}
+            {(cs.outcome.paragraphs || []).length > 0 && (
+              <div className="case-study__prose case-study__prose--story">
+                {cs.outcome.paragraphs.map((paragraph) => (
+                  <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+                ))}
+              </div>
+            )}
           </div>
-        </div>
+        )}
+        {businessCard && usesPrintLayout ? renderBusinessCardPrint({ embedded: true }) : null}
       </section>
     )
   }
@@ -568,18 +597,25 @@ export default function ProjectCaseStudy({
     )
   }
 
-  const renderTouchpoints = () => {
+  const renderTouchpoints = ({ cardsOnly = false } = {}) => {
     if (!cs.touchpoints) return null
     const layout = cs.touchpoints.layout || 'cards'
     const hasVisual = cs.touchpoints.cards?.some((card) => card.image || card.images?.length)
+    if (cardsOnly && !cs.touchpoints.cards?.length) return null
 
     return (
       <section
-        className={`case-study__block case-study__block--touchpoints case-study__block--touchpoints-${layout}`}
+        className={`case-study__block case-study__block--touchpoints case-study__block--touchpoints-${layout}${
+          cardsOnly ? ' case-study__block--touchpoints-cards-only' : ''
+        }`}
       >
-        <p className="case-study__label">{cs.touchpoints.label}</p>
-        <h2 className="case-study__title">{cs.touchpoints.title}</h2>
-        {cs.touchpoints.text && <p className="case-study__intro">{cs.touchpoints.text}</p>}
+        {!cardsOnly && (
+          <>
+            <p className="case-study__label">{cs.touchpoints.label}</p>
+            <h2 className="case-study__title">{cs.touchpoints.title}</h2>
+            {cs.touchpoints.text && <p className="case-study__intro">{cs.touchpoints.text}</p>}
+          </>
+        )}
 
         {cs.touchpoints.cards?.length > 0 && (
           <div
@@ -681,12 +717,14 @@ export default function ProjectCaseStudy({
       case 'solution':
         if (project.slug === 'kimchi-house-au') {
           return (
-            <OrderJourneyDemo
-              key={key}
-              section={cs.solution}
-              fallbackLabel={t.projects.solution}
-              accent={cs.accent || '#123524'}
-            />
+            <div key={key}>
+              <OrderJourneyDemo
+                section={cs.solution}
+                fallbackLabel={t.projects.solution}
+                accent={cs.accent || '#123524'}
+              />
+              {renderTouchpoints({ cardsOnly: true })}
+            </div>
           )
         }
         return (
@@ -700,6 +738,9 @@ export default function ProjectCaseStudy({
           />
         )
       case 'outcome':
+        if (project.slug === 'kimchi-house-au') {
+          return <div key={key}>{renderOutcomePrint()}</div>
+        }
         return (
           <StoryBlock
             key={key}
@@ -716,6 +757,7 @@ export default function ProjectCaseStudy({
         return <div key={key}>{renderLogo()}</div>
       case 'businessCard':
         if (!businessCard) return null
+        if (project.slug === 'kimchi-house-au') return null
         return (
           <div key={key}>
             {usesPrintLayout ? renderBusinessCardPrint() : renderBusinessCardCards()}

@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from '../i18n/LanguageContext'
 import './OrderJourneyDemo.css'
 
@@ -576,8 +576,6 @@ export default function OrderJourneyDemo({
     if (reduceMotion) setStepIndex(8)
   }, [reduceMotion])
 
-  const progress = useMemo(() => (stepIndex + 1) / STEP_DEFS.length, [stepIndex])
-
   return (
     <section
       ref={rootRef}
@@ -620,12 +618,6 @@ export default function OrderJourneyDemo({
         <p className="ojd__caption" aria-live="polite">
           {c.caption[stepIndex]}
         </p>
-        <div className="ojd__progress" aria-hidden>
-          <motion.span
-            style={{ scaleX: progress }}
-            transition={{ duration: 0.45, ease }}
-          />
-        </div>
         <div className="ojd__dots" aria-hidden>
           {STEP_DEFS.map((step, index) => (
             <span
