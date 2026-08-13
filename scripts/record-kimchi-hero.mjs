@@ -19,7 +19,7 @@ const PHONE_SCREEN = { width: 154, height: 330 }
 const CROP_PADDING = 40
 const RECORD_MS = 14000
 const RECORD_FPS = 30
-const LOOP_HOLD_MS = 900
+const LOOP_HOLD_MS = 400
 
 function stripScrollPx(captureHeight, viewportWidth, screen, scaleWidth) {
   const displayHeight = captureHeight * (scaleWidth / viewportWidth)
@@ -27,10 +27,10 @@ function stripScrollPx(captureHeight, viewportWidth, screen, scaleWidth) {
 }
 
 function scrollProgress(t) {
-  if (t < 0.18) return 0
-  if (t < 0.58) return (t - 0.18) / 0.4
-  if (t < 0.72) return 1
-  if (t < 0.9) return 1 - (t - 0.72) / 0.18
+  // Start scrolling immediately — no lead-in hold.
+  if (t < 0.48) return t / 0.48
+  if (t < 0.56) return 1
+  if (t < 0.96) return 1 - (t - 0.56) / 0.4
   return 0
 }
 
@@ -47,16 +47,34 @@ async function injectCaptureStyles(page) {
       .checkout-overlay,
       .shop-mobile-nav,
       [class*="fixed-cta"],
-      [class*="mobile-nav"] {
+      [class*="mobile-nav"],
+      [class*="cookie"],
+      [class*="toast"],
+      .cart-fab,
+      [class*="CartFab"],
+      [class*="floating"],
+      [class*="Floating"],
+      [class*="kakao-float"],
+      [role="dialog"],
+      [aria-modal="true"],
+      [class*="modal-overlay"],
+      [class*="ModalOverlay"],
+      [class*="dialog-overlay"] {
         display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        opacity: 0 !important;
       }
       /* Avoid sticky header repeating across strip chunks */
       .shop-site-header,
       header,
+      nav,
       [class*="site-header"],
-      [class*="ShopHeader"] {
+      [class*="ShopHeader"],
+      [class*="Header"] {
         position: relative !important;
         top: auto !important;
+        inset: auto !important;
       }
       /* Freeze carousel/hero slide mid-transition artifacts */
       *, *::before, *::after {
@@ -72,6 +90,36 @@ async function injectCaptureStyles(page) {
       }
     `,
   })
+}
+
+async function dismissBlockingOverlays(page) {
+  await page.evaluate(() => {
+    const labels = ['확인', '닫기', 'Close', 'OK', '알겠습니다']
+    const buttons = [...document.querySelectorAll('button, [role="button"], a')]
+    for (const btn of buttons) {
+      const text = (btn.textContent || '').trim()
+      if (labels.includes(text)) {
+        btn.click()
+        break
+      }
+    }
+
+    document
+      .querySelectorAll('[role="dialog"], [aria-modal="true"], [class*="modal"], [class*="Modal"]')
+      .forEach((el) => {
+        el.remove()
+      })
+
+    ;[...document.querySelectorAll('a, button, div')].forEach((el) => {
+      const text = (el.textContent || '').replace(/\s+/g, '')
+      if (!/톡문의|카톡문의/.test(text)) return
+      const rect = el.getBoundingClientRect()
+      if (rect.width > 0 && rect.width < 140 && rect.height < 140) {
+        el.remove()
+      }
+    })
+  })
+  await page.waitForTimeout(400)
 }
 
 async function stabilizeHeroSlider(page) {
@@ -126,22 +174,27 @@ async function findShowcaseCropHeight(page) {
       document.body.scrollHeight,
     )
     const titles = [...document.querySelectorAll('h2.shop-section-title, h3.section-title, h2')]
+
+    // Prefer cutting before trust/FAQ blocks so the strip stays product-forward.
+    const end = titles.find((title) =>
+      /김치하우스를 선택하는 이유|온라인 주문이 어려우신가요|자주 묻는 질문|주문 방법|특별한 약속/.test(
+        title.textContent || '',
+      ),
+    )
+    if (end) {
+      const top = end.getBoundingClientRect().top + window.scrollY
+      const minHeight = Math.round(window.innerHeight * 3.6)
+      return Math.min(scrollHeight, Math.max(minHeight, Math.ceil(top - 24)))
+    }
+
     const popularIdx = titles.findIndex((title) =>
-      /지금 가장 많이 찾는 상품|베스트셀러|인기|카테고리 추천|추천 상품|BEST/.test(
+      /지금 가장 많이 찾는 상품|베스트셀러|카테고리 추천|추천 상품|입맛에 맞는 김치|골라보세요/.test(
         title.textContent || '',
       ),
     )
 
     if (popularIdx === -1) {
-      // Renewed homepage: include schedule + benefits + category + first product grid.
-      const why = titles.find((title) =>
-        /김치하우스를 선택하는 이유|주문 방법|특별한 약속/.test(title.textContent || ''),
-      )
-      if (why) {
-        const top = why.getBoundingClientRect().top + window.scrollY
-        return Math.min(scrollHeight, Math.max(Math.round(window.innerHeight * 2.4), Math.ceil(top - 24)))
-      }
-      return Math.min(scrollHeight, Math.round(window.innerHeight * 3.2))
+      return Math.min(scrollHeight, Math.round(window.innerHeight * 4))
     }
 
     const popular = titles[popularIdx]
@@ -157,7 +210,6 @@ async function findShowcaseCropHeight(page) {
       el = el.nextElementSibling
     }
 
-    // Include the popular products section fully, then a little breathing room.
     const section = popular.closest('section') || popular.parentElement
     if (section) {
       const rect = section.getBoundingClientRect()
@@ -168,8 +220,9 @@ async function findShowcaseCropHeight(page) {
     const nextTop = next
       ? next.getBoundingClientRect().top + window.scrollY - 8
       : padded
+    const minHeight = Math.round(window.innerHeight * 3.6)
 
-    return Math.min(scrollHeight, Math.min(padded, nextTop))
+    return Math.min(scrollHeight, Math.max(minHeight, Math.min(padded, nextTop)))
   }, CROP_PADDING)
 }
 
@@ -221,10 +274,13 @@ async function captureStrip(page, viewport, stripName, mobile = false) {
   await page.setViewportSize(viewport)
   await page.goto(orderUrl, { waitUntil: 'networkidle' })
   await page.waitForTimeout(800)
+  await dismissBlockingOverlays(page)
   await injectCaptureStyles(page)
+  await dismissBlockingOverlays(page)
   await stabilizeHeroSlider(page)
   await preparePage(page)
   await stabilizeHeroSlider(page)
+  await dismissBlockingOverlays(page)
 
   // Ensure first slide is painted before stitching strip chunks
   await page.evaluate(() => window.scrollTo(0, 0))
@@ -419,37 +475,49 @@ function cleanupTestFiles() {
   }
 }
 
+const videoOnly = process.argv.includes('--video-only')
 const browser = await chromium.launch()
 
-const desktopPage = await browser.newPage()
-const desktopMetrics = await captureStrip(desktopPage, DESKTOP, 'desktop-strip.jpg')
-await desktopPage.close()
+let desktopScrollPx
+let mobileScrollPx
 
-const mobilePage = await browser.newPage({
-  viewport: MOBILE,
-  deviceScaleFactor: 1,
-  isMobile: true,
-  hasTouch: true,
-})
-const mobileMetrics = await captureStrip(mobilePage, MOBILE, 'mobile-strip.jpg', true)
-await mobilePage.close()
+if (videoOnly) {
+  const desktopMeta = await sharp(path.join(outDir, 'desktop-strip.jpg')).metadata()
+  const mobileMeta = await sharp(path.join(outDir, 'mobile-strip.jpg')).metadata()
+  desktopScrollPx = stripScrollPx(desktopMeta.height, DESKTOP.width, LAPTOP_SCREEN, LAPTOP_SCREEN.width)
+  mobileScrollPx = stripScrollPx(mobileMeta.height, MOBILE.width, PHONE_SCREEN, PHONE_SCREEN.width)
+  console.log(`Video-only mode — desktop scroll ${desktopScrollPx}px, mobile scroll ${mobileScrollPx}px`)
+} else {
+  const desktopPage = await browser.newPage()
+  const desktopMetrics = await captureStrip(desktopPage, DESKTOP, 'desktop-strip.jpg')
+  await desktopPage.close()
 
-const desktopScrollPx = stripScrollPx(
-  desktopMetrics.cropHeight,
-  desktopMetrics.viewportWidth,
-  LAPTOP_SCREEN,
-  LAPTOP_SCREEN.width,
-)
+  const mobilePage = await browser.newPage({
+    viewport: MOBILE,
+    deviceScaleFactor: 1,
+    isMobile: true,
+    hasTouch: true,
+  })
+  const mobileMetrics = await captureStrip(mobilePage, MOBILE, 'mobile-strip.jpg', true)
+  await mobilePage.close()
 
-const mobileScrollPx = stripScrollPx(
-  mobileMetrics.cropHeight,
-  mobileMetrics.viewportWidth,
-  PHONE_SCREEN,
-  PHONE_SCREEN.width,
-)
+  desktopScrollPx = stripScrollPx(
+    desktopMetrics.cropHeight,
+    desktopMetrics.viewportWidth,
+    LAPTOP_SCREEN,
+    LAPTOP_SCREEN.width,
+  )
 
-console.log(`Desktop strip: ${desktopMetrics.cropHeight}px → scroll ${desktopScrollPx}px`)
-console.log(`Mobile strip: ${mobileMetrics.cropHeight}px → scroll ${mobileScrollPx}px`)
+  mobileScrollPx = stripScrollPx(
+    mobileMetrics.cropHeight,
+    mobileMetrics.viewportWidth,
+    PHONE_SCREEN,
+    PHONE_SCREEN.width,
+  )
+
+  console.log(`Desktop strip: ${desktopMetrics.cropHeight}px → scroll ${desktopScrollPx}px`)
+  console.log(`Mobile strip: ${mobileMetrics.cropHeight}px → scroll ${mobileScrollPx}px`)
+}
 
 fs.writeFileSync(
   path.join(outDir, 'showcase.html'),
@@ -468,7 +536,7 @@ await page.waitForFunction(() =>
   [...document.images].every((img) => img.complete && img.naturalHeight > 0),
 )
 await setScrollProgress(page, 0)
-await page.waitForTimeout(700)
+await page.waitForTimeout(200)
 
 await page.screenshot({
   path: path.join(outDir, 'hero-poster.jpg'),
@@ -477,7 +545,7 @@ await page.screenshot({
 })
 
 await setScrollProgress(page, 0)
-await page.waitForTimeout(200)
+await page.waitForTimeout(50)
 await recordFrames(page)
 await context.close()
 await browser.close()
