@@ -1,0 +1,1166 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
+
+.wedding-root {
+  --w-ui: 'Lato', 'Noto Sans KR', var(--font-main), sans-serif;
+  --w-display: var(--w-ui);
+  --nav-h: 56px;
+  min-height: 100dvh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--w-ui);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+.wedding-root a:focus-visible,
+.wedding-root button:focus-visible,
+.wedding-root input:focus-visible {
+  outline: 1px solid var(--color-text);
+  outline-offset: 3px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.wedding-page {
+  padding-bottom: 48px;
+}
+
+/* Music — circular control left of RSVP FAB */
+.w-music {
+  position: fixed;
+  right: 88px;
+  bottom: 20px;
+  bottom: max(20px, env(safe-area-inset-bottom, 0px));
+  z-index: 44;
+}
+
+.w-music__fab {
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-bg);
+  color: var(--color-text);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.14);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+
+.w-music__fab:hover:not(:disabled) {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+}
+
+.w-music__fab:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.w-music__fab:disabled {
+  opacity: 0.45;
+  cursor: wait;
+}
+
+.w-music__fab.is-playing {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.w-music__icon {
+  display: grid;
+  place-items: center;
+  line-height: 0;
+}
+
+@media (min-width: 860px) {
+  .w-music {
+    right: calc(clamp(28px, 4vw, 40px) + 56px + 12px);
+    bottom: clamp(24px, 4vw, 36px);
+  }
+}
+
+/* RSVP widget — aviemuah / Channel Talk style */
+.w-rsvp-widget {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  bottom: max(20px, env(safe-area-inset-bottom, 0px));
+  z-index: 45;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.w-rsvp-widget > * {
+  pointer-events: auto;
+}
+
+.w-rsvp-widget__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: rgba(0, 0, 0, 0.18);
+  pointer-events: auto;
+}
+
+.w-rsvp-widget__panel {
+  width: min(360px, calc(100vw - 40px));
+  max-height: min(72vh, 640px);
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--color-bg);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.16);
+  animation: w-rsvp-widget-in 0.28s ease;
+}
+
+@keyframes w-rsvp-widget-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.w-rsvp-widget__header {
+  position: relative;
+  height: 132px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.w-rsvp-widget__header-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.05);
+}
+
+.w-rsvp-widget__header-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.08) 0%,
+    rgba(0, 0, 0, 0.22) 55%,
+    var(--color-bg) 100%
+  );
+}
+
+.w-rsvp-widget__header-mark {
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  margin: 0;
+  font-family: var(--w-ui);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.w-rsvp-widget__header-names {
+  position: absolute;
+  left: 18px;
+  bottom: 14px;
+  margin: 0;
+  font-family: var(--w-ui);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.w-rsvp-widget__body {
+  flex: 1;
+  min-height: 0;
+  padding: 16px 18px 20px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.w-rsvp-widget__welcome {
+  display: grid;
+  gap: 16px;
+}
+
+.w-rsvp-widget__bubble {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.w-rsvp-widget__avatar {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-bg-dark);
+  color: var(--color-bg);
+  font-family: var(--w-ui);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+
+.w-rsvp-widget__message {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #f4f4f4;
+}
+
+.w-rsvp-widget__greeting {
+  margin: 0;
+  font-family: var(--w-ui);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.w-rsvp-widget__intro {
+  margin: 8px 0 0;
+  font-family: var(--w-ui);
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+}
+
+.w-rsvp-widget__cta {
+  width: 100%;
+  min-height: 44px;
+  border: 0;
+  border-radius: 10px;
+  background: #ececec;
+  color: var(--color-text);
+  font-family: var(--w-ui);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.w-rsvp-widget__cta:hover {
+  background: #e0e0e0;
+}
+
+.w-rsvp-widget__form {
+  padding-top: 4px;
+}
+
+.w-rsvp-widget__form .wedding-step__title {
+  font-size: 14px;
+}
+
+.w-rsvp-widget__form .wedding-session__start {
+  font-size: 1rem;
+}
+
+.w-rsvp-widget__form .wedding-stepper span {
+  font-size: 1.125rem;
+}
+
+.w-rsvp-widget__fab {
+  width: 56px;
+  height: 56px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-bg);
+  color: var(--color-text);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.14);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.w-rsvp-widget__fab:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+}
+
+.w-rsvp-widget__fab:active {
+  transform: scale(0.96);
+}
+
+.w-rsvp-widget__fab-icon {
+  display: grid;
+  place-items: center;
+  line-height: 1;
+}
+
+.w-rsvp-widget__fab-icon--close {
+  font-size: 28px;
+  font-weight: 300;
+  margin-top: -2px;
+}
+
+@media (min-width: 860px) {
+  .w-rsvp-widget {
+    right: clamp(28px, 4vw, 40px);
+    bottom: clamp(24px, 4vw, 36px);
+  }
+
+  .w-rsvp-widget__panel {
+    width: 380px;
+    max-height: min(78vh, 680px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .w-rsvp-widget__panel {
+    animation: none;
+  }
+}
+
+.w-eyebrow {
+  margin: 0;
+  font-family: var(--w-ui);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.w-caption {
+  margin: 16px 0 0;
+  font-family: var(--w-ui);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.w-body {
+  margin: 16px 0 0;
+  max-width: 28rem;
+  font-family: var(--w-ui);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.85;
+  color: var(--color-text-muted);
+  white-space: pre-line;
+  word-break: keep-all;
+}
+
+.w-lede {
+  margin: 10px 0 0;
+  font-family: var(--w-ui);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: -0.01em;
+  white-space: pre-line;
+  word-break: keep-all;
+}
+
+.w-display {
+  margin: 10px 0 0;
+  font-family: var(--w-ui);
+  font-size: clamp(1.125rem, 3.5vw, 1.5rem);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.w-display--sm {
+  font-size: clamp(1rem, 3vw, 1.25rem);
+}
+
+.w-reveal {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .w-reveal {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .w-reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Nav */
+.w-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--color-bg);
+}
+
+.w-nav--overlay {
+  position: sticky;
+  top: 0;
+  margin-bottom: calc(-1 * var(--nav-h));
+  background: transparent;
+}
+
+.w-nav--overlay.w-nav--solid {
+  margin-bottom: 0;
+  background: var(--color-bg);
+}
+
+.w-nav__inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--nav-h);
+  padding: 14px 20px;
+}
+
+.w-nav__side {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+}
+
+.w-nav__side--left {
+  justify-self: start;
+}
+
+.w-nav__side--right {
+  justify-self: end;
+  margin-left: auto;
+}
+
+.w-nav--overlay:not(.w-nav--solid) .w-nav__burger span {
+  background: #fff;
+}
+
+.w-nav--overlay:not(.w-nav--solid) .w-nav__links a {
+  color: #fff;
+}
+
+.w-nav--overlay:not(.w-nav--solid) .w-nav__links a:hover {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.w-nav__links {
+  display: none;
+  align-items: center;
+}
+
+.w-nav__links a {
+  display: block;
+  padding: 0 16px 0 0;
+  font-family: var(--w-ui);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-text);
+  line-height: 32px;
+  transition: color 0.2s;
+}
+
+.w-nav__links a:hover {
+  color: var(--color-text-muted);
+}
+
+.w-nav__links--right a {
+  padding: 0 0 0 16px;
+}
+
+.w-nav__burger {
+  display: block;
+  width: 24px;
+  height: 32px;
+  position: relative;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.w-nav__burger span {
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--color-text);
+  position: absolute;
+  left: 0;
+}
+
+.w-nav__burger span:nth-child(1) {
+  top: 46%;
+}
+
+.w-nav__burger span:nth-child(2) {
+  top: 62%;
+}
+
+.w-nav__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 41;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.w-nav__panel {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 42;
+  width: min(100%, 280px);
+  background: var(--color-bg);
+  padding: 48px 32px 32px 24px;
+  box-sizing: border-box;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  pointer-events: none;
+}
+
+.w-nav__panel.is-open {
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.w-nav__close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  background: none;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.w-nav__panel-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.w-nav__panel-list a {
+  display: block;
+  line-height: 2.2;
+  font-family: var(--w-ui);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.w-nav__panel-list a:hover {
+  color: var(--color-text-muted);
+}
+
+/* Editorial copy blocks */
+.w-copy {
+  padding: clamp(40px, 8vw, 72px) 20px clamp(28px, 5vw, 40px);
+  max-width: 480px;
+}
+
+.w-copy--hero {
+  padding-top: clamp(28px, 5vw, 40px);
+  padding-bottom: clamp(36px, 6vw, 56px);
+}
+
+.w-copy--tight {
+  padding-bottom: 20px;
+}
+
+.w-copy--end {
+  padding-top: clamp(28px, 5vw, 40px);
+  padding-bottom: 48px;
+}
+
+/* Full-bleed image stack */
+.w-lookbook {
+  display: flex;
+  flex-direction: column;
+}
+
+.w-lookbook__frame {
+  margin: 0;
+  width: 100%;
+}
+
+.w-lookbook__frame img {
+  width: 100%;
+  aspect-ratio: var(--look-ratio, 3 / 4);
+  max-height: 92vh;
+  object-fit: cover;
+  display: block;
+  background: var(--color-border);
+}
+
+.w-lookbook__frame--hero img {
+  max-height: none;
+  height: min(85vh, 820px);
+  height: min(85dvh, 820px);
+}
+
+.w-hero__slides {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  height: min(85vh, 820px);
+  height: min(85dvh, 820px);
+  overflow: hidden;
+  background: var(--color-border);
+}
+
+.w-hero__slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity var(--hero-fade-ms, 1200ms) ease;
+  will-change: opacity;
+}
+
+.w-hero__slide.is-active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.w-lookbook__frame--end img {
+  max-height: min(80vh, 720px);
+}
+
+/* Hero — image first, journal header below */
+.w-hero {
+  position: relative;
+  display: block;
+}
+
+.w-hero__title {
+  margin: 0;
+  font-family: var(--w-ui);
+  font-size: clamp(1.125rem, 3.5vw, 1.375rem);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.w-hero__meta {
+  margin: 12px 0 0;
+  font-family: var(--w-ui);
+  font-size: 12px;
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+  line-height: 1.7;
+}
+
+.w-hero__meta span + span::before {
+  content: ' · ';
+}
+
+/* Wedding day */
+.w-day {
+  padding: 0;
+}
+
+.w-day__facts {
+  display: grid;
+  gap: 24px;
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-border);
+}
+
+.w-day__facts dt {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.w-day__facts dd {
+  margin: 6px 0 0;
+  font-family: var(--w-ui);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.w-day__facts dd span {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.w-day__note {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-border);
+}
+
+.w-day__note h3 {
+  margin: 0;
+  font-family: var(--w-ui);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.w-day__note .w-body {
+  margin-top: 10px;
+}
+
+/* Location */
+.w-location {
+  padding: 0 0 clamp(40px, 7vw, 64px);
+}
+
+.w-location .w-route,
+.w-location .w-map-links {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.w-route {
+  margin: 32px 0 28px;
+  padding: 24px 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  display: grid;
+  gap: 20px;
+}
+
+.w-route__item strong {
+  display: block;
+  font-family: var(--w-ui);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.w-route__item em {
+  display: block;
+  margin-top: 4px;
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+}
+
+.w-route__walk {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.w-map-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* RSVP */
+.w-rsvp {
+  padding: 0 20px clamp(48px, 8vw, 72px);
+}
+
+.w-rsvp__action {
+  margin-top: 8px;
+}
+
+.w-rsvp__start {
+  min-width: 140px;
+  min-height: 44px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+}
+
+.w-rsvp__form {
+  width: min(100%, 400px);
+  margin-top: 24px;
+}
+
+.w-text-link {
+  margin-top: 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--w-ui);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.w-text-link:hover {
+  color: var(--color-text-muted);
+}
+
+.wedding-step__title {
+  margin: 8px 0 16px;
+  font-family: var(--w-ui);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.wedding-input {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--color-border);
+  background: transparent;
+  padding: 10px 0 12px;
+  font-family: var(--w-ui);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.wedding-input:focus {
+  outline: none;
+  border-bottom-color: var(--color-text);
+}
+
+.wedding-choice-col {
+  display: grid;
+  gap: 8px;
+}
+
+.wedding-choice {
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  text-align: left;
+  font-family: var(--w-ui);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.wedding-choice.is-selected {
+  border-color: var(--color-text);
+}
+
+.wedding-stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.wedding-stepper button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  font-size: 1.1rem;
+}
+
+.wedding-stepper span {
+  font-family: var(--w-ui);
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.wedding-hint {
+  font-family: var(--w-ui);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  white-space: pre-line;
+  margin: 0 0 14px;
+}
+
+.wedding-error {
+  margin: 0;
+  font-size: 12px;
+  color: #8b3a3a;
+}
+
+.wedding-companion {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.wedding-companion > label:first-child {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.wedding-sessions {
+  display: grid;
+  gap: 0;
+}
+
+.wedding-session {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: 16px 0;
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.wedding-session:last-child {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.wedding-session.is-selected .wedding-session__start {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.wedding-session.is-disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.wedding-session__label,
+.wedding-session__meta,
+.wedding-session__status {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.wedding-session__start {
+  font-family: var(--w-ui);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.wedding-session__time {
+  font-size: 12px;
+}
+
+.wedding-session__status {
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.wedding-checklist {
+  display: grid;
+  gap: 10px;
+}
+
+.wedding-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  font-size: 13px;
+}
+
+.wedding-check input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-text);
+}
+
+.wedding-summary {
+  display: grid;
+  gap: 20px;
+}
+
+.wedding-summary__block h4 {
+  margin: 0 0 6px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+}
+
+.wedding-summary__block ul {
+  padding: 0;
+  margin: 6px 0 0;
+  list-style: none;
+}
+
+.wedding-step__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.wedding-step__nav .w-text-link {
+  margin: 0;
+}
+
+.wedding-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0 16px;
+  border: 1px solid var(--color-text);
+  background: transparent;
+  color: var(--color-text);
+  font-family: var(--w-ui);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, opacity 0.2s;
+}
+
+.wedding-btn:hover:not(:disabled) {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.wedding-btn:disabled,
+.wedding-btn.is-muted {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.wedding-btn--fill {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.wedding-prose {
+  margin: 0 0 20px;
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--color-text-muted);
+  white-space: pre-line;
+}
+
+/* Ending */
+.w-end {
+  padding: 0;
+}
+
+.w-end__line {
+  margin: 0;
+  font-family: var(--w-ui);
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: pre-line;
+}
+
+.w-end__meta {
+  margin-top: 12px;
+  font-family: var(--w-ui);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  line-height: 1.8;
+}
+
+@media (min-width: 860px) {
+  .w-nav__inner {
+    padding: 18px 48px;
+  }
+
+  .w-nav__links {
+    display: flex;
+  }
+
+  .w-nav__burger,
+  .w-nav__overlay,
+  .w-nav__panel {
+    display: none;
+  }
+
+  .w-copy {
+    padding-left: clamp(48px, 10vw, 120px);
+    padding-right: clamp(48px, 10vw, 120px);
+    max-width: 520px;
+  }
+
+  .w-lookbook__frame img {
+    max-height: 96vh;
+  }
+
+  .w-day__facts {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .w-location .w-route,
+  .w-location .w-map-links {
+    margin-left: clamp(48px, 10vw, 120px);
+    max-width: 520px;
+  }
+
+  .w-rsvp {
+    display: grid;
+    grid-template-columns: 1fr min(400px, 34vw);
+    gap: clamp(40px, 7vw, 80px);
+    align-items: start;
+    padding-left: clamp(48px, 10vw, 120px);
+    padding-right: clamp(48px, 10vw, 120px);
+  }
+
+  .w-rsvp__intro {
+    max-width: 520px;
+  }
+
+  .w-rsvp__form,
+  .w-rsvp__action {
+    margin-top: clamp(40px, 7vw, 64px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .w-nav {
+    backdrop-filter: none;
+  }
+
+  .w-hero__slide {
+    transition: none;
+  }
+}

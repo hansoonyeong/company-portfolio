@@ -26,6 +26,9 @@ import ContactPage from './pages/ContactPage'
 import LegalPage from './pages/LegalPage'
 import AdminPage from './pages/AdminPage'
 import ScrollRevealManager from './components/ScrollRevealManager'
+import WeddingLayout from './wedding/WeddingLayout'
+import WeddingPage from './wedding/pages/WeddingPage'
+import WeddingAdminPage from './wedding/pages/WeddingAdminPage'
 
 function CartShell() {
   const cart = useQuoteCart()
@@ -78,6 +81,13 @@ const router = createBrowserRouter([
     ],
   },
   { path: '/admin', element: <AdminPage /> },
+  {
+    element: <WeddingLayout />,
+    children: [
+      { path: '/wedding', element: <WeddingPage /> },
+      { path: '/wedding/admin', element: <WeddingAdminPage /> },
+    ],
+  },
 ])
 
 export default function App() {

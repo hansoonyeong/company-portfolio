@@ -15,6 +15,7 @@ dist-ssr
 
 # Quote submissions (local data)
 server/data/quotes.json
+server/data/wedding-rsvps.json
 
 # Runtime admin uploads (persisted on Render disk)
 server/data/uploads/
