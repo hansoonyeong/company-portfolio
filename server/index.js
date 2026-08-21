@@ -8,6 +8,10 @@ import { fileURLToPath } from 'url'
 import { buildDefaultProjects } from '../src/data/defaultProjects.js'
 import { buildDefaultHero } from '../src/data/defaultHero.js'
 import { createWeddingRouter } from './wedding/routes.js'
+import { createOfficeRouter } from './office/routes.js'
+import { loadEnvFile } from './loadEnv.js'
+
+loadEnvFile()
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const DATA_FILE = path.join(__dirname, 'data', 'quotes.json')
@@ -804,6 +808,7 @@ app.use('/projects', express.static(PROJECTS_PUBLIC))
 app.use('/hero', express.static(HERO_UPLOAD))
 app.use('/hero', express.static(HERO_PUBLIC))
 app.use('/api/wedding', createWeddingRouter())
+app.use('/api/office', createOfficeRouter(authMiddleware))
 app.use(express.static(PUBLIC_ROOT))
 
 const distPath = path.join(__dirname, '..', 'dist')

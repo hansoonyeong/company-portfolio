@@ -24,11 +24,25 @@ import ProjectDetailPage from './pages/ProjectDetailPage'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
 import LegalPage from './pages/LegalPage'
-import AdminPage from './pages/AdminPage'
 import ScrollRevealManager from './components/ScrollRevealManager'
 import WeddingLayout from './wedding/WeddingLayout'
 import WeddingPage from './wedding/pages/WeddingPage'
 import WeddingAdminPage from './wedding/pages/WeddingAdminPage'
+import { AdminAuthProvider } from './admin/AdminAuthContext'
+import AdminLayout from './admin/AdminLayout'
+import OfficePage from './admin/office/OfficePage'
+import DashboardPage from './admin/pages/DashboardPage'
+import TodayPage from './admin/pages/TodayPage'
+import InboxPage from './admin/pages/InboxPage'
+import AiTeamPage from './admin/pages/AiTeamPage'
+import TasksPage from './admin/pages/TasksPage'
+import NotesPage from './admin/pages/NotesPage'
+import FilesPage from './admin/pages/FilesPage'
+import SettingsPage from './admin/pages/SettingsPage'
+import ProjectsPage from './admin/pages/ProjectsPage'
+import OfficeProjectPage from './admin/pages/OfficeProjectPage'
+import ChatPage from './admin/pages/ChatPage'
+import AdminWebsitePanel from './admin/website/AdminWebsitePanel'
 
 function CartShell() {
   const cart = useQuoteCart()
@@ -63,6 +77,14 @@ function RootLayout() {
   )
 }
 
+function AdminRoot() {
+  return (
+    <AdminAuthProvider>
+      <Outlet />
+    </AdminAuthProvider>
+  )
+}
+
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
@@ -80,7 +102,34 @@ const router = createBrowserRouter([
       { path: 'terms', element: <LegalPage type="terms" />, handle: { page: 'meta' } },
     ],
   },
-  { path: '/admin', element: <AdminPage /> },
+  {
+    path: '/admin',
+    element: <AdminRoot />,
+    children: [
+      {
+        element: <AdminLayout />,
+        children: [
+          { index: true, element: <Navigate to="office" replace /> },
+          { path: 'office', element: <OfficePage /> },
+          { path: 'dashboard', element: <DashboardPage /> },
+          { path: 'today', element: <TodayPage /> },
+          { path: 'inbox', element: <InboxPage /> },
+          { path: 'ai-team', element: <AiTeamPage /> },
+          { path: 'projects', element: <ProjectsPage /> },
+          { path: 'projects/:id', element: <OfficeProjectPage /> },
+          { path: 'tasks', element: <TasksPage /> },
+          { path: 'chat', element: <ChatPage /> },
+          { path: 'notes', element: <NotesPage /> },
+          { path: 'files', element: <FilesPage /> },
+          { path: 'settings', element: <SettingsPage /> },
+          { path: 'website/quotes', element: <AdminWebsitePanel tab="quotes" /> },
+          { path: 'website/news', element: <AdminWebsitePanel tab="news" /> },
+          { path: 'website/hero', element: <AdminWebsitePanel tab="hero" /> },
+          { path: 'website/portfolio', element: <AdminWebsitePanel tab="projects" /> },
+        ],
+      },
+    ],
+  },
   {
     element: <WeddingLayout />,
     children: [
