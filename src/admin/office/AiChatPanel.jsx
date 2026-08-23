@@ -1,4 +1,5 @@
 import { useEffect, useId, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   createOfficeConversation,
   createOfficeTask,
@@ -7,6 +8,7 @@ import {
   updateOfficeConversation,
 } from '../../lib/officeApi'
 import { useOfficeData } from '../OfficeDataContext'
+import { buildProjectBrief, copyText } from './briefBuilder'
 import AiResultModal from './AiResultModal'
 
 export default function AiChatPanel({
@@ -14,7 +16,16 @@ export default function AiChatPanel({
   initialAgentId = 'auto',
   compact = false,
 }) {
-  const { agents, activeProjects, conversations, refresh } = useOfficeData()
+  const {
+    agents,
+    activeProjects,
+    conversations,
+    memory,
+    tasks,
+    notes,
+    refresh,
+    isManualMode,
+  } = useOfficeData()
   const [projectId, setProjectId] = useState(lockedProjectId || '')
   const [agentId, setAgentId] = useState(initialAgentId)
   const [activeId, setActiveId] = useState(null)
@@ -24,6 +35,7 @@ export default function AiChatPanel({
   const [handledBy, setHandledBy] = useState('')
   const [resultTaskId, setResultTaskId] = useState(null)
   const [busy, setBusy] = useState(null)
+  const [hint, setHint] = useState('')
   const titleId = useId()
 
   useEffect(() => {
@@ -37,6 +49,7 @@ export default function AiChatPanel({
   }, [conversations, lockedProjectId])
 
   const active = projectConversations.find((c) => c.id === activeId) || null
+  const project = activeProjects.find((p) => p.id === (projectId || lockedProjectId))
 
   async function startNew() {
     const created = await createOfficeConversation({
@@ -65,7 +78,38 @@ export default function AiChatPanel({
     await refresh()
   }
 
+  async function copyProjectBrief() {
+    const text = buildProjectBrief({
+      project,
+      memory,
+      tasks,
+      notes,
+    })
+    const ok = await copyText(text)
+    setHint(ok ? 'Project brief copied' : '복사에 실패했습니다')
+    if (!ok) window.prompt('Copy brief:', text)
+  }
+
+  async function createTaskFromComposer() {
+    const text = message.trim()
+    if (!text) return
+    await createOfficeTask({
+      projectId: projectId || lockedProjectId || null,
+      assignedAgentId: agentId === 'auto' ? null : agentId,
+      title: text.slice(0, 80),
+      description: text,
+      mode: 'queue',
+    })
+    setMessage('')
+    setHint('Task created')
+    await refresh()
+  }
+
   async function send(force = false) {
+    if (isManualMode) {
+      setError('')
+      return
+    }
     const text = message.trim()
     if (!text) return
     setError('')
@@ -90,13 +134,75 @@ export default function AiChatPanel({
       setBusy(null)
     } catch (err) {
       setStage('')
+      if (err.code === 'MANUAL_MODE' || err.code === 'OPENAI_NOT_CONFIGURED') {
+        setError('')
+        setHint('AI generation is off. Create a task or copy a project brief instead.')
+        return
+      }
       if (err.code === 'AGENT_BUSY') {
         setBusy(err.conflict)
         return
       }
-      setError(err.message || 'AI 요청 실패')
+      setError(err.message || '요청 실패')
       await refresh()
     }
+  }
+
+  if (isManualMode) {
+    return (
+      <div className={`ai-chat ai-chat--manual${compact ? ' ai-chat--compact' : ''}`}>
+        <div className="office-card" style={{ width: '100%' }}>
+          <h3>AI generation is off</h3>
+          <p>
+            You can still use this project workspace to prepare briefs and save results.
+            Tasks, Notes, and Project Memory remain fully available.
+          </p>
+          {!lockedProjectId ? (
+            <select
+              value={projectId}
+              onChange={(e) => setProjectId(e.target.value)}
+              style={{ marginTop: 10 }}
+            >
+              <option value="">프로젝트 선택</option>
+              {activeProjects.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <p className="office-badge" style={{ marginTop: 10 }}>
+              {project?.name || 'Project'}
+            </p>
+          )}
+          <div className="office-modal__actions" style={{ marginTop: 14, flexWrap: 'wrap' }}>
+            <button type="button" className="office-btn office-btn--primary" onClick={createTaskFromComposer}>
+              Create Task
+            </button>
+            <button type="button" className="office-btn" onClick={copyProjectBrief} disabled={!project}>
+              Copy Project Brief
+            </button>
+            <Link className="office-btn" to="/admin/notes">
+              Open Notes
+            </Link>
+            <Link
+              className="office-btn"
+              to={project ? `/admin/projects/${project.id}?tab=memory` : '/admin/projects'}
+            >
+              Open Memory
+            </Link>
+          </div>
+          <textarea
+            rows={3}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Optional: type a task title then Create Task"
+            style={{ width: '100%', marginTop: 12 }}
+          />
+          {hint ? <p className="office-form__hint">{hint}</p> : null}
+        </div>
+      </div>
+    )
   }
 
   return (

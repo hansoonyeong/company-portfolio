@@ -4,14 +4,35 @@ import { AGENT_STATE_LABEL, TASK_STATUS_LABEL, useOfficeData } from '../OfficeDa
 import AiResultModal from '../office/AiResultModal'
 import '../office/office.css'
 
+function isToday(dateStr) {
+  if (!dateStr) return false
+  const d = new Date(dateStr)
+  const now = new Date()
+  return (
+    d.getFullYear() === now.getFullYear() &&
+    d.getMonth() === now.getMonth() &&
+    d.getDate() === now.getDate()
+  )
+}
+
+function isOverdue(dateStr) {
+  if (!dateStr) return false
+  const d = new Date(dateStr)
+  const now = new Date()
+  now.setHours(0, 0, 0, 0)
+  return d < now
+}
+
 export default function DashboardPage() {
-  const { activeProjects, tasks, agents, activity, loading, error } = useOfficeData()
+  const { activeProjects, tasks, agents, activity, loading, error, isAiMode } = useOfficeData()
   const [resultTaskId, setResultTaskId] = useState(null)
 
+  const inProgress = tasks.filter((t) => t.status === 'in_progress')
+  const waiting = tasks.filter((t) => t.status === 'waiting')
+  const dueToday = tasks.filter((t) => isToday(t.dueDate) && t.status !== 'done')
+  const overdue = tasks.filter((t) => isOverdue(t.dueDate) && t.status !== 'done')
+  const recentlyCompleted = tasks.filter((t) => t.status === 'done').slice(0, 8)
   const aiDone = tasks.filter((t) => t.aiGenerated && t.status === 'done')
-  const aiInProgress = tasks.filter((t) => t.status === 'in_progress' && t.assignedAgentId)
-  const aiWaiting = tasks.filter((t) => t.status === 'waiting')
-  const recentAi = aiDone.slice(0, 8)
   const workingAgents = agents.filter((a) => a.state === 'working' || a.state === 'thinking')
 
   return (
@@ -24,25 +45,37 @@ export default function DashboardPage() {
 
       <div className="office-card-grid">
         <section className="office-card">
-          <h3>AI Tasks Completed</h3>
-          <p>{aiDone.length}개</p>
+          <h3>Active Projects</h3>
+          <p>{activeProjects.length}</p>
         </section>
         <section className="office-card">
-          <h3>AI Tasks In Progress</h3>
-          <p>{aiInProgress.length}개</p>
+          <h3>Tasks In Progress</h3>
+          <p>{inProgress.length}</p>
         </section>
         <section className="office-card">
-          <h3>AI Tasks Waiting</h3>
-          <p>{aiWaiting.length}개</p>
-        </section>
-        <section className="office-card">
-          <h3>활성 프로젝트</h3>
-          <p>{activeProjects.length}개</p>
-        </section>
-        <section className="office-card">
-          <h3>Recent AI Results</h3>
+          <h3>Waiting</h3>
+          <p>{waiting.length}</p>
           <ul>
-            {recentAi.map((t) => (
+            {waiting.slice(0, 5).map((t) => (
+              <li key={t.id}>
+                {t.title}
+                {t.waitingFor ? ` · Waiting for ${t.waitingFor}` : ''}
+              </li>
+            ))}
+          </ul>
+        </section>
+        <section className="office-card">
+          <h3>Due Today</h3>
+          <p>{dueToday.length}</p>
+        </section>
+        <section className="office-card">
+          <h3>Overdue</h3>
+          <p>{overdue.length}</p>
+        </section>
+        <section className="office-card">
+          <h3>Recently Completed</h3>
+          <ul>
+            {recentlyCompleted.map((t) => (
               <li key={t.id}>
                 <button type="button" className="office-btn" onClick={() => setResultTaskId(t.id)}>
                   {t.title}
@@ -52,18 +85,18 @@ export default function DashboardPage() {
           </ul>
         </section>
         <section className="office-card">
-          <h3>작업 중인 AI</h3>
-          <p>{workingAgents.length}명</p>
+          <h3>Team Status</h3>
           <ul>
             {workingAgents.map((a) => (
               <li key={a.id}>
                 {a.name} · {AGENT_STATE_LABEL[a.state]}
               </li>
             ))}
+            {workingAgents.length === 0 ? <li>모두 대기</li> : null}
           </ul>
         </section>
         <section className="office-card">
-          <h3>최근 활동</h3>
+          <h3>Recent Activity</h3>
           <ul>
             {activity.slice(0, 8).map((item) => (
               <li key={item.id}>{item.message}</li>
@@ -71,7 +104,7 @@ export default function DashboardPage() {
           </ul>
         </section>
         <section className="office-card">
-          <h3>웹사이트 관리</h3>
+          <h3>Website Management</h3>
           <ul>
             <li>
               <Link to="/admin/website/quotes">견적</Link>
@@ -87,16 +120,12 @@ export default function DashboardPage() {
             </li>
           </ul>
         </section>
-        <section className="office-card">
-          <h3>대기 작업</h3>
-          <ul>
-            {aiWaiting.slice(0, 6).map((t) => (
-              <li key={t.id}>
-                {t.title} · {TASK_STATUS_LABEL[t.status]}
-              </li>
-            ))}
-          </ul>
-        </section>
+        {isAiMode ? (
+          <section className="office-card">
+            <h3>AI Tasks Completed</h3>
+            <p>{aiDone.length}</p>
+          </section>
+        ) : null}
       </div>
 
       {resultTaskId ? (

@@ -233,9 +233,10 @@ export async function createTask(body) {
     resultFormat: 'text',
     aiGenerated: false,
     generatedByAgentId: null,
-    startedAt: null,
+    startedAt: (body.status === 'in_progress' || (mode === 'start' && assignedAgentId)) ? t : null,
     completedAt: null,
     errorMessage: null,
+    waitingFor: body.waitingFor ? String(body.waitingFor).trim() : null,
     usage: null,
     suggestedTasks: [],
     suggestedMemory: [],
@@ -304,6 +305,14 @@ export async function updateTask(taskId, body) {
           body.generatedByAgentId !== undefined ? body.generatedByAgentId : item.generatedByAgentId,
         startedAt: body.startedAt !== undefined ? body.startedAt : item.startedAt,
         errorMessage: body.errorMessage !== undefined ? body.errorMessage : item.errorMessage,
+        waitingFor:
+          body.waitingFor !== undefined
+            ? body.waitingFor
+              ? String(body.waitingFor).trim()
+              : null
+            : nextStatus !== 'waiting' && body.status !== undefined
+              ? null
+              : (item.waitingFor ?? null),
         usage: body.usage !== undefined ? body.usage : item.usage,
         suggestedTasks:
           body.suggestedTasks !== undefined ? body.suggestedTasks : item.suggestedTasks,
@@ -359,12 +368,43 @@ export async function updateTask(taskId, body) {
           : updated.status === 'in_progress'
             ? 'task_started'
             : 'task_assigned'
+    const waitSuffix =
+      updated.status === 'waiting' && updated.waitingFor ? ` (대기: ${updated.waitingFor})` : ''
     await logActivity({
       type,
       projectId: updated.projectId,
       taskId: updated.id,
       agentId: updated.assignedAgentId,
-      message: `작업 ${updated.status}: ${updated.title}`,
+      message: `작업 ${updated.status}: ${updated.title}${waitSuffix}`,
+    })
+  }
+
+  if (
+    previous &&
+    body.assignedAgentId !== undefined &&
+    previous.assignedAgentId !== updated.assignedAgentId
+  ) {
+    await logActivity({
+      type: 'task_reassigned',
+      projectId: updated.projectId,
+      taskId: updated.id,
+      agentId: updated.assignedAgentId,
+      message: `작업 재배정: ${updated.title}`,
+    })
+  }
+
+  if (
+    body.result !== undefined &&
+    body.result !== previous?.result &&
+    !body.aiGenerated &&
+    previous?.status === updated.status
+  ) {
+    await logActivity({
+      type: 'manual_result_saved',
+      projectId: updated.projectId,
+      taskId: updated.id,
+      agentId: updated.assignedAgentId,
+      message: `작업 결과 저장: ${updated.title}`,
     })
   }
 

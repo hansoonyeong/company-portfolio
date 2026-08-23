@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import { useOfficeData } from '../OfficeDataContext'
 
 const titles = {
   '/admin/office': '오피스',
@@ -7,6 +8,7 @@ const titles = {
   '/admin/inbox': '수신함',
   '/admin/ai-team': 'AI 팀',
   '/admin/tasks': '작업',
+  '/admin/chat': '채팅',
   '/admin/notes': '노트',
   '/admin/files': '파일',
   '/admin/settings': '설정',
@@ -18,6 +20,7 @@ const titles = {
 }
 
 export default function AdminTopbar({ pathname }) {
+  const { isManualMode, isAiMode } = useOfficeData()
   let title = titles[pathname]
   if (!title && pathname.startsWith('/admin/projects/')) title = '프로젝트'
   if (!title) title = 'AI Office'
@@ -26,6 +29,16 @@ export default function AdminTopbar({ pathname }) {
     <header className="office-topbar">
       <div className="office-topbar__left">
         <h1 className="office-topbar__title">{title}</h1>
+        <span
+          className="office-mode-pill"
+          title={
+            isManualMode
+              ? 'Manage work manually. AI generation can be enabled later.'
+              : 'AI generation is available.'
+          }
+        >
+          {isAiMode ? 'AI Mode' : 'Manual Mode'}
+        </span>
       </div>
       <div className="office-topbar__switch" role="tablist" aria-label="오피스 또는 대시보드">
         <NavLink

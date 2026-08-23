@@ -44,11 +44,22 @@ function useIsMobileOffice(breakpoint = 860) {
 
 export default function OfficePage() {
   const navigate = useNavigate()
-  const { agents, projects, tasks, meetings, loading, error, refresh, activeProjects } =
-    useOfficeData()
+  const {
+    agents,
+    projects,
+    tasks,
+    meetings,
+    loading,
+    error,
+    refresh,
+    activeProjects,
+    isManualMode,
+    isAiMode,
+  } = useOfficeData()
   const [selectedId, setSelectedId] = useState(null)
   const [assignOpen, setAssignOpen] = useState(false)
   const [assignPrefillId, setAssignPrefillId] = useState(null)
+  const [assignTitle, setAssignTitle] = useState('')
   const [meetingOpen, setMeetingOpen] = useState(false)
   const [projectFilter, setProjectFilter] = useState('all')
   const [toast, setToast] = useState(null)
@@ -71,7 +82,7 @@ export default function OfficePage() {
   const activeMeeting = meetings.find((m) => m.status === 'active') || null
   const meetingProject = projects.find((p) => p.id === activeMeeting?.projectId)
 
-  const hasActiveAi = agents.some((a) => a.state === 'thinking' || a.state === 'working')
+  const hasActiveAi = isAiMode && agents.some((a) => a.state === 'thinking' || a.state === 'working')
 
   useEffect(() => {
     if (!hasActiveAi) return undefined
@@ -86,9 +97,10 @@ export default function OfficePage() {
     window.setTimeout(() => setToast(null), 2600)
   }
 
-  function openAssign(forAgentId) {
+  function openAssign(forAgentId, title = '') {
     setBusyWarning('')
     setAssignPrefillId(forAgentId || selectedId || null)
+    setAssignTitle(title)
     setAssignOpen(true)
   }
 
@@ -97,9 +109,14 @@ export default function OfficePage() {
       await createOfficeTask(payload)
       setAssignOpen(false)
       setAssignPrefillId(null)
+      setAssignTitle('')
       setBusyWarning('')
       await refresh()
-      showToast(`「${payload.title}」 배정됨`)
+      showToast(
+        payload.mode === 'queue'
+          ? `「${payload.title}」 대기열에 추가됨`
+          : `「${payload.title}」 배정 · 시작됨`,
+      )
     } catch (err) {
       if (err.code === 'AGENT_BUSY') {
         const name = err.conflict?.agent?.name || '에이전트'
@@ -110,7 +127,12 @@ export default function OfficePage() {
     }
   }
 
-  async function runAi(message, { force = false, agentId = 'auto' } = {}) {
+  async function handleCommandSubmit(message) {
+    if (isManualMode) {
+      openAssign(null, message)
+      return
+    }
+
     setPendingAiMessage(message)
     setAiStage('Thinking')
     setAiBusy(null)
@@ -118,9 +140,8 @@ export default function OfficePage() {
       setAiStage('Preparing project context')
       const result = await executeAiWork({
         projectId: projectFilter === 'all' ? null : projectFilter,
-        agentId,
+        agentId: 'auto',
         message,
-        force,
       })
       setAiStage('Finalising')
       const agent = agents.find((a) => a.id === result.agentId)
@@ -129,16 +150,20 @@ export default function OfficePage() {
       setResultTaskId(result.taskId)
       setSelectedId(result.agentId)
       setAiStage('')
-      showToast('AI 작업 완료')
+      showToast('작업 완료')
     } catch (err) {
       setAiStage('')
       await refresh()
+      if (err.code === 'MANUAL_MODE' || err.code === 'OPENAI_NOT_CONFIGURED') {
+        openAssign(null, message)
+        return
+      }
       if (err.code === 'AGENT_BUSY') {
         setAiBusy(err.conflict)
         return
       }
       if (err.taskId) setResultTaskId(err.taskId)
-      showToast(err.message || 'AI 요청 실패')
+      showToast(err.message || '요청 실패')
     }
   }
 
@@ -196,8 +221,9 @@ export default function OfficePage() {
         onProjectFilter={setProjectFilter}
         onAssignWork={() => openAssign()}
         onStartMeeting={() => setMeetingOpen(true)}
-        onAiSubmit={(text) => runAi(text)}
-        aiStage={aiStage}
+        onCommandSubmit={handleCommandSubmit}
+        isManualMode={isManualMode}
+        busyLabel={aiStage}
         handledBy={handledBy}
       />
 
@@ -242,8 +268,10 @@ export default function OfficePage() {
           meeting={activeMeeting}
           agents={enrichedAgents}
           projectName={meetingProject?.name}
+          projectId={activeMeeting.projectId}
           onEnd={handleEndMeeting}
           onChanged={refresh}
+          isManualMode={isManualMode}
         />
       )}
 
@@ -269,11 +297,6 @@ export default function OfficePage() {
                   type="button"
                   className={`office-mobile-card${selectedId === agent.id ? ' is-selected' : ''}${dimmed ? ' is-dimmed' : ''}`}
                   role="listitem"
-                  aria-label={
-                    agent.currentTask
-                      ? `${agent.name} AI, ${AGENT_STATE_LABEL[agent.state] || agent.state}, ${agent.currentTask}`
-                      : `${agent.name} AI, ${AGENT_STATE_LABEL[agent.state] || agent.state}`
-                  }
                   onClick={() => setSelectedId(agent.id)}
                 >
                   <AgentCharacter
@@ -309,6 +332,7 @@ export default function OfficePage() {
                 ? () => setResultTaskId(selectedAgent.currentTaskId)
                 : undefined
             }
+            isManualMode={isManualMode}
           />
         )}
       </div>
@@ -318,11 +342,16 @@ export default function OfficePage() {
           agents={enrichedAgents}
           projects={activeProjects}
           initialAgentId={assignPrefillId}
+          initialProjectId={projectFilter === 'all' ? '' : projectFilter}
+          initialTitle={assignTitle}
+          initialDescription={assignTitle}
           busyWarning={busyWarning}
+          isManualMode={isManualMode}
           onAssign={handleAssign}
           onClose={() => {
             setAssignOpen(false)
             setAssignPrefillId(null)
+            setAssignTitle('')
             setBusyWarning('')
           }}
         />

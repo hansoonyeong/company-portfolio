@@ -15,8 +15,9 @@ export default function OfficeCommandBar({
   onProjectFilter,
   onAssignWork,
   onStartMeeting,
-  onAiSubmit,
-  aiStage,
+  onCommandSubmit,
+  isManualMode,
+  busyLabel,
   handledBy,
 }) {
   const { working, waiting, available } = countByState(agents)
@@ -26,7 +27,9 @@ export default function OfficeCommandBar({
     <header className="office-command">
       <div className="office-command__copy">
         <h1 className="office-command__greeting">{getGreeting()}, Lucy</h1>
-        <p className="office-command__sub">AI 팀이 일하고 있어요.</p>
+        <p className="office-command__sub">
+          {isManualMode ? '팀을 배정하고 작업을 진행하세요.' : 'AI 팀이 일하고 있어요.'}
+        </p>
       </div>
 
       <label className="office-command__filter">
@@ -58,24 +61,26 @@ export default function OfficeCommandBar({
         onSubmit={(e) => {
           e.preventDefault()
           const text = message.trim()
-          if (!text || aiStage) return
-          onAiSubmit?.(text)
+          if (!text || busyLabel) return
+          onCommandSubmit?.(text)
           setMessage('')
         }}
       >
         <label className="visually-hidden" htmlFor="office-ai-input">
-          AI 팀에 시킬 일
+          작업 지시
         </label>
         <input
           id="office-ai-input"
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="What do you want the AI team to work on?"
-          disabled={Boolean(aiStage)}
+          placeholder={
+            isManualMode ? 'What are we working on?' : 'What do you want the AI team to work on?'
+          }
+          disabled={Boolean(busyLabel)}
         />
-        <button type="submit" className="office-btn office-btn--primary" disabled={Boolean(aiStage)}>
-          {aiStage || 'Run'}
+        <button type="submit" className="office-btn office-btn--primary" disabled={Boolean(busyLabel)}>
+          {busyLabel || (isManualMode ? 'Assign' : 'Run')}
         </button>
       </form>
       {handledBy ? <p className="office-command__handled">{handledBy}</p> : null}

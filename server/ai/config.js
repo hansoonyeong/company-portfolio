@@ -9,9 +9,28 @@ export function isOpenAiConfigured() {
   return Boolean(process.env.OPENAI_API_KEY?.trim())
 }
 
-export function getOpenAiStatus() {
+/**
+ * Single source of truth for Office operating mode.
+ * AI architecture stays intact; Manual Mode when no provider key exists.
+ */
+export function getProviderStatus() {
+  if (isOpenAiConfigured()) {
+    return {
+      mode: 'ai',
+      configured: true,
+      provider: 'openai',
+      model: AI_CONFIG.model,
+    }
+  }
   return {
-    configured: isOpenAiConfigured(),
+    mode: 'manual',
+    configured: false,
+    provider: null,
     model: AI_CONFIG.model,
   }
+}
+
+/** @deprecated use getProviderStatus — kept for callers during Phase 3.5 */
+export function getOpenAiStatus() {
+  return getProviderStatus()
 }

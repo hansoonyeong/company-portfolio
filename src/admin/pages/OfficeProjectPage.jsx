@@ -19,6 +19,7 @@ import {
   useOfficeData,
 } from '../OfficeDataContext'
 import AiChatPanel from '../office/AiChatPanel'
+import { buildProjectBrief, copyText } from '../office/briefBuilder'
 import '../office/office.css'
 
 const TABS = [
@@ -32,7 +33,8 @@ const TABS = [
 
 export default function OfficeProjectPage() {
   const { id } = useParams()
-  const { projects, tasks, notes, memory, agents, activity, refresh, loading } = useOfficeData()
+  const { projects, tasks, notes, memory, agents, activity, refresh, loading, isManualMode } =
+    useOfficeData()
   const [tab, setTab] = useState('overview')
   const [memoryFilter, setMemoryFilter] = useState('all')
   const [memoryQuery, setMemoryQuery] = useState('')
@@ -87,6 +89,24 @@ export default function OfficeProjectPage() {
         {' · '}
         목표: {project.currentGoal || '—'}
       </p>
+      <button
+        type="button"
+        className="office-btn"
+        style={{ marginTop: 10 }}
+        onClick={async () => {
+          const text = buildProjectBrief({
+            project,
+            memory: projectMemory,
+            tasks: projectTasks,
+            notes: projectNotes,
+          })
+          const ok = await copyText(text)
+          if (!ok) window.prompt('Copy Project Brief:', text)
+          else window.alert('Project brief copied')
+        }}
+      >
+        Copy Project Brief
+      </button>
 
       <div className="office-topbar__switch" style={{ margin: '18px 0', display: 'inline-flex' }}>
         {TABS.map((item) => (
@@ -167,7 +187,13 @@ export default function OfficeProjectPage() {
       )}
 
       {tab === 'tasks' && (
-        <ProjectTasksTab projectId={id} tasks={projectTasks} agents={agents} onChanged={refresh} />
+        <ProjectTasksTab
+          projectId={id}
+          tasks={projectTasks}
+          agents={agents}
+          onChanged={refresh}
+          isManualMode={isManualMode}
+        />
       )}
       {tab === 'notes' && (
         <ProjectNotesTab projectId={id} notes={projectNotes} onChanged={refresh} />
@@ -232,7 +258,7 @@ function GoalEditor({ project, onSaved }) {
   )
 }
 
-function ProjectTasksTab({ projectId, tasks, agents, onChanged }) {
+function ProjectTasksTab({ projectId, tasks, agents, onChanged, isManualMode }) {
   const [form, setForm] = useState({
     title: '',
     assignedAgentId: '',
@@ -320,7 +346,8 @@ function ProjectTasksTab({ projectId, tasks, agents, onChanged }) {
                 </option>
               ))}
             </select>
-            {task.assignedAgentId && (task.status === 'todo' || task.status === 'waiting') ? (
+            {task.assignedAgentId &&
+            (task.status === 'todo' || task.status === 'waiting' || task.status === 'inbox') ? (
               <button
                 type="button"
                 className="office-btn office-btn--primary"
@@ -328,22 +355,46 @@ function ProjectTasksTab({ projectId, tasks, agents, onChanged }) {
                 onClick={async () => {
                   setRunningId(task.id)
                   try {
-                    await executeAiWork({
-                      projectId,
-                      agentId: task.assignedAgentId,
-                      taskId: task.id,
-                      message: task.description || task.title,
-                    })
+                    if (isManualMode) {
+                      await updateOfficeTask(task.id, {
+                        status: 'in_progress',
+                        force: true,
+                        errorMessage: null,
+                        aiGenerated: false,
+                      })
+                    } else {
+                      await executeAiWork({
+                        projectId,
+                        agentId: task.assignedAgentId,
+                        taskId: task.id,
+                        message: task.description || task.title,
+                      })
+                    }
                     await onChanged()
                   } catch (err) {
-                    window.alert(err.message)
-                    await onChanged()
+                    if (err.code === 'MANUAL_MODE') {
+                      await updateOfficeTask(task.id, {
+                        status: 'in_progress',
+                        force: true,
+                        errorMessage: null,
+                      })
+                      await onChanged()
+                    } else {
+                      window.alert(err.message)
+                      await onChanged()
+                    }
                   } finally {
                     setRunningId('')
                   }
                 }}
               >
-                {runningId === task.id ? '실행 중…' : task.status === 'waiting' ? 'Retry' : 'Start AI Task'}
+                {runningId === task.id
+                  ? '실행 중…'
+                  : isManualMode
+                    ? 'Start Work'
+                    : task.status === 'waiting'
+                      ? 'Retry'
+                      : 'Start AI Task'}
               </button>
             ) : null}
           </div>

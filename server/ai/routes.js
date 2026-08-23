@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { getOpenAiStatus } from './config.js'
-import { routeAgent } from './router.js'
+import { getProviderStatus, isOpenAiConfigured } from './config.js'
+import { routeAgent, routeLocally } from './router.js'
 import {
   executeAiWork,
   generateMeetingContributions,
@@ -31,7 +31,7 @@ export function createAiRouter() {
   router.get(
     '/status',
     wrap(async (_req, res) => {
-      res.json(getOpenAiStatus())
+      res.json(getProviderStatus())
     }),
   )
 
@@ -43,13 +43,27 @@ export function createAiRouter() {
         res.status(400).json({ error: '메시지가 필요합니다.' })
         return
       }
-      res.json(await routeAgent(message, { allowLlm: req.body?.allowLlm !== false }))
+      // Manual Mode: local keyword routing only (no paid LLM routing)
+      const allowLlm = isOpenAiConfigured() && req.body?.allowLlm !== false
+      if (!allowLlm) {
+        res.json({ ...routeLocally(message), source: 'local' })
+        return
+      }
+      res.json(await routeAgent(message, { allowLlm: true }))
     }),
   )
 
   router.post(
     '/execute',
     wrap(async (req, res) => {
+      if (!isOpenAiConfigured()) {
+        res.status(503).json({
+          error: 'AI generation is off. Use Manual Mode to assign and complete work.',
+          code: 'MANUAL_MODE',
+          mode: 'manual',
+        })
+        return
+      }
       const result = await executeAiWork(req.body ?? {})
       res.json(result)
     }),
@@ -58,6 +72,13 @@ export function createAiRouter() {
   router.post(
     '/meetings/:id/contributions',
     wrap(async (req, res) => {
+      if (!isOpenAiConfigured()) {
+        res.status(503).json({
+          error: 'AI generation is off. Use Manual Meeting notes instead.',
+          code: 'MANUAL_MODE',
+        })
+        return
+      }
       const meeting = await generateMeetingContributions(req.params.id)
       res.json(meeting)
     }),
@@ -66,6 +87,13 @@ export function createAiRouter() {
   router.post(
     '/meetings/:id/summary',
     wrap(async (req, res) => {
+      if (!isOpenAiConfigured()) {
+        res.status(503).json({
+          error: 'AI generation is off. Write a manual summary instead.',
+          code: 'MANUAL_MODE',
+        })
+        return
+      }
       const meeting = await generateMeetingSummary(req.params.id)
       res.json(meeting)
     }),

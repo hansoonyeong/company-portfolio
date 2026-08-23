@@ -1,29 +1,51 @@
 import { useEffect, useId, useState } from 'react'
 import { PRIORITY_LABEL } from '../OfficeDataContext'
+import { routeAiAgent } from '../../lib/officeApi'
 
 export default function AssignWorkModal({
   agents,
   projects,
   initialAgentId,
+  initialProjectId,
+  initialTitle,
+  initialDescription,
+  suggestedAgentId,
+  routeReason,
   onAssign,
   onClose,
   busyWarning,
+  isManualMode = true,
 }) {
   const titleId = useId()
-  const [projectId, setProjectId] = useState(projects[0]?.id || '')
-  const [agentId, setAgentId] = useState(initialAgentId || agents[0]?.id || '')
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
+  const [projectId, setProjectId] = useState(initialProjectId || projects[0]?.id || '')
+  const [agentId, setAgentId] = useState(
+    initialAgentId || suggestedAgentId || agents[0]?.id || '',
+  )
+  const [title, setTitle] = useState(initialTitle || '')
+  const [description, setDescription] = useState(initialDescription || initialTitle || '')
   const [priority, setPriority] = useState('medium')
   const [dueDate, setDueDate] = useState('')
   const [mode, setMode] = useState('start')
   const [force, setForce] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
+  const [hint, setHint] = useState(routeReason || '')
 
   useEffect(() => {
     if (initialAgentId) setAgentId(initialAgentId)
-  }, [initialAgentId])
+    else if (suggestedAgentId) setAgentId(suggestedAgentId)
+  }, [initialAgentId, suggestedAgentId])
+
+  useEffect(() => {
+    if (initialProjectId) setProjectId(initialProjectId)
+  }, [initialProjectId])
+
+  useEffect(() => {
+    if (initialTitle) {
+      setTitle(initialTitle)
+      setDescription(initialDescription || initialTitle)
+    }
+  }, [initialTitle, initialDescription])
 
   useEffect(() => {
     const onKey = (e) => {
@@ -32,6 +54,25 @@ export default function AssignWorkModal({
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [onClose])
+
+  useEffect(() => {
+    if (!initialTitle || initialAgentId) return undefined
+    let cancelled = false
+    routeAiAgent({ message: initialTitle, allowLlm: false })
+      .then((route) => {
+        if (cancelled) return
+        if (route.confidence >= 0.75) {
+          setAgentId(route.agentId)
+          setHint(route.reason || '')
+        } else {
+          setHint('Choose an AI team member')
+        }
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+  }, [initialTitle, initialAgentId])
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -67,13 +108,15 @@ export default function AssignWorkModal({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="office-modal__head">
-          <h2 id={titleId}>작업 배정</h2>
+          <h2 id={titleId}>{isManualMode ? '작업 배정' : '작업 배정'}</h2>
           <button type="button" className="office-details__close" onClick={onClose} aria-label="닫기">
             ×
           </button>
         </div>
 
         <form className="office-form" onSubmit={handleSubmit}>
+          {hint ? <p className="office-form__hint">{hint}</p> : null}
+
           <label>
             <span>프로젝트</span>
             <select value={projectId} onChange={(e) => setProjectId(e.target.value)}>
@@ -87,7 +130,7 @@ export default function AssignWorkModal({
           </label>
 
           <label>
-            <span>AI 에이전트</span>
+            <span>AI 팀</span>
             <select value={agentId} onChange={(e) => setAgentId(e.target.value)}>
               {agents.map((a) => (
                 <option key={a.id} value={a.id}>
@@ -143,7 +186,7 @@ export default function AssignWorkModal({
                 checked={mode === 'start'}
                 onChange={() => setMode('start')}
               />
-              <span>바로 시작 (진행 중)</span>
+              <span>Assign & Start (진행 중)</span>
             </label>
             <label className="office-check">
               <input
@@ -152,14 +195,14 @@ export default function AssignWorkModal({
                 checked={mode === 'queue'}
                 onChange={() => setMode('queue')}
               />
-              <span>대기열에 추가 (할 일)</span>
+              <span>Add to Queue (할 일)</span>
             </label>
           </fieldset>
 
           {(busyWarning || error) && (
             <p className="office-form__hint" style={{ color: '#8b3a3a' }}>
               {busyWarning || error}
-              {error?.includes('다른 작업') ? (
+              {error?.includes('다른 작업') || busyWarning ? (
                 <>
                   <br />
                   <label className="office-check" style={{ marginTop: 8 }}>
@@ -173,10 +216,10 @@ export default function AssignWorkModal({
 
           <div className="office-modal__actions">
             <button type="button" className="office-btn" onClick={onClose}>
-              취소
+              Cancel
             </button>
             <button type="submit" className="office-btn office-btn--primary" disabled={submitting}>
-              {submitting ? '저장 중…' : '배정'}
+              {submitting ? '저장 중…' : mode === 'start' ? 'Assign & Start' : 'Add to Queue'}
             </button>
           </div>
         </form>

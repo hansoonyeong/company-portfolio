@@ -9,6 +9,7 @@ export default function AgentDetailsPanel({
   onSetIdle,
   onMarkDone,
   onViewResult,
+  isManualMode,
 }) {
   if (!agent) return null
 
@@ -61,18 +62,24 @@ export default function AgentDetailsPanel({
         </button>
         {onViewResult ? (
           <button type="button" className="office-btn" onClick={onViewResult}>
-            결과 보기
+            Work Result
           </button>
         ) : null}
         {agent.state === 'done' || agent.currentTaskId ? (
           <button type="button" className="office-btn" onClick={onMarkDone}>
-            작업 완료 처리
+            Mark Done
           </button>
         ) : null}
         <button type="button" className="office-btn" onClick={onSetIdle}>
-          대기로 전환
+          Return to Idle
         </button>
       </div>
+
+      {isManualMode ? (
+        <p className="office-details__note">
+          Manual Mode — characters show assigned work, not autonomous generation.
+        </p>
+      ) : null}
     </aside>
   )
 }

@@ -14,7 +14,8 @@ import AiResultModal from '../office/AiResultModal'
 import '../office/office.css'
 
 export default function TasksPage() {
-  const { tasks, projects, agents, refresh, loading, error } = useOfficeData()
+  const { tasks, projects, agents, refresh, loading, error, isManualMode, isAiMode } =
+    useOfficeData()
   const [projectFilter, setProjectFilter] = useState('all')
   const [agentFilter, setAgentFilter] = useState('all')
   const [statusFilter, setStatusFilter] = useState('all')
@@ -42,25 +43,54 @@ export default function TasksPage() {
     [tasks, projectFilter, agentFilter, statusFilter, aiOnly],
   )
 
-  async function startAi(task) {
+  async function startWork(task) {
     setRunningId(task.id)
     try {
-      const result = await executeAiWork({
-        projectId: task.projectId,
-        agentId: task.assignedAgentId || 'auto',
-        taskId: task.id,
-        message: task.description || task.title,
-        conversationId: task.conversationId || null,
-      })
-      await refresh()
-      setResultTaskId(result.taskId)
+      if (isManualMode) {
+        await updateOfficeTask(task.id, {
+          status: 'in_progress',
+          assignedAgentId: task.assignedAgentId,
+          startedAt: task.startedAt || new Date().toISOString(),
+          errorMessage: null,
+          force: true,
+        })
+        await refresh()
+        setResultTaskId(task.id)
+      } else {
+        const result = await executeAiWork({
+          projectId: task.projectId,
+          agentId: task.assignedAgentId || 'auto',
+          taskId: task.id,
+          message: task.description || task.title,
+          conversationId: task.conversationId || null,
+        })
+        await refresh()
+        setResultTaskId(result.taskId)
+      }
     } catch (err) {
       await refresh()
-      window.alert(err.message)
-      if (err.taskId) setResultTaskId(err.taskId)
+      if (err.code === 'MANUAL_MODE') {
+        await updateOfficeTask(task.id, { status: 'in_progress', force: true, errorMessage: null })
+        await refresh()
+        setResultTaskId(task.id)
+      } else {
+        window.alert(err.message)
+        if (err.taskId) setResultTaskId(err.taskId)
+      }
     } finally {
       setRunningId('')
     }
+  }
+
+  async function convertManual(task) {
+    await updateOfficeTask(task.id, {
+      errorMessage: null,
+      aiGenerated: false,
+      generatedByAgentId: null,
+      status: task.status === 'waiting' || task.status === 'done' ? 'todo' : task.status,
+    })
+    await refresh()
+    setResultTaskId(task.id)
   }
 
   return (
@@ -177,10 +207,12 @@ export default function TasksPage() {
             </option>
           ))}
         </select>
-        <label className="office-check">
-          <input type="checkbox" checked={aiOnly} onChange={(e) => setAiOnly(e.target.checked)} />
-          <span>Completed by AI</span>
-        </label>
+        {isAiMode ? (
+          <label className="office-check">
+            <input type="checkbox" checked={aiOnly} onChange={(e) => setAiOnly(e.target.checked)} />
+            <span>Completed by AI</span>
+          </label>
+        ) : null}
       </div>
 
       <div className="office-list">
@@ -199,6 +231,7 @@ export default function TasksPage() {
                 {PRIORITY_LABEL[task.priority]}
                 {task.dueDate ? ` · ~${task.dueDate}` : ''}
                 {task.aiGenerated ? ' · AI generated' : ''}
+                {task.waitingFor ? ` · Waiting for ${task.waitingFor}` : ''}
               </div>
             </div>
             <span>{projects.find((p) => p.id === task.projectId)?.name || '—'}</span>
@@ -226,26 +259,35 @@ export default function TasksPage() {
                   type="button"
                   className="office-btn office-btn--primary"
                   disabled={runningId === task.id}
-                  onClick={() => startAi(task)}
+                  onClick={() => startWork(task)}
                 >
-                  {runningId === task.id ? '실행 중…' : 'Start AI Task'}
+                  {runningId === task.id
+                    ? '실행 중…'
+                    : isManualMode
+                      ? 'Start Work'
+                      : 'Start AI Task'}
                 </button>
               ) : null}
-              {task.status === 'waiting' && task.errorMessage ? (
-                <button
-                  type="button"
-                  className="office-btn"
-                  disabled={runningId === task.id}
-                  onClick={() => startAi(task)}
-                >
-                  Retry
-                </button>
+              {task.errorMessage ? (
+                <>
+                  {!isManualMode ? (
+                    <button
+                      type="button"
+                      className="office-btn"
+                      disabled={runningId === task.id}
+                      onClick={() => startWork(task)}
+                    >
+                      Retry
+                    </button>
+                  ) : null}
+                  <button type="button" className="office-btn" onClick={() => convertManual(task)}>
+                    Convert to Manual
+                  </button>
+                </>
               ) : null}
-              {(task.result || task.aiGenerated) && (
-                <button type="button" className="office-btn" onClick={() => setResultTaskId(task.id)}>
-                  결과
-                </button>
-              )}
+              <button type="button" className="office-btn" onClick={() => setResultTaskId(task.id)}>
+                결과
+              </button>
               <button
                 type="button"
                 className="office-btn"

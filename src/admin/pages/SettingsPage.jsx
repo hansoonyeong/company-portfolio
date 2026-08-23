@@ -1,16 +1,8 @@
-import { useEffect, useState } from 'react'
-import { getAiStatus } from '../../lib/officeApi'
+import { useOfficeData } from '../OfficeDataContext'
 import '../office/office.css'
 
 export default function SettingsPage() {
-  const [status, setStatus] = useState(null)
-  const [error, setError] = useState('')
-
-  useEffect(() => {
-    getAiStatus()
-      .then(setStatus)
-      .catch((err) => setError(err.message || '상태를 불러오지 못했습니다.'))
-  }, [])
+  const { providerStatus, isManualMode, isAiMode } = useOfficeData()
 
   return (
     <div className="office-page">
@@ -19,29 +11,24 @@ export default function SettingsPage() {
       <p className="office-page__lead">AI Office 환경과 인증 설정입니다.</p>
       <div className="office-card-grid">
         <section className="office-card">
-          <h3>OpenAI Status</h3>
-          {error ? <p style={{ color: '#8b3a3a' }}>{error}</p> : null}
-          {status ? (
-            <>
-              <p>
-                {status.configured ? (
-                  <span className="office-badge">Connected</span>
-                ) : (
-                  <span className="office-badge">Not configured</span>
-                )}
-              </p>
-              <p style={{ marginTop: 8 }}>Model: {status.model}</p>
-              {!status.configured ? (
-                <p style={{ marginTop: 10 }}>
-                  OpenAI is not configured yet.
-                  <br />
-                  Add OPENAI_API_KEY to the server environment.
-                </p>
-              ) : null}
-            </>
-          ) : (
-            !error && <p>불러오는 중…</p>
-          )}
+          <h3>AI Engine</h3>
+          <p>
+            Mode:{' '}
+            <span className="office-badge">{isAiMode ? 'AI Mode' : 'Manual Mode'}</span>
+          </p>
+          <p style={{ marginTop: 8 }}>
+            OpenAI:{' '}
+            {providerStatus.configured ? 'Connected' : 'Not configured'}
+          </p>
+          <p style={{ marginTop: 8 }}>Model: {providerStatus.model || '—'}</p>
+          <p style={{ marginTop: 12, color: '#666' }}>
+            AI generation is optional. The Office can be used fully in Manual Mode.
+          </p>
+          {isManualMode ? (
+            <p style={{ marginTop: 8, color: '#666', fontSize: '0.9rem' }}>
+              To enable AI Mode later, add OPENAI_API_KEY to the server environment.
+            </p>
+          ) : null}
         </section>
         <section className="office-card">
           <h3>인증</h3>

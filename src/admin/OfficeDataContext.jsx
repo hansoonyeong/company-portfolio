@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { getOfficeBundle } from '../lib/officeApi'
+import { getAiStatus, getOfficeBundle } from '../lib/officeApi'
 import { useAdminAuth } from './AdminAuthContext'
 
 const OfficeDataContext = createContext(null)
@@ -15,9 +15,17 @@ const EMPTY = {
   conversations: [],
 }
 
+const DEFAULT_MODE = {
+  mode: 'manual',
+  configured: false,
+  provider: null,
+  model: null,
+}
+
 export function OfficeDataProvider({ children }) {
   const { token, clearAuth } = useAdminAuth()
   const [data, setData] = useState(EMPTY)
+  const [providerStatus, setProviderStatus] = useState(DEFAULT_MODE)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -26,7 +34,7 @@ export function OfficeDataProvider({ children }) {
     setLoading(true)
     setError('')
     try {
-      const bundle = await getOfficeBundle()
+      const [bundle, status] = await Promise.all([getOfficeBundle(), getAiStatus().catch(() => DEFAULT_MODE)])
       setData({
         projects: bundle.projects || [],
         tasks: bundle.tasks || [],
@@ -36,6 +44,12 @@ export function OfficeDataProvider({ children }) {
         activity: bundle.activity || [],
         meetings: bundle.meetings || [],
         conversations: bundle.conversations || [],
+      })
+      setProviderStatus({
+        mode: status.mode || (status.configured ? 'ai' : 'manual'),
+        configured: Boolean(status.configured),
+        provider: status.provider ?? (status.configured ? 'openai' : null),
+        model: status.model || null,
       })
     } catch (err) {
       if (err.status === 401) {
@@ -52,6 +66,9 @@ export function OfficeDataProvider({ children }) {
     refresh()
   }, [refresh])
 
+  const isManualMode = providerStatus.mode === 'manual' || !providerStatus.configured
+  const isAiMode = providerStatus.mode === 'ai' && providerStatus.configured
+
   const value = useMemo(
     () => ({
       ...data,
@@ -60,8 +77,11 @@ export function OfficeDataProvider({ children }) {
       refresh,
       setData,
       activeProjects: data.projects.filter((p) => !p.archived),
+      providerStatus,
+      isManualMode,
+      isAiMode,
     }),
-    [data, loading, error, refresh],
+    [data, loading, error, refresh, providerStatus, isManualMode, isAiMode],
   )
 
   return <OfficeDataContext.Provider value={value}>{children}</OfficeDataContext.Provider>
