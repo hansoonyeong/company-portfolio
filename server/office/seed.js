@@ -89,9 +89,11 @@ export function seedProjects() {
     {
       id: 'proj-soono',
       name: 'soono',
-      description: '사진, 디자인, 웹사이트, 마케팅을 아우르는 크리에이티브 스튜디오.',
+      description:
+        '시드니 기반의 크리에이티브 스튜디오. 디자인, 사진·미디어, 웹사이트 제작 및 마케팅 업무를 통합하여 제공한다.',
       status: 'active',
-      currentGoal: '스튜디오 운영과 클라이언트 프로젝트 조율',
+      currentGoal:
+        'soono의 크리에이티브 비즈니스를 운영하면서 내부 프로젝트와 업무를 통합 관리할 수 있는 AI Office를 구축하고 실제 업무에 활용한다.',
       icon: '◎',
       color: '#1a1a1a',
       archived: false,
@@ -113,9 +115,11 @@ export function seedProjects() {
     {
       id: 'proj-kimchi',
       name: 'Kimchi House AU',
-      description: '시드니 한식 프리오더 · 딜리버리 비즈니스.',
+      description:
+        '기존 이킴김치(iikimchi)에서 리브랜딩한 시드니 한식 선주문·배송 브랜드. 김치 판매뿐 아니라 카카오채널, 고객 주문 및 배송 안내 시스템을 함께 운영한다.',
       status: 'active',
-      currentGoal: '주문 여정과 고객 안내 개선',
+      currentGoal:
+        '선주문 및 배송 운영을 명확하게 관리하고, 고객이 쉽고 편하게 주문할 수 있도록 Kimchi House AU의 브랜드와 주문 경험을 개선한다.',
       icon: '◇',
       color: '#6b5c52',
       archived: false,
@@ -125,9 +129,10 @@ export function seedProjects() {
     {
       id: 'proj-hangeul',
       name: 'Hangeul Snack',
-      description: '한글 스낵 시드니 유통 프로젝트.',
+      description: 'Kalphabets 한글과자 및 관련 상품의 시드니 론칭·유통 프로젝트.',
       status: 'active',
-      currentGoal: '시드니 시장 조사와 입점 채널 탐색',
+      currentGoal:
+        'Kalphabets의 시드니 첫 론칭을 준비하고 초기 주문 구성, 유통 구조, 판매처 및 마케팅 계획을 확정한다.',
       icon: '▣',
       color: '#8a9a8e',
       archived: false,
@@ -137,9 +142,9 @@ export function seedProjects() {
     {
       id: 'proj-dog',
       name: 'Dog Treats',
-      description: '호주 펫 트릿 OEM 사업 개발.',
+      description: '호주 현지 제조 기반의 반려견 간식 제품 개발 및 OEM/Private Label 제조 프로젝트.',
       status: 'planning',
-      currentGoal: '공급망 · 브랜드 포지셔닝 정리',
+      currentGoal: '적합한 호주 제조사를 찾고 샘플 제작, MOQ, 생산 방식 및 초기 상품의 가능성을 확인한다.',
       icon: '○',
       color: '#a09080',
       archived: false,
@@ -149,9 +154,11 @@ export function seedProjects() {
     {
       id: 'proj-wedding',
       name: 'Wedding',
-      description: '웨딩 준비와 벤더 조율.',
+      description:
+        '결혼식, 모바일 청첩장, RSVP, 식사 예약, 애프터 참석 및 행사 운영을 통합 관리하는 프로젝트.',
       status: 'active',
-      currentGoal: '청첩장 · RSVP · 일정 관리',
+      currentGoal:
+        '모바일 청첩장과 RSVP 시스템을 완성하고 식사, 참석자 관리 및 남은 결혼식 운영 사항을 확정한다.',
       icon: '✦',
       color: '#c4a574',
       archived: false,

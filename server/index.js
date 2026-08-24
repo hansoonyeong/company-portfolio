@@ -9,6 +9,7 @@ import { buildDefaultProjects } from '../src/data/defaultProjects.js'
 import { buildDefaultHero } from '../src/data/defaultHero.js'
 import { createWeddingRouter } from './wedding/routes.js'
 import { createOfficeRouter } from './office/routes.js'
+import { ensureRealWorkspaceImported } from './office/ensureWorkspaceImport.js'
 import { loadEnvFile } from './loadEnv.js'
 
 loadEnvFile()
@@ -826,7 +827,17 @@ if (process.env.SERVE_STATIC === '1') {
 const isDirectRun = process.argv[1] === fileURLToPath(import.meta.url)
 
 if (isDirectRun) {
-  app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`)
-  })
+  ensureRealWorkspaceImported()
+    .then((result) => {
+      if (result?.imported) console.log('[office] Real workspace data imported')
+      else if (result?.skipped) console.log('[office] Workspace import skipped:', result.reason)
+    })
+    .catch((err) => {
+      console.error('[office] Workspace import failed:', err.message)
+    })
+    .finally(() => {
+      app.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`)
+      })
+    })
 }
