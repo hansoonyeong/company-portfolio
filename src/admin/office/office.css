@@ -479,14 +479,22 @@
   position: fixed;
   inset: 0;
   background: rgba(28, 28, 28, 0.28);
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
   padding: 20px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   z-index: 80;
 }
 
 .office-modal {
   width: min(440px, 100%);
+  max-height: calc(100dvh - 40px);
+  margin: auto 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   background: var(--office-surface);
   border: 1px solid var(--office-line);
   border-radius: calc(var(--office-radius) + 2px);
