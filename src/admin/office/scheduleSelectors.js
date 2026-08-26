@@ -141,26 +141,40 @@ export function isActive(item) {
   return !DONE.has(item.status)
 }
 
+const DEFERRED_CATEGORIES = new Set([
+  'kimchi_phase_4',
+  'kimchi_phase_5',
+  'wedding_phase_vendors',
+  'wedding_phase_selfshoot',
+  'wedding_phase_invite',
+  'wedding_phase_rsvp',
+  'wedding_phase_headcount',
+  'wedding_phase_final',
+  'wedding_phase_day',
+])
+
+const FOCUS_CATEGORIES = new Set(['kimchi_phase_3', 'wedding_phase_now'])
+
 export function partitionToday(items, nowKey = todayKey()) {
   const weekEnd = addDaysKey(nowKey, 7)
   const active = items.filter(isActive)
 
   const overdue = active.filter((i) => i.date && i.date < nowKey)
   const todayAction = active.filter((i) => {
-    if (i.category === 'kimchi_phase_4' || i.category === 'kimchi_phase_5') {
-      // Only surface if a real date/follow-up hits today
+    if (DEFERRED_CATEGORIES.has(i.category)) {
+      // Only when a real date/follow-up hits today (e.g. approaching RSVP deadlines later)
       if (i.date === nowKey || i.followUpDate === nowKey) return true
       return false
     }
     if (i.date === nowKey) return true
     if (i.followUpDate === nowKey) return true
-    // Current-focus phase without inventing extra dates elsewhere
-    if (i.category === 'kimchi_phase_3' && !i.isMilestone) return true
+    if (FOCUS_CATEGORIES.has(i.category) && !i.isMilestone) return true
     return false
   })
   const thisWeek = active.filter((i) => {
     if (!i.date) return false
     if (i.date <= nowKey) return false
+    if (DEFERRED_CATEGORIES.has(i.category) && daysBetween(nowKey, i.date) > 21) return false
     return i.date <= weekEnd
   })
   const waiting = active.filter((i) => i.status === 'waiting')
@@ -178,29 +192,37 @@ export function partitionToday(items, nowKey = todayKey()) {
     waiting,
     milestones,
     firstCheck,
-    weekDeadlines: active.filter((i) => i.date && i.date >= nowKey && i.date <= weekEnd),
+    weekDeadlines: active.filter((i) => {
+      if (!i.date || i.date < nowKey || i.date > weekEnd) return false
+      if (DEFERRED_CATEGORIES.has(i.category) && daysBetween(nowKey, i.date) > 21) return false
+      return true
+    }),
   }
 }
 
 function pickFirstCheck(active, nowKey) {
   const scored = []
   for (const item of active) {
-    // Phase 4–5 undated work stays off the morning "check first" list
-    const deferredPhase =
-      item.category === 'kimchi_phase_4' || item.category === 'kimchi_phase_5'
-    if (deferredPhase && !(item.date && item.date <= nowKey) && item.followUpDate !== nowKey) {
-      continue
+    if (
+      DEFERRED_CATEGORIES.has(item.category) &&
+      !(item.date && item.date <= nowKey) &&
+      item.followUpDate !== nowKey
+    ) {
+      // Allow major countdowns within 30 days into first-check milestones list via rank 5 only
+      if (!(item.isMilestone && item.date && daysBetween(nowKey, item.date) <= 30)) {
+        continue
+      }
     }
 
     let rank = 99
     if (item.date && item.date < nowKey) rank = 1
     else if (item.date === nowKey) rank = 2
     else if (item.followUpDate === nowKey) rank = 3
-    else if (item.blocking) rank = 4
+    else if (item.blocking && !DEFERRED_CATEGORIES.has(item.category)) rank = 4
     else if (item.isMilestone && item.date) {
       const d = daysBetween(nowKey, item.date)
       if (d !== null && d >= 0 && d <= 14) rank = 5
-    } else if (item.category === 'kimchi_phase_3' && !item.isMilestone) {
+    } else if (FOCUS_CATEGORIES.has(item.category) && !item.isMilestone) {
       rank = 2
     }
     if (rank < 99) scored.push({ item, rank })

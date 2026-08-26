@@ -77,8 +77,28 @@ export default function TimelinePage({ lockedProjectId = null }) {
       kimchi_phase_3: 'PHASE 3 — 3차 집중',
       kimchi_phase_4: 'PHASE 4 — 4차 운영 체계 정비 및 광고 준비',
       kimchi_phase_5: 'PHASE 5 — 5차 외부 확장 및 데이터 분석',
+      wedding_phase_now: '1. 지금 준비',
+      wedding_phase_vendors: '2. 업체 예약',
+      wedding_phase_selfshoot: '3. 셀프웨딩촬영',
+      wedding_phase_invite: '4. 청첩장 준비',
+      wedding_phase_rsvp: '5. RSVP 및 하객 관리',
+      wedding_phase_headcount: '6. 식사 인원 확정',
+      wedding_phase_final: '7. 본식 최종 준비',
+      wedding_phase_day: '8. Wedding Day',
     }
-    const order = ['kimchi_phase_3', 'kimchi_phase_4', 'kimchi_phase_5']
+    const order = [
+      'kimchi_phase_3',
+      'kimchi_phase_4',
+      'kimchi_phase_5',
+      'wedding_phase_now',
+      'wedding_phase_vendors',
+      'wedding_phase_selfshoot',
+      'wedding_phase_invite',
+      'wedding_phase_rsvp',
+      'wedding_phase_headcount',
+      'wedding_phase_final',
+      'wedding_phase_day',
+    ]
     const hasPhase = projectItems.some((i) => order.includes(i.category))
     if (!hasPhase) return null
     return order
@@ -125,6 +145,9 @@ export default function TimelinePage({ lockedProjectId = null }) {
               <span className={`sch-health sch-health--${health}`}>{HEALTH_LABEL[health]}</span>
             ) : null}
             {item.isMilestone ? <span className="sch-tag">Phase</span> : null}
+            {item.notes?.includes('한 달 전 최종 인원 전달 마감') ? (
+              <span className="sch-tag">한 달 전 최종 인원 전달 마감</span>
+            ) : null}
             <span className="office-badge">{SCHEDULE_STATUS_LABEL[item.status] || item.status}</span>
           </div>
           <h3>{item.title}</h3>

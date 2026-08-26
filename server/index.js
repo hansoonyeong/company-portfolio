@@ -11,6 +11,7 @@ import { createWeddingRouter } from './wedding/routes.js'
 import { createOfficeRouter } from './office/routes.js'
 import { ensureRealWorkspaceImported } from './office/ensureWorkspaceImport.js'
 import { ensureKimchiMeeting20260826 } from './office/ensureKimchiMeeting20260826.js'
+import { ensureWeddingScheduleV1 } from './office/ensureWeddingScheduleV1.js'
 import { loadEnvFile } from './loadEnv.js'
 
 loadEnvFile()
@@ -855,6 +856,19 @@ if (isDirectRun) {
         })
       } catch (err) {
         console.error('[office] Kimchi meeting import failed:', err.message)
+      }
+    })
+    .then(async () => {
+      try {
+        const result = await ensureWeddingScheduleV1()
+        if (result?.skipped) console.log('[office] Wedding schedule import skipped:', result.reason)
+        else
+          console.log('[office] Wedding schedule imported', {
+            tasks: result.createdTasks?.length,
+            milestones: result.createdMilestones?.length,
+          })
+      } catch (err) {
+        console.error('[office] Wedding schedule import failed:', err.message)
       }
     })
     .finally(() => {
