@@ -7,6 +7,8 @@ import {
   SCHEDULE_TYPE_LABEL,
   addDaysKey,
   formatKoreanDate,
+  formatKoreanDateTime,
+  formatTimeLabel,
   startOfWeekMonday,
   todayKey,
   toDateKey,
@@ -17,9 +19,15 @@ import '../office/schedule.css'
 
 const WEEKDAYS = ['월', '화', '수', '목', '금', '토', '일']
 
+function sortByTime(a, b) {
+  return String(a.time || '99:99').localeCompare(String(b.time || '99:99'))
+}
+
 function ItemCard({ item, onOpen }) {
+  const timeLabel = formatTimeLabel(item.time)
   return (
     <button type="button" className="sch-cal-card" onClick={() => onOpen(item)}>
+      {timeLabel ? <span className="sch-cal-card__time">{timeLabel}</span> : null}
       <span className="sch-cal-card__dot" style={{ background: item.projectColor }} />
       <span className="sch-cal-card__project">{item.projectName}</span>
       <strong>{item.title}</strong>
@@ -30,7 +38,7 @@ function ItemCard({ item, onOpen }) {
   )
 }
 
-function DetailDrawer({ item, onClose }) {
+function DetailDrawer({ item, onClose, onEdit }) {
   if (!item) return null
   return (
     <div className="office-modal-backdrop" role="presentation" onClick={onClose}>
@@ -47,8 +55,15 @@ function DetailDrawer({ item, onClose }) {
             <dd>{item.projectName}</dd>
           </div>
           <div>
-            <dt>날짜</dt>
-            <dd>{item.date ? formatKoreanDate(item.date) : '미정'}</dd>
+            <dt>날짜 · 시간</dt>
+            <dd>
+              {item.date || item.time
+                ? formatKoreanDateTime(item.date, item.time)
+                : '미정'}
+              {item.endDate || item.endTime
+                ? ` ~ ${formatKoreanDateTime(item.endDate || item.date, item.endTime)}`
+                : ''}
+            </dd>
           </div>
           <div>
             <dt>유형</dt>
@@ -65,6 +80,16 @@ function DetailDrawer({ item, onClose }) {
             </div>
           ) : null}
         </dl>
+        <div className="office-modal__actions">
+          <button type="button" className="office-btn" onClick={onClose}>
+            닫기
+          </button>
+          {item.scheduleId || item.rawSchedule ? (
+            <button type="button" className="office-btn office-btn--primary" onClick={onEdit}>
+              수정
+            </button>
+          ) : null}
+        </div>
       </div>
     </div>
   )
@@ -76,6 +101,7 @@ export default function SchedulePage() {
   const [anchor, setAnchor] = useState(todayKey())
   const [addOpen, setAddOpen] = useState(false)
   const [addPrefill, setAddPrefill] = useState({ title: '', date: '', projectId: '' })
+  const [editItem, setEditItem] = useState(null)
   const [quick, setQuick] = useState('')
   const [selected, setSelected] = useState(null)
   const [dayFocus, setDayFocus] = useState(null)
@@ -93,6 +119,7 @@ export default function SchedulePage() {
       if (!map.has(item.date)) map.set(item.date, [])
       map.get(item.date).push(item)
     }
+    for (const list of map.values()) list.sort(sortByTime)
     return map
   }, [items])
 
@@ -106,6 +133,13 @@ export default function SchedulePage() {
     const start = startOfWeekMonday(firstKey)
     return Array.from({ length: 42 }, (_, i) => addDaysKey(start, i))
   }, [anchor])
+
+  function openEdit(workItem) {
+    const raw = workItem.rawSchedule || (schedule || []).find((s) => s.id === workItem.scheduleId)
+    if (!raw) return
+    setSelected(null)
+    setEditItem(raw)
+  }
 
   function submitQuick(e) {
     e.preventDefault()
@@ -290,7 +324,11 @@ export default function SchedulePage() {
         </>
       ) : null}
 
-      <DetailDrawer item={selected} onClose={() => setSelected(null)} />
+      <DetailDrawer
+        item={selected}
+        onClose={() => setSelected(null)}
+        onEdit={() => openEdit(selected)}
+      />
       {addOpen ? (
         <ScheduleAddModal
           onClose={() => setAddOpen(false)}
@@ -298,6 +336,13 @@ export default function SchedulePage() {
           initialTitle={addPrefill.title}
           initialDate={addPrefill.date}
           initialProjectId={addPrefill.projectId}
+        />
+      ) : null}
+      {editItem ? (
+        <ScheduleAddModal
+          editItem={editItem}
+          onClose={() => setEditItem(null)}
+          onSaved={refresh}
         />
       ) : null}
     </div>

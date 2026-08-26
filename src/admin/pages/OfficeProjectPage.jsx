@@ -26,6 +26,7 @@ import {
   SCHEDULE_STATUS_LABEL,
   SCHEDULE_TYPE_LABEL,
   formatKoreanDate,
+  formatKoreanDateTime,
   itemEffectiveDate,
 } from '../office/scheduleUtils'
 import TimelinePage from './TimelinePage'
@@ -55,6 +56,7 @@ export default function OfficeProjectPage() {
   const [memoryQuery, setMemoryQuery] = useState('')
   const [roundOpen, setRoundOpen] = useState(false)
   const [addScheduleOpen, setAddScheduleOpen] = useState(false)
+  const [editScheduleItem, setEditScheduleItem] = useState(null)
 
   const project = projects.find((p) => p.id === id)
 
@@ -291,8 +293,8 @@ export default function OfficeProjectPage() {
                 <strong className="sch-row__title">{item.title}</strong>
                 <div className="sch-row__meta">
                   <span>
-                    {itemEffectiveDate(item)
-                      ? formatKoreanDate(itemEffectiveDate(item))
+                    {itemEffectiveDate(item) || item.time
+                      ? formatKoreanDateTime(itemEffectiveDate(item), item.time)
                       : '날짜 미정'}
                   </span>
                   <span>{SCHEDULE_TYPE_LABEL[item.type] || item.type}</span>
@@ -301,6 +303,13 @@ export default function OfficeProjectPage() {
                 </div>
               </div>
               <div className="sch-row__actions">
+                <button
+                  type="button"
+                  className="office-btn"
+                  onClick={() => setEditScheduleItem(item)}
+                >
+                  수정
+                </button>
                 {item.status !== 'completed' ? (
                   <button
                     type="button"
@@ -361,6 +370,13 @@ export default function OfficeProjectPage() {
           onClose={() => setAddScheduleOpen(false)}
           onSaved={refresh}
           initialProjectId={id}
+        />
+      ) : null}
+      {editScheduleItem ? (
+        <ScheduleAddModal
+          editItem={editScheduleItem}
+          onClose={() => setEditScheduleItem(null)}
+          onSaved={refresh}
         />
       ) : null}
     </div>

@@ -13,6 +13,7 @@ import {
   SCHEDULE_STATUS_LABEL,
   countdownLabel,
   formatKoreanDate,
+  formatKoreanDateTime,
   itemEffectiveDate,
   todayKey,
 } from '../office/scheduleUtils'
@@ -25,6 +26,7 @@ export default function TimelinePage({ lockedProjectId = null }) {
   const { activeProjects, schedule, tasks, refresh, loading } = useOfficeData()
   const [projectId, setProjectId] = useState(lockedProjectId || '')
   const [addOpen, setAddOpen] = useState(false)
+  const [editItem, setEditItem] = useState(null)
   const [editingId, setEditingId] = useState(null)
   const [editDate, setEditDate] = useState('')
   const [ensured, setEnsured] = useState(false)
@@ -133,7 +135,7 @@ export default function TimelinePage({ lockedProjectId = null }) {
               <div className="sch-tl-item__rail" aria-hidden />
               <div className="sch-tl-item__body">
                 <div className="sch-tl-item__top">
-                  <time>{formatKoreanDate(date)}</time>
+                  <time>{formatKoreanDateTime(date, item.time)}</time>
                   {item.isMilestone ? (
                     <span className="sch-countdown">{countdownLabel(date)}</span>
                   ) : null}
@@ -167,6 +169,9 @@ export default function TimelinePage({ lockedProjectId = null }) {
                   ) : (
                     <span className="sch-tag">완료 / 지남</span>
                   )}
+                  <button type="button" className="office-btn" onClick={() => setEditItem(item)}>
+                    수정
+                  </button>
                   <button
                     type="button"
                     className="office-btn"
@@ -213,6 +218,9 @@ export default function TimelinePage({ lockedProjectId = null }) {
                 ))}
               </div>
               <div className="sch-row__actions">
+                <button type="button" className="office-btn" onClick={() => setEditItem(item)}>
+                  수정
+                </button>
                 <button
                   type="button"
                   className="office-btn"
@@ -247,6 +255,13 @@ export default function TimelinePage({ lockedProjectId = null }) {
           onClose={() => setAddOpen(false)}
           onSaved={refresh}
           initialProjectId={projectId}
+        />
+      ) : null}
+      {editItem ? (
+        <ScheduleAddModal
+          editItem={editItem}
+          onClose={() => setEditItem(null)}
+          onSaved={refresh}
         />
       ) : null}
     </div>

@@ -485,8 +485,24 @@
   border-bottom: 1px solid #ebe6dc;
 }
 
-.office-modal--wide {
-  max-width: 640px;
+.sch-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 520px) {
+  .sch-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sch-cal-card__time {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 650;
+  color: #3d4a3f;
+  margin-bottom: 2px;
 }
 
 .office-check {

@@ -13,6 +13,7 @@ import {
   addDaysKey,
   daysWaitingLabel,
   formatKoreanDate,
+  formatKoreanDateTime,
   todayKey,
 } from '../office/scheduleUtils'
 import '../office/office.css'
@@ -38,7 +39,7 @@ async function rescheduleItem(item, date) {
   }
 }
 
-function WorkRow({ item, onChanged, showWaiting }) {
+function WorkRow({ item, onChanged, showWaiting, onEdit }) {
   const [busy, setBusy] = useState(false)
   const [dateOpen, setDateOpen] = useState(false)
 
@@ -62,7 +63,11 @@ function WorkRow({ item, onChanged, showWaiting }) {
         </span>
         <strong className="sch-row__title">{item.title}</strong>
         <div className="sch-row__meta">
-          {item.date ? <span>{formatKoreanDate(item.date)}</span> : <span>날짜 미정</span>}
+          {item.date || item.time ? (
+            <span>{formatKoreanDateTime(item.date, item.time)}</span>
+          ) : (
+            <span>날짜 미정</span>
+          )}
           <span>{SCHEDULE_TYPE_LABEL[item.type] || item.type}</span>
           <span>{SCHEDULE_STATUS_LABEL[item.status] || item.status}</span>
           <span className={`sch-urgency sch-urgency--${item.urgency}`}>
@@ -86,6 +91,11 @@ function WorkRow({ item, onChanged, showWaiting }) {
         >
           완료
         </button>
+        {item.scheduleId || item.rawSchedule ? (
+          <button type="button" className="office-btn" disabled={busy} onClick={() => onEdit?.(item)}>
+            수정
+          </button>
+        ) : null}
         <button type="button" className="office-btn" disabled={busy} onClick={() => setDateOpen((v) => !v)}>
           날짜 변경
         </button>
@@ -119,6 +129,17 @@ function WorkRow({ item, onChanged, showWaiting }) {
                 run(() => rescheduleItem(item, e.target.value))
               }}
             />
+            <label className="sch-inline-date">
+              <span>시간</span>
+              <input
+                type="time"
+                defaultValue={item.time || ''}
+                onChange={(e) => {
+                  if (!item.scheduleId) return
+                  run(() => updateOfficeSchedule(item.scheduleId, { time: e.target.value || null }))
+                }}
+              />
+            </label>
           </div>
         ) : null}
         {item.taskId ? (
@@ -143,6 +164,7 @@ function Section({ title, children, empty }) {
 export default function TodayPage() {
   const { tasks, projects, schedule, refresh, loading, error } = useOfficeData()
   const [addOpen, setAddOpen] = useState(false)
+  const [editItem, setEditItem] = useState(null)
   const nowKey = todayKey()
 
   const items = useMemo(
@@ -150,6 +172,11 @@ export default function TodayPage() {
     [tasks, schedule, projects],
   )
   const parts = useMemo(() => partitionToday(items, nowKey), [items, nowKey])
+
+  function openEdit(workItem) {
+    const raw = workItem.rawSchedule || (schedule || []).find((s) => s.id === workItem.scheduleId)
+    if (raw) setEditItem(raw)
+  }
 
   return (
     <div className="office-page sch-page">
@@ -188,25 +215,25 @@ export default function TodayPage() {
 
       <Section title="가장 먼저 확인할 것" empty={parts.firstCheck.length === 0}>
         {parts.firstCheck.map((item) => (
-          <WorkRow key={item.id} item={item} onChanged={refresh} showWaiting />
+          <WorkRow key={item.id} item={item} onChanged={refresh} showWaiting onEdit={openEdit} />
         ))}
       </Section>
 
       <Section title="오늘 해야 할 일" empty={parts.todayAction.length === 0}>
         {parts.todayAction.map((item) => (
-          <WorkRow key={item.id} item={item} onChanged={refresh} />
+          <WorkRow key={item.id} item={item} onChanged={refresh} onEdit={openEdit} />
         ))}
       </Section>
 
       <Section title="이번 주" empty={parts.thisWeek.length === 0}>
         {parts.thisWeek.map((item) => (
-          <WorkRow key={item.id} item={item} onChanged={refresh} />
+          <WorkRow key={item.id} item={item} onChanged={refresh} onEdit={openEdit} />
         ))}
       </Section>
 
       <Section title="대기 중" empty={parts.waiting.length === 0}>
         {parts.waiting.map((item) => (
-          <WorkRow key={item.id} item={item} onChanged={refresh} showWaiting />
+          <WorkRow key={item.id} item={item} onChanged={refresh} showWaiting onEdit={openEdit} />
         ))}
         <p className="sch-section__link">
           <Link to="/admin/waiting">대기 목록 전체 보기 →</Link>
@@ -215,17 +242,20 @@ export default function TodayPage() {
 
       <Section title="지연" empty={parts.overdue.length === 0}>
         {parts.overdue.map((item) => (
-          <WorkRow key={item.id} item={item} onChanged={refresh} />
+          <WorkRow key={item.id} item={item} onChanged={refresh} onEdit={openEdit} />
         ))}
       </Section>
 
       <Section title="다가오는 중요 일정" empty={parts.milestones.length === 0}>
         {parts.milestones.map((item) => (
-          <WorkRow key={item.id} item={item} onChanged={refresh} />
+          <WorkRow key={item.id} item={item} onChanged={refresh} onEdit={openEdit} />
         ))}
       </Section>
 
       {addOpen ? <ScheduleAddModal onClose={() => setAddOpen(false)} onSaved={refresh} /> : null}
+      {editItem ? (
+        <ScheduleAddModal editItem={editItem} onClose={() => setEditItem(null)} onSaved={refresh} />
+      ) : null}
     </div>
   )
 }

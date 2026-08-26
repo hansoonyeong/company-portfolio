@@ -129,3 +129,32 @@ export const SCHEDULE_STATUS_LABEL = {
 export function itemEffectiveDate(item) {
   return toDateKey(item.date || item.endDate || item.startDate || item.dueDate)
 }
+
+/** Normalize "9:30" → "09:30"; invalid → null */
+export function normalizeTime(value) {
+  if (!value) return null
+  const m = String(value).trim().match(/^(\d{1,2}):(\d{2})$/)
+  if (!m) return null
+  const h = Number(m[1])
+  const min = Number(m[2])
+  if (h < 0 || h > 23 || min < 0 || min > 59) return null
+  return `${String(h).padStart(2, '0')}:${String(min).padStart(2, '0')}`
+}
+
+export function formatTimeLabel(time) {
+  const t = normalizeTime(time)
+  if (!t) return null
+  const [h, m] = t.split(':').map(Number)
+  const period = h < 12 ? '오전' : '오후'
+  const hour12 = h % 12 === 0 ? 12 : h % 12
+  return `${period} ${hour12}:${String(m).padStart(2, '0')}`
+}
+
+export function formatKoreanDateTime(dateKey, time) {
+  const dateLabel = dateKey ? formatKoreanDate(dateKey) : null
+  const timeLabel = formatTimeLabel(time)
+  if (dateLabel && timeLabel) return `${dateLabel} ${timeLabel}`
+  if (dateLabel) return dateLabel
+  if (timeLabel) return timeLabel
+  return '—'
+}

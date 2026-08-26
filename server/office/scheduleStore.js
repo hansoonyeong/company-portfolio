@@ -5,6 +5,19 @@ const FILE = 'office-schedule.json'
 const now = () => new Date().toISOString()
 const id = () => crypto.randomUUID()
 
+/** Accept "HH:MM" or "H:MM"; empty → null */
+function normalizeTime(value) {
+  if (value === undefined) return null
+  if (value === null || value === '') return null
+  const raw = String(value).trim()
+  const m = raw.match(/^(\d{1,2}):(\d{2})$/)
+  if (!m) return null
+  const h = Number(m[1])
+  const min = Number(m[2])
+  if (h < 0 || h > 23 || min < 0 || min > 59) return null
+  return `${String(h).padStart(2, '0')}:${String(min).padStart(2, '0')}`
+}
+
 export function seedSchedule() {
   return []
 }
@@ -41,8 +54,14 @@ function normalizeItem(body, existing = null) {
       body.description !== undefined ? String(body.description).trim() : existing?.description || '',
     type: body.type || existing?.type || 'task',
     date: body.date !== undefined ? body.date || null : existing?.date || null,
+    time: normalizeTime(
+      body.time !== undefined ? body.time : existing?.time,
+    ),
     startDate: body.startDate !== undefined ? body.startDate || null : existing?.startDate || null,
     endDate: body.endDate !== undefined ? body.endDate || null : existing?.endDate || null,
+    endTime: normalizeTime(
+      body.endTime !== undefined ? body.endTime : existing?.endTime,
+    ),
     status,
     priority: body.priority || existing?.priority || 'medium',
     assignedAgentId:
