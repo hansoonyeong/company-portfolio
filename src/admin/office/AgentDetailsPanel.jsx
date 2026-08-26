@@ -1,5 +1,6 @@
 import { AGENT_STATE_LABEL } from '../OfficeDataContext'
 import { getZoneById } from './officeData'
+import { formatKoreanDate, itemEffectiveDate, todayKey } from './scheduleUtils'
 
 export default function AgentDetailsPanel({
   agent,
@@ -10,8 +11,30 @@ export default function AgentDetailsPanel({
   onMarkDone,
   onViewResult,
   isManualMode,
+  tasks = [],
+  schedule = [],
 }) {
   if (!agent) return null
+
+  const agentTasks = tasks.filter(
+    (t) => t.assignedAgentId === agent.id && t.status !== 'done',
+  )
+  const upcoming = agentTasks
+    .filter((t) => t.dueDate)
+    .sort((a, b) => String(a.dueDate).localeCompare(String(b.dueDate)))
+    .slice(0, 3)
+  const waiting = agentTasks.filter((t) => t.status === 'waiting')
+  const agentSchedule = (schedule || [])
+    .filter(
+      (s) =>
+        s.assignedAgentId === agent.id &&
+        s.status !== 'completed' &&
+        s.status !== 'cancelled',
+    )
+    .sort((a, b) =>
+      String(itemEffectiveDate(a) || '9999').localeCompare(String(itemEffectiveDate(b) || '9999')),
+    )
+    .slice(0, 3)
 
   return (
     <aside className="office-details" aria-label={`${agent.name} 상세`}>
@@ -40,8 +63,8 @@ export default function AgentDetailsPanel({
           <dd>{agent.project || '—'}</dd>
         </div>
         <div>
-          <dt>작업</dt>
-          <dd>{agent.currentTask || '—'}</dd>
+          <dt>현재 담당 업무</dt>
+          <dd>{agent.currentTask || agentTasks[0]?.title || '—'}</dd>
         </div>
         <div>
           <dt>메시지</dt>
@@ -52,6 +75,39 @@ export default function AgentDetailsPanel({
           <dd>{getZoneById(agent.currentZone || agent.zone || agent.homeZone).label}</dd>
         </div>
       </dl>
+
+      <div className="office-details__block">
+        <h3>다가오는 마감</h3>
+        {upcoming.length === 0 && agentSchedule.length === 0 ? <p>—</p> : null}
+        <ul>
+          {upcoming.map((t) => (
+            <li key={t.id}>
+              {t.title}
+              {t.dueDate ? ` · ${formatKoreanDate(String(t.dueDate).slice(0, 10))}` : ''}
+              {String(t.dueDate || '').slice(0, 10) === todayKey() ? ' (오늘)' : ''}
+            </li>
+          ))}
+          {agentSchedule.map((s) => (
+            <li key={s.id}>
+              {s.title}
+              {itemEffectiveDate(s) ? ` · ${formatKoreanDate(itemEffectiveDate(s))}` : ''}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="office-details__block">
+        <h3>대기 업무</h3>
+        {waiting.length === 0 ? <p>—</p> : null}
+        <ul>
+          {waiting.map((t) => (
+            <li key={t.id}>
+              {t.title}
+              {t.waitingFor ? ` · ${t.waitingFor}` : ''}
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <div className="office-details__actions">
         <button type="button" className="office-btn office-btn--primary" onClick={onAssignWork}>
@@ -77,7 +133,7 @@ export default function AgentDetailsPanel({
 
       {isManualMode ? (
         <p className="office-details__note">
-          Manual Mode — characters show assigned work, not autonomous generation.
+          Manual Mode — 캐릭터 상태는 실제 배정 업무·대기·마감에서 파생됩니다.
         </p>
       ) : null}
     </aside>

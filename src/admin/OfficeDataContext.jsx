@@ -13,6 +13,7 @@ const EMPTY = {
   activity: [],
   meetings: [],
   conversations: [],
+  schedule: [],
 }
 
 const DEFAULT_MODE = {
@@ -44,6 +45,7 @@ export function OfficeDataProvider({ children }) {
         activity: bundle.activity || [],
         meetings: bundle.meetings || [],
         conversations: bundle.conversations || [],
+        schedule: bundle.schedule || [],
       })
       setProviderStatus({
         mode: status.mode || (status.configured ? 'ai' : 'manual'),

@@ -4,6 +4,7 @@ import { OfficeDataProvider } from './OfficeDataContext'
 import AdminSidebar from './components/AdminSidebar'
 import AdminTopbar from './components/AdminTopbar'
 import AdminMobileNav from './components/AdminMobileNav'
+import AdminAlerts from './components/AdminAlerts'
 import './admin-shell.css'
 import '../pages/AdminPage.css'
 
@@ -46,6 +47,7 @@ export default function AdminLayout() {
         <div className="office-shell__main">
           <AdminTopbar pathname={location.pathname} />
           <AdminMobileNav />
+          <AdminAlerts />
           <div className="office-shell__content">
             <Outlet />
           </div>

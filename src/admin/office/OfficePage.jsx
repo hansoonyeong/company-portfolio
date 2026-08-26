@@ -48,6 +48,7 @@ export default function OfficePage() {
     agents,
     projects,
     tasks,
+    schedule,
     meetings,
     loading,
     error,
@@ -333,6 +334,8 @@ export default function OfficePage() {
                 : undefined
             }
             isManualMode={isManualMode}
+            tasks={tasks}
+            schedule={schedule || []}
           />
         )}
       </div>

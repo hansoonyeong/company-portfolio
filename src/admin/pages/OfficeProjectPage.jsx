@@ -8,6 +8,7 @@ import {
   deleteOfficeNote,
   executeAiWork,
   updateOfficeProject,
+  updateOfficeSchedule,
   updateOfficeTask,
 } from '../../lib/officeApi'
 import {
@@ -18,32 +19,56 @@ import {
   TASK_STATUS_LABEL,
   useOfficeData,
 } from '../OfficeDataContext'
-import AiChatPanel from '../office/AiChatPanel'
+import KimchiRoundModal from '../office/KimchiRoundModal'
+import ScheduleAddModal from '../office/ScheduleAddModal'
 import { buildProjectBrief, copyText } from '../office/briefBuilder'
+import {
+  SCHEDULE_STATUS_LABEL,
+  SCHEDULE_TYPE_LABEL,
+  formatKoreanDate,
+  itemEffectiveDate,
+} from '../office/scheduleUtils'
+import TimelinePage from './TimelinePage'
 import '../office/office.css'
+import '../office/schedule.css'
 
 const TABS = [
-  { id: 'overview', label: '개요' },
-  { id: 'tasks', label: '작업' },
-  { id: 'notes', label: '노트' },
-  { id: 'memory', label: '메모리' },
-  { id: 'files', label: '파일' },
-  { id: 'chat', label: '채팅' },
+  { id: 'overview', label: 'Overview' },
+  { id: 'tasks', label: 'Tasks' },
+  { id: 'schedule', label: 'Schedule' },
+  { id: 'timeline', label: 'Timeline' },
+  { id: 'memory', label: 'Memory' },
+  { id: 'notes', label: 'Notes' },
 ]
+
+function isKimchiProject(project) {
+  if (!project) return false
+  return project.id === 'proj-kimchi' || /kimchi|김치/i.test(project.name || '')
+}
 
 export default function OfficeProjectPage() {
   const { id } = useParams()
-  const { projects, tasks, notes, memory, agents, activity, refresh, loading, isManualMode } =
+  const { projects, tasks, notes, memory, agents, activity, schedule, refresh, loading, isManualMode } =
     useOfficeData()
   const [tab, setTab] = useState('overview')
   const [memoryFilter, setMemoryFilter] = useState('all')
   const [memoryQuery, setMemoryQuery] = useState('')
+  const [roundOpen, setRoundOpen] = useState(false)
+  const [addScheduleOpen, setAddScheduleOpen] = useState(false)
 
   const project = projects.find((p) => p.id === id)
 
   const projectTasks = useMemo(() => tasks.filter((t) => t.projectId === id), [tasks, id])
   const projectNotes = useMemo(() => notes.filter((n) => n.projectId === id), [notes, id])
   const projectMemory = useMemo(() => memory.filter((m) => m.projectId === id), [memory, id])
+  const projectSchedule = useMemo(
+    () =>
+      (schedule || [])
+        .filter((s) => s.projectId === id)
+        .slice()
+        .sort((a, b) => String(itemEffectiveDate(a) || '9999').localeCompare(String(itemEffectiveDate(b) || '9999'))),
+    [schedule, id],
+  )
   const projectActivity = useMemo(
     () => activity.filter((a) => a.projectId === id).slice(0, 12),
     [activity, id],
@@ -69,6 +94,24 @@ export default function OfficeProjectPage() {
     return true
   })
 
+  const currentRound = useMemo(() => {
+    const withRound = projectSchedule.filter((s) => s.roundId)
+    if (!withRound.length) return null
+    const latest = withRound.reduce((acc, item) => {
+      if (!acc || String(item.createdAt) > String(acc.createdAt)) return item
+      return acc
+    }, null)
+    return latest?.roundId
+      ? {
+          id: latest.roundId,
+          name: latest.roundName,
+          steps: withRound
+            .filter((s) => s.roundId === latest.roundId)
+            .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)),
+        }
+      : null
+  }, [projectSchedule])
+
   if (loading && !project) return <p>불러오는 중…</p>
   if (!project) {
     return (
@@ -89,26 +132,32 @@ export default function OfficeProjectPage() {
         {' · '}
         목표: {project.currentGoal || '—'}
       </p>
-      <button
-        type="button"
-        className="office-btn"
-        style={{ marginTop: 10 }}
-        onClick={async () => {
-          const text = buildProjectBrief({
-            project,
-            memory: projectMemory,
-            tasks: projectTasks,
-            notes: projectNotes,
-          })
-          const ok = await copyText(text)
-          if (!ok) window.prompt('Copy Project Brief:', text)
-          else window.alert('Project brief copied')
-        }}
-      >
-        Copy Project Brief
-      </button>
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 10 }}>
+        <button
+          type="button"
+          className="office-btn"
+          onClick={async () => {
+            const text = buildProjectBrief({
+              project,
+              memory: projectMemory,
+              tasks: projectTasks,
+              notes: projectNotes,
+            })
+            const ok = await copyText(text)
+            if (!ok) window.prompt('Copy Project Brief:', text)
+            else window.alert('Project brief copied')
+          }}
+        >
+          Copy Project Brief
+        </button>
+        {isKimchiProject(project) ? (
+          <button type="button" className="office-btn office-btn--primary" onClick={() => setRoundOpen(true)}>
+            새 차수 만들기
+          </button>
+        ) : null}
+      </div>
 
-      <div className="office-topbar__switch" style={{ margin: '18px 0', display: 'inline-flex' }}>
+      <div className="office-topbar__switch" style={{ margin: '18px 0', display: 'inline-flex', flexWrap: 'wrap' }}>
         {TABS.map((item) => (
           <button
             key={item.id}
@@ -131,6 +180,29 @@ export default function OfficeProjectPage() {
               {projectTasks.filter((t) => t.status === 'waiting').length}
             </p>
           </section>
+          <section className="office-card">
+            <h3>일정</h3>
+            <p>활성 일정 {projectSchedule.filter((s) => s.status !== 'completed').length}건</p>
+            <button type="button" className="office-btn" onClick={() => setTab('schedule')}>
+              Schedule 보기
+            </button>
+          </section>
+          {isKimchiProject(project) && currentRound ? (
+            <section className="office-card">
+              <h3>현재 차수</h3>
+              <p>{currentRound.name}</p>
+              <ol className="sch-round-steps">
+                {currentRound.steps.map((step) => (
+                  <li key={step.id}>
+                    <span>
+                      {step.title} · {SCHEDULE_STATUS_LABEL[step.status] || step.status}
+                    </span>
+                    <span>{itemEffectiveDate(step) || '미정'}</span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          ) : null}
           <section className="office-card">
             <h3>배정된 AI</h3>
             {assignedAgents.length === 0 ? (
@@ -195,6 +267,60 @@ export default function OfficeProjectPage() {
           isManualMode={isManualMode}
         />
       )}
+
+      {tab === 'schedule' && (
+        <div>
+          <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+            <button
+              type="button"
+              className="office-btn office-btn--primary"
+              onClick={() => setAddScheduleOpen(true)}
+            >
+              + 일정 추가
+            </button>
+            {isKimchiProject(project) ? (
+              <button type="button" className="office-btn" onClick={() => setRoundOpen(true)}>
+                새 차수 만들기
+              </button>
+            ) : null}
+          </div>
+          {projectSchedule.length === 0 ? <p className="sch-empty">일정 없음</p> : null}
+          {projectSchedule.map((item) => (
+            <article key={item.id} className="sch-row">
+              <div className="sch-row__main">
+                <strong className="sch-row__title">{item.title}</strong>
+                <div className="sch-row__meta">
+                  <span>
+                    {itemEffectiveDate(item)
+                      ? formatKoreanDate(itemEffectiveDate(item))
+                      : '날짜 미정'}
+                  </span>
+                  <span>{SCHEDULE_TYPE_LABEL[item.type] || item.type}</span>
+                  <span>{SCHEDULE_STATUS_LABEL[item.status] || item.status}</span>
+                  {item.roundName ? <span>{item.roundName}</span> : null}
+                </div>
+              </div>
+              <div className="sch-row__actions">
+                {item.status !== 'completed' ? (
+                  <button
+                    type="button"
+                    className="office-btn"
+                    onClick={async () => {
+                      await updateOfficeSchedule(item.id, { status: 'completed' })
+                      await refresh()
+                    }}
+                  >
+                    완료
+                  </button>
+                ) : null}
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+
+      {tab === 'timeline' && <TimelinePage lockedProjectId={id} />}
+
       {tab === 'notes' && (
         <ProjectNotesTab projectId={id} notes={projectNotes} onChanged={refresh} />
       )}
@@ -222,17 +348,21 @@ export default function OfficeProjectPage() {
           />
         </div>
       )}
-      {tab === 'files' && (
-        <div className="office-card">
-          <h3>파일</h3>
-          <p>오피스 파일 업로드는 Phase 3에서 기존 업로드 구조를 재사용해 추가합니다.</p>
-        </div>
-      )}
-      {tab === 'chat' && (
-        <div className="office-card">
-          <AiChatPanel lockedProjectId={id} />
-        </div>
-      )}
+
+      {roundOpen ? (
+        <KimchiRoundModal
+          projectId={id}
+          onClose={() => setRoundOpen(false)}
+          onSaved={refresh}
+        />
+      ) : null}
+      {addScheduleOpen ? (
+        <ScheduleAddModal
+          onClose={() => setAddScheduleOpen(false)}
+          onSaved={refresh}
+          initialProjectId={id}
+        />
+      ) : null}
     </div>
   )
 }

@@ -835,6 +835,15 @@ if (isDirectRun) {
     .catch((err) => {
       console.error('[office] Workspace import failed:', err.message)
     })
+    .then(async () => {
+      try {
+        const { ensureHangeulSnackTimeline } = await import('./office/scheduleStore.js')
+        const created = await ensureHangeulSnackTimeline('proj-hangeul')
+        if (created?.length) console.log(`[office] Hangeul timeline seeded (${created.length})`)
+      } catch (err) {
+        console.error('[office] Hangeul timeline seed failed:', err.message)
+      }
+    })
     .finally(() => {
       app.listen(PORT, () => {
         console.log(`Server running on http://localhost:${PORT}`)

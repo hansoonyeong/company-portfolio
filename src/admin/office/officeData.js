@@ -43,10 +43,26 @@ export function countByState(agents) {
 export function enrichAgent(agent, { projects = [], tasks = [] } = {}) {
   const task = tasks.find((t) => t.id === agent.currentTaskId)
   const project = projects.find((p) => p.id === agent.currentProjectId)
+  const openTasks = tasks.filter((t) => t.assignedAgentId === agent.id && t.status !== 'done')
+  const waitingTask = openTasks.find((t) => t.status === 'waiting')
+  const workingTask = openTasks.find((t) => t.status === 'in_progress') || task
+
+  let derivedState = agent.state
+  if (agent.state === 'meeting') {
+    derivedState = 'meeting'
+  } else if (waitingTask) {
+    derivedState = 'waiting'
+  } else if (workingTask || agent.state === 'working' || agent.state === 'thinking') {
+    derivedState = agent.state === 'thinking' ? 'thinking' : 'working'
+  } else if (!openTasks.length && (agent.state === 'idle' || agent.state === 'done')) {
+    derivedState = 'idle'
+  }
+
   return {
     ...agent,
+    state: derivedState,
     zone: agent.currentZone || agent.homeZone,
-    currentTask: task?.title || null,
+    currentTask: workingTask?.title || waitingTask?.title || task?.title || null,
     project: project?.name || null,
   }
 }

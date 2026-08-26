@@ -5,13 +5,17 @@ const titles = {
   '/admin/office': '오피스',
   '/admin/dashboard': '대시보드',
   '/admin/today': '오늘',
+  '/admin/schedule': '일정',
+  '/admin/timeline': '타임라인',
+  '/admin/waiting': '대기 중',
   '/admin/inbox': '수신함',
   '/admin/ai-team': 'AI 팀',
-  '/admin/tasks': '작업',
+  '/admin/tasks': '업무',
   '/admin/chat': '채팅',
-  '/admin/notes': '노트',
-  '/admin/files': '파일',
-  '/admin/settings': '설정',
+  '/admin/notes': 'Notes',
+  '/admin/memory': 'Memory',
+  '/admin/files': 'Files',
+  '/admin/settings': 'Settings',
   '/admin/projects': '프로젝트',
   '/admin/website/quotes': '견적',
   '/admin/website/news': '소식',
@@ -40,13 +44,20 @@ export default function AdminTopbar({ pathname }) {
           {isAiMode ? 'AI Mode' : 'Manual Mode'}
         </span>
       </div>
-      <div className="office-topbar__switch" role="tablist" aria-label="오피스 또는 대시보드">
+      <div className="office-topbar__switch" role="tablist" aria-label="주요 화면">
         <NavLink
-          to="/admin/office"
+          to="/admin/today"
           className={({ isActive }) => `office-topbar__switch-btn${isActive ? ' is-active' : ''}`}
           role="tab"
         >
-          오피스
+          오늘
+        </NavLink>
+        <NavLink
+          to="/admin/schedule"
+          className={({ isActive }) => `office-topbar__switch-btn${isActive ? ' is-active' : ''}`}
+          role="tab"
+        >
+          일정
         </NavLink>
         <NavLink
           to="/admin/dashboard"

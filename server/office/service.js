@@ -218,25 +218,29 @@ export async function createTask(body) {
   }
 
   const t = now()
+  const status =
+    body.status ||
+    (mode === 'queue' ? 'todo' : assignedAgentId ? 'in_progress' : 'inbox')
   const task = {
     id: id(),
     projectId: body.projectId || null,
     assignedAgentId,
     title: String(body.title || '').trim(),
     description: String(body.description || '').trim(),
-    status:
-      body.status ||
-      (mode === 'queue' ? 'todo' : assignedAgentId ? 'in_progress' : 'inbox'),
+    status,
     priority: body.priority || 'medium',
     dueDate: body.dueDate || null,
     result: '',
     resultFormat: 'text',
     aiGenerated: false,
     generatedByAgentId: null,
-    startedAt: (body.status === 'in_progress' || (mode === 'start' && assignedAgentId)) ? t : null,
+    startedAt: status === 'in_progress' ? t : null,
     completedAt: null,
     errorMessage: null,
     waitingFor: body.waitingFor ? String(body.waitingFor).trim() : null,
+    waitingSince: status === 'waiting' ? body.waitingSince || t : null,
+    followUpDate: body.followUpDate || null,
+    scheduleId: body.scheduleId || null,
     usage: null,
     suggestedTasks: [],
     suggestedMemory: [],
@@ -313,6 +317,17 @@ export async function updateTask(taskId, body) {
             : nextStatus !== 'waiting' && body.status !== undefined
               ? null
               : (item.waitingFor ?? null),
+        waitingSince:
+          body.waitingSince !== undefined
+            ? body.waitingSince
+            : nextStatus === 'waiting'
+              ? item.waitingSince || (previous?.status !== 'waiting' ? now() : item.waitingSince)
+              : body.status !== undefined && nextStatus !== 'waiting'
+                ? null
+                : item.waitingSince ?? null,
+        followUpDate:
+          body.followUpDate !== undefined ? body.followUpDate : item.followUpDate ?? null,
+        scheduleId: body.scheduleId !== undefined ? body.scheduleId : item.scheduleId ?? null,
         usage: body.usage !== undefined ? body.usage : item.usage,
         suggestedTasks:
           body.suggestedTasks !== undefined ? body.suggestedTasks : item.suggestedTasks,
@@ -406,6 +421,13 @@ export async function updateTask(taskId, body) {
       agentId: updated.assignedAgentId,
       message: `작업 결과 저장: ${updated.title}`,
     })
+  }
+
+  try {
+    const { syncScheduleFromTask } = await import('./scheduleStore.js')
+    await syncScheduleFromTask(updated)
+  } catch {
+    // schedule optional
   }
 
   return updated
@@ -864,7 +886,8 @@ export async function getProject(projectId) {
 }
 
 export async function getOfficeBundle() {
-  const [projects, tasks, notes, memory, agents, activity, meetings, conversations] =
+  const scheduleMod = await import('./scheduleStore.js')
+  const [projects, tasks, notes, memory, agents, activity, meetings, conversations, schedule] =
     await Promise.all([
       getProjects(),
       getTasks(),
@@ -874,6 +897,7 @@ export async function getOfficeBundle() {
       getActivity(),
       getMeetings(),
       getConversations(),
+      scheduleMod.getScheduleItems(),
     ])
-  return { projects, tasks, notes, memory, agents, activity, meetings, conversations }
+  return { projects, tasks, notes, memory, agents, activity, meetings, conversations, schedule }
 }

@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import crypto from 'crypto'
 import * as office from './service.js'
 
 import { createAiRouter, createConversationRoutes } from '../ai/routes.js'
@@ -170,5 +171,140 @@ export function createOfficeRouter(authMiddleware) {
     }),
   )
 
+  // —— Schedule ——
+  router.get(
+    '/schedule',
+    wrap(async (_req, res) => {
+      const { getScheduleItems } = await import('./scheduleStore.js')
+      res.json(await getScheduleItems())
+    }),
+  )
+  router.post(
+    '/schedule',
+    wrap(async (req, res) => {
+      const { createScheduleItem } = await import('./scheduleStore.js')
+      const item = await createScheduleItem(req.body ?? {})
+      // Optional: create linked task
+      if (req.body?.createTask) {
+        const task = await office.createTask({
+          projectId: item.projectId,
+          assignedAgentId: item.assignedAgentId,
+          title: item.title,
+          description: item.description,
+          dueDate: item.date || item.endDate,
+          priority: item.priority,
+          mode: 'queue',
+          status: item.status === 'waiting' ? 'waiting' : 'todo',
+          waitingFor: item.waitingFor,
+          followUpDate: item.followUpDate,
+          scheduleId: item.id,
+        })
+        const { updateScheduleItem } = await import('./scheduleStore.js')
+        const linked = await updateScheduleItem(item.id, { relatedTaskId: task.id })
+        res.status(201).json(linked)
+        return
+      }
+      res.status(201).json(item)
+    }),
+  )
+  router.put(
+    '/schedule/:id',
+    wrap(async (req, res) => {
+      const { updateScheduleItem, getScheduleItem } = await import('./scheduleStore.js')
+      const updated = await updateScheduleItem(req.params.id, req.body ?? {})
+      if (updated.relatedTaskId && (req.body?.date !== undefined || req.body?.status !== undefined)) {
+        const patch = {}
+        if (req.body.date !== undefined) patch.dueDate = req.body.date
+        if (req.body.status === 'completed') patch.status = 'done'
+        if (req.body.status === 'waiting') {
+          patch.status = 'waiting'
+          if (req.body.waitingFor !== undefined) patch.waitingFor = req.body.waitingFor
+        }
+        if (req.body.followUpDate !== undefined) patch.followUpDate = req.body.followUpDate
+        if (Object.keys(patch).length) {
+          try {
+            await office.updateTask(updated.relatedTaskId, { ...patch, force: true })
+          } catch {
+            // task may have been deleted
+          }
+        }
+      }
+      void getScheduleItem
+      res.json(updated)
+    }),
+  )
+  router.delete(
+    '/schedule/:id',
+    wrap(async (req, res) => {
+      const { deleteScheduleItem } = await import('./scheduleStore.js')
+      res.json(await deleteScheduleItem(req.params.id))
+    }),
+  )
+
+  router.post(
+    '/schedule/kimchi-round',
+    wrap(async (req, res) => {
+      const body = req.body ?? {}
+      const projectId = body.projectId || 'proj-kimchi'
+      const roundName = String(body.roundName || '').trim()
+      if (!roundName) throw Object.assign(new Error('차수명이 필요합니다.'), { status: 400 })
+      if (!body.orderOpenDate || !body.orderDeadline || !body.deliveryStartDate) {
+        throw Object.assign(new Error('주문 시작일, 마감일, 배송 예정일이 필요합니다.'), {
+          status: 400,
+        })
+      }
+
+      const steps = Array.isArray(body.steps) ? body.steps : defaultKimchiSteps(body)
+      const { createManyScheduleItems } = await import('./scheduleStore.js')
+      const roundId = crypto.randomUUID()
+      const created = await createManyScheduleItems(
+        steps.map((step, index) => ({
+          projectId,
+          title: step.title,
+          description: step.description || `${roundName} · ${step.title}`,
+          type: step.type || 'task',
+          date: step.date || null,
+          status: step.status || 'upcoming',
+          priority: step.priority || 'high',
+          isMilestone: Boolean(step.isMilestone),
+          category: 'order_round',
+          roundId,
+          roundName,
+          sortOrder: index,
+        })),
+      )
+      res.status(201).json({ roundId, roundName, items: created })
+    }),
+  )
+
+  router.post(
+    '/schedule/ensure-hangeul',
+    wrap(async (_req, res) => {
+      const { ensureHangeulSnackTimeline } = await import('./scheduleStore.js')
+      const created = await ensureHangeulSnackTimeline('proj-hangeul')
+      res.json({ created: created.length, items: created })
+    }),
+  )
+
   return router
+}
+
+function defaultKimchiSteps(body) {
+  const open = body.orderOpenDate
+  const deadline = body.orderDeadline
+  const delivery = body.deliveryStartDate
+  const announce = body.announcementDate || open
+  return [
+    { title: '상품/가격 최종 확인', date: open, type: 'task', isMilestone: false },
+    { title: '고객 안내문 작성', date: announce, type: 'announcement' },
+    { title: '안내문 검수', date: announce, type: 'task' },
+    { title: '안내문 발송', date: announce, type: 'announcement', isMilestone: true },
+    { title: '주문 접수', date: open, type: 'order_period', isMilestone: true },
+    { title: '주문 마감', date: deadline, type: 'deadline', isMilestone: true },
+    { title: '최종 주문 정리', date: deadline, type: 'task' },
+    { title: '배송 준비', date: delivery, type: 'shipping' },
+    { title: '배송 시작', date: delivery, type: 'delivery', isMilestone: true },
+    { title: '고객 문의 대응', date: delivery, type: 'task' },
+    { title: '차수 종료', date: body.deliveryEndDate || delivery, type: 'milestone', isMilestone: true },
+  ]
 }

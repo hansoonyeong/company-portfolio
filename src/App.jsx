@@ -33,10 +33,14 @@ import AdminLayout from './admin/AdminLayout'
 import OfficePage from './admin/office/OfficePage'
 import DashboardPage from './admin/pages/DashboardPage'
 import TodayPage from './admin/pages/TodayPage'
+import SchedulePage from './admin/pages/SchedulePage'
+import TimelinePage from './admin/pages/TimelinePage'
+import WaitingPage from './admin/pages/WaitingPage'
 import InboxPage from './admin/pages/InboxPage'
 import AiTeamPage from './admin/pages/AiTeamPage'
 import TasksPage from './admin/pages/TasksPage'
 import NotesPage from './admin/pages/NotesPage'
+import MemoryPage from './admin/pages/MemoryPage'
 import FilesPage from './admin/pages/FilesPage'
 import SettingsPage from './admin/pages/SettingsPage'
 import ProjectsPage from './admin/pages/ProjectsPage'
@@ -109,10 +113,13 @@ const router = createBrowserRouter([
       {
         element: <AdminLayout />,
         children: [
-          { index: true, element: <Navigate to="office" replace /> },
+          { index: true, element: <Navigate to="today" replace /> },
           { path: 'office', element: <OfficePage /> },
           { path: 'dashboard', element: <DashboardPage /> },
           { path: 'today', element: <TodayPage /> },
+          { path: 'schedule', element: <SchedulePage /> },
+          { path: 'timeline', element: <TimelinePage /> },
+          { path: 'waiting', element: <WaitingPage /> },
           { path: 'inbox', element: <InboxPage /> },
           { path: 'ai-team', element: <AiTeamPage /> },
           { path: 'projects', element: <ProjectsPage /> },
@@ -120,6 +127,7 @@ const router = createBrowserRouter([
           { path: 'tasks', element: <TasksPage /> },
           { path: 'chat', element: <ChatPage /> },
           { path: 'notes', element: <NotesPage /> },
+          { path: 'memory', element: <MemoryPage /> },
           { path: 'files', element: <FilesPage /> },
           { path: 'settings', element: <SettingsPage /> },
           { path: 'website/quotes', element: <AdminWebsitePanel tab="quotes" /> },

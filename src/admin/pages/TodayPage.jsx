@@ -1,139 +1,231 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { AGENT_STATE_LABEL, TASK_STATUS_LABEL, useOfficeData } from '../OfficeDataContext'
-import AiResultModal from '../office/AiResultModal'
+import { updateOfficeSchedule, updateOfficeTask } from '../../lib/officeApi'
+import { useOfficeData } from '../OfficeDataContext'
+import ScheduleAddModal from '../office/ScheduleAddModal'
+import {
+  buildWorkItems,
+  partitionToday,
+} from '../office/scheduleSelectors'
+import {
+  SCHEDULE_STATUS_LABEL,
+  SCHEDULE_TYPE_LABEL,
+  addDaysKey,
+  daysWaitingLabel,
+  formatKoreanDate,
+  todayKey,
+} from '../office/scheduleUtils'
 import '../office/office.css'
+import '../office/schedule.css'
 
-function isToday(dateStr) {
-  if (!dateStr) return false
-  const d = new Date(dateStr)
-  const now = new Date()
+const URGENCY_LABEL = { urgent: '긴급', high: '높음', normal: '보통' }
+
+async function completeItem(item) {
+  if (item.taskId) {
+    await updateOfficeTask(item.taskId, { status: 'done', force: true })
+  }
+  if (item.scheduleId) {
+    await updateOfficeSchedule(item.scheduleId, { status: 'completed' })
+  }
+}
+
+async function rescheduleItem(item, date) {
+  if (item.scheduleId) {
+    await updateOfficeSchedule(item.scheduleId, { date })
+  }
+  if (item.taskId) {
+    await updateOfficeTask(item.taskId, { dueDate: date, force: true })
+  }
+}
+
+function WorkRow({ item, onChanged, showWaiting }) {
+  const [busy, setBusy] = useState(false)
+  const [dateOpen, setDateOpen] = useState(false)
+
+  async function run(fn) {
+    setBusy(true)
+    try {
+      await fn()
+      await onChanged()
+    } catch (err) {
+      window.alert(err.message || '처리 실패')
+    } finally {
+      setBusy(false)
+    }
+  }
+
   return (
-    d.getFullYear() === now.getFullYear() &&
-    d.getMonth() === now.getMonth() &&
-    d.getDate() === now.getDate()
+    <article className={`sch-row sch-row--${item.urgency}`}>
+      <div className="sch-row__main">
+        <span className="sch-row__project" style={{ borderColor: item.projectColor }}>
+          {item.projectName}
+        </span>
+        <strong className="sch-row__title">{item.title}</strong>
+        <div className="sch-row__meta">
+          {item.date ? <span>{formatKoreanDate(item.date)}</span> : <span>날짜 미정</span>}
+          <span>{SCHEDULE_TYPE_LABEL[item.type] || item.type}</span>
+          <span>{SCHEDULE_STATUS_LABEL[item.status] || item.status}</span>
+          <span className={`sch-urgency sch-urgency--${item.urgency}`}>
+            {URGENCY_LABEL[item.urgency]}
+          </span>
+          {item.followUpDate === todayKey() ? <span className="sch-tag">Follow-up 필요</span> : null}
+          {showWaiting && item.waitingFor ? (
+            <span>
+              대기: {item.waitingFor}
+              {item.waitingSince ? ` · ${daysWaitingLabel(item.waitingSince)}` : ''}
+            </span>
+          ) : null}
+        </div>
+      </div>
+      <div className="sch-row__actions">
+        <button
+          type="button"
+          className="office-btn office-btn--primary"
+          disabled={busy}
+          onClick={() => run(() => completeItem(item))}
+        >
+          완료
+        </button>
+        <button type="button" className="office-btn" disabled={busy} onClick={() => setDateOpen((v) => !v)}>
+          날짜 변경
+        </button>
+        {dateOpen ? (
+          <div className="sch-reschedule">
+            <button
+              type="button"
+              className="office-btn"
+              onClick={() => run(() => rescheduleItem(item, todayKey()))}
+            >
+              오늘
+            </button>
+            <button
+              type="button"
+              className="office-btn"
+              onClick={() => run(() => rescheduleItem(item, addDaysKey(todayKey(), 1)))}
+            >
+              내일
+            </button>
+            <button
+              type="button"
+              className="office-btn"
+              onClick={() => run(() => rescheduleItem(item, addDaysKey(todayKey(), 3)))}
+            >
+              이번 주
+            </button>
+            <input
+              type="date"
+              onChange={(e) => {
+                if (!e.target.value) return
+                run(() => rescheduleItem(item, e.target.value))
+              }}
+            />
+          </div>
+        ) : null}
+        {item.taskId ? (
+          <Link className="office-btn" to="/admin/tasks">
+            업무
+          </Link>
+        ) : null}
+      </div>
+    </article>
   )
 }
 
-function isOverdue(dateStr) {
-  if (!dateStr) return false
-  const d = new Date(dateStr)
-  const now = new Date()
-  now.setHours(0, 0, 0, 0)
-  return d < now
+function Section({ title, children, empty }) {
+  return (
+    <section className="sch-section">
+      <h3 className="sch-section__title">{title}</h3>
+      {empty ? <p className="sch-empty">없음</p> : children}
+    </section>
+  )
 }
 
 export default function TodayPage() {
-  const { tasks, projects, activity, agents, refresh } = useOfficeData()
-  const [resultTaskId, setResultTaskId] = useState(null)
+  const { tasks, projects, schedule, refresh, loading, error } = useOfficeData()
+  const [addOpen, setAddOpen] = useState(false)
+  const nowKey = todayKey()
 
-  const dueToday = useMemo(
-    () => tasks.filter((t) => isToday(t.dueDate) && t.status !== 'done'),
-    [tasks],
+  const items = useMemo(
+    () => buildWorkItems({ tasks, schedule: schedule || [], projects }),
+    [tasks, schedule, projects],
   )
-  const urgent = tasks.filter((t) => t.priority === 'urgent' && t.status !== 'done')
-  const overdue = tasks.filter((t) => isOverdue(t.dueDate) && t.status !== 'done')
-  const inProgress = tasks.filter((t) => t.status === 'in_progress')
-  const waiting = tasks.filter((t) => t.status === 'waiting')
-  const recentlyCompleted = tasks.filter((t) => t.status === 'done' && isToday(t.completedAt))
+  const parts = useMemo(() => partitionToday(items, nowKey), [items, nowKey])
 
   return (
-    <div className="office-page">
-      <p className="office-page__eyebrow">홈</p>
-      <h2 className="office-page__title">오늘</h2>
-      <p className="office-page__lead">오늘 확인할 일과 진행 중인 작업을 모았습니다.</p>
-
-      <div className="office-card-grid">
-        <section className="office-card">
-          <h3>Today&apos;s Priorities</h3>
-          <p>
-            <strong>Due today</strong>
-          </p>
-          <ul>
-            {dueToday.length === 0 ? <li>없음</li> : dueToday.map((t) => <li key={t.id}>{t.title}</li>)}
-          </ul>
-          <p style={{ marginTop: 10 }}>
-            <strong>Urgent</strong>
-          </p>
-          <ul>
-            {urgent.length === 0 ? <li>없음</li> : urgent.map((t) => <li key={t.id}>{t.title}</li>)}
-          </ul>
-          <p style={{ marginTop: 10 }}>
-            <strong>Overdue</strong>
-          </p>
-          <ul>
-            {overdue.length === 0 ? <li>없음</li> : overdue.map((t) => <li key={t.id}>{t.title}</li>)}
-          </ul>
-        </section>
-        <section className="office-card">
-          <h3>In Progress</h3>
-          <ul>
-            {inProgress.map((t) => (
-              <li key={t.id}>
-                <button type="button" className="office-btn" onClick={() => setResultTaskId(t.id)}>
-                  {t.title}
-                </button>
-                <span> · {TASK_STATUS_LABEL[t.status]}</span>
-              </li>
-            ))}
-            {inProgress.length === 0 ? <li>없음</li> : null}
-          </ul>
-        </section>
-        <section className="office-card">
-          <h3>Waiting</h3>
-          <ul>
-            {waiting.map((t) => (
-              <li key={t.id}>
-                <button type="button" className="office-btn" onClick={() => setResultTaskId(t.id)}>
-                  {t.title}
-                </button>
-                {t.waitingFor ? <span> · Waiting for {t.waitingFor}</span> : null}
-              </li>
-            ))}
-            {waiting.length === 0 ? <li>없음</li> : null}
-          </ul>
-        </section>
-        <section className="office-card">
-          <h3>Recently Completed</h3>
-          <ul>
-            {recentlyCompleted.map((t) => (
-              <li key={t.id}>
-                <button type="button" className="office-btn" onClick={() => setResultTaskId(t.id)}>
-                  {t.title}
-                </button>
-              </li>
-            ))}
-            {recentlyCompleted.length === 0 ? <li>없음</li> : null}
-          </ul>
-        </section>
-        <section className="office-card">
-          <h3>Project Activity</h3>
-          <ul>
-            {activity.slice(0, 10).map((a) => (
-              <li key={a.id}>{a.message}</li>
-            ))}
-          </ul>
-        </section>
-        <section className="office-card">
-          <h3>팀 상태</h3>
-          <ul>
-            {agents
-              .filter((a) => a.state !== 'idle')
-              .map((a) => (
-                <li key={a.id}>
-                  {a.name} · {AGENT_STATE_LABEL[a.state]}
-                </li>
-              ))}
-          </ul>
-          <p style={{ marginTop: 10 }}>
-            <Link to="/admin/projects">프로젝트 보기</Link>
-          </p>
-        </section>
+    <div className="office-page sch-page">
+      <div className="sch-page__head">
+        <div>
+          <p className="office-page__eyebrow">운영 본부</p>
+          <h2 className="office-page__title">오늘</h2>
+          <p className="sch-date-line">{formatKoreanDate(nowKey, { weekday: true })}</p>
+        </div>
+        <button type="button" className="office-btn office-btn--primary" onClick={() => setAddOpen(true)}>
+          + 일정 추가
+        </button>
       </div>
 
-      {resultTaskId ? (
-        <AiResultModal taskId={resultTaskId} onClose={() => setResultTaskId(null)} onChanged={refresh} />
-      ) : null}
+      {error ? <p style={{ color: '#8b3a3a' }}>{error}</p> : null}
+      {loading ? <p>불러오는 중…</p> : null}
+
+      <div className="sch-morning">
+        <div className="sch-morning__stat">
+          <strong>{parts.todayAction.length}</strong>
+          <span>오늘 할 일</span>
+        </div>
+        <div className="sch-morning__stat">
+          <strong>{parts.weekDeadlines.length}</strong>
+          <span>이번 주 마감</span>
+        </div>
+        <div className="sch-morning__stat">
+          <strong>{parts.waiting.length}</strong>
+          <span>대기 중</span>
+        </div>
+        <div className="sch-morning__stat">
+          <strong>{parts.overdue.length}</strong>
+          <span>지연</span>
+        </div>
+      </div>
+
+      <Section title="가장 먼저 확인할 것" empty={parts.firstCheck.length === 0}>
+        {parts.firstCheck.map((item) => (
+          <WorkRow key={item.id} item={item} onChanged={refresh} showWaiting />
+        ))}
+      </Section>
+
+      <Section title="오늘 해야 할 일" empty={parts.todayAction.length === 0}>
+        {parts.todayAction.map((item) => (
+          <WorkRow key={item.id} item={item} onChanged={refresh} />
+        ))}
+      </Section>
+
+      <Section title="이번 주" empty={parts.thisWeek.length === 0}>
+        {parts.thisWeek.map((item) => (
+          <WorkRow key={item.id} item={item} onChanged={refresh} />
+        ))}
+      </Section>
+
+      <Section title="대기 중" empty={parts.waiting.length === 0}>
+        {parts.waiting.map((item) => (
+          <WorkRow key={item.id} item={item} onChanged={refresh} showWaiting />
+        ))}
+        <p className="sch-section__link">
+          <Link to="/admin/waiting">대기 목록 전체 보기 →</Link>
+        </p>
+      </Section>
+
+      <Section title="지연" empty={parts.overdue.length === 0}>
+        {parts.overdue.map((item) => (
+          <WorkRow key={item.id} item={item} onChanged={refresh} />
+        ))}
+      </Section>
+
+      <Section title="다가오는 중요 일정" empty={parts.milestones.length === 0}>
+        {parts.milestones.map((item) => (
+          <WorkRow key={item.id} item={item} onChanged={refresh} />
+        ))}
+      </Section>
+
+      {addOpen ? <ScheduleAddModal onClose={() => setAddOpen(false)} onSaved={refresh} /> : null}
     </div>
   )
 }

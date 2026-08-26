@@ -1,11 +1,11 @@
 import { NavLink } from 'react-router-dom'
 
 const LINKS = [
-  { to: '/admin/office', label: '오피스' },
-  { to: '/admin/dashboard', label: '대시보드' },
-  { to: '/admin/website/quotes', label: '견적' },
-  { to: '/admin/website/portfolio', label: '포트폴리오' },
-  { to: '/admin/ai-team', label: '팀' },
+  { to: '/admin/today', label: '오늘' },
+  { to: '/admin/schedule', label: '일정' },
+  { to: '/admin/waiting', label: '대기' },
+  { to: '/admin/tasks', label: '업무' },
+  { to: '/admin/office', label: 'Office' },
 ]
 
 export default function AdminMobileNav() {

@@ -27,21 +27,26 @@ function Item({ to, end, children }) {
 
 export default function AdminSidebar() {
   const { logout } = useAdminAuth()
-  const { activeProjects } = useOfficeData()
+  const { activeProjects, tasks, schedule } = useOfficeData()
+
+  const waitingCount =
+    tasks.filter((t) => t.status === 'waiting').length +
+    (schedule || []).filter((s) => s.status === 'waiting').length
 
   return (
     <aside className="office-nav" aria-label="AI Office 내비게이션">
       <div className="office-nav__brand">
         <span className="office-nav__brand-name">soono</span>
-        <span className="office-nav__brand-sub">AI OFFICE</span>
+        <span className="office-nav__brand-sub">운영 본부</span>
       </div>
 
       <nav className="office-nav__scroll">
         <p className="office-nav__section">홈</p>
-        <Item to="/admin/office">오피스</Item>
-        <Item to="/admin/dashboard">대시보드</Item>
         <Item to="/admin/today">오늘</Item>
-        <Item to="/admin/inbox">수신함</Item>
+        <Item to="/admin/schedule">일정</Item>
+        <Item to="/admin/timeline">타임라인</Item>
+        <Item to="/admin/office">Office</Item>
+        <Item to="/admin/dashboard">Dashboard</Item>
 
         <p className="office-nav__section">프로젝트</p>
         {activeProjects.map((project) => (
@@ -51,18 +56,22 @@ export default function AdminSidebar() {
         ))}
         <Item to="/admin/projects">+ 새 프로젝트</Item>
 
+        <p className="office-nav__section">워크스페이스</p>
+        <Item to="/admin/tasks">업무</Item>
+        <Item to="/admin/waiting">
+          대기 중{waitingCount ? ` (${waitingCount})` : ''}
+        </Item>
+        <Item to="/admin/notes">Notes</Item>
+        <Item to="/admin/memory">Memory</Item>
+        <Item to="/admin/files">Files</Item>
+        <Item to="/admin/chat">채팅</Item>
+
         <p className="office-nav__section">AI 팀</p>
         {AI_TEAM.map((agent) => (
           <Item key={agent.id} to={`/admin/ai-team#${agent.id}`}>
             {agent.label}
           </Item>
         ))}
-
-        <p className="office-nav__section">워크스페이스</p>
-        <Item to="/admin/tasks">작업</Item>
-        <Item to="/admin/chat">채팅</Item>
-        <Item to="/admin/notes">노트</Item>
-        <Item to="/admin/files">파일</Item>
 
         <p className="office-nav__section">웹사이트</p>
         <Item to="/admin/website/quotes">견적</Item>
@@ -74,9 +83,9 @@ export default function AdminSidebar() {
         </a>
 
         <p className="office-nav__section">시스템</p>
-        <Item to="/admin/settings">설정</Item>
+        <Item to="/admin/settings">Settings</Item>
         <button type="button" className="office-nav__link office-nav__action" onClick={logout}>
-          로그아웃
+          Logout
         </button>
       </nav>
     </aside>

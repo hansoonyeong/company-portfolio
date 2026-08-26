@@ -112,3 +112,14 @@ export const generateMeetingContributions = (id) =>
   officeFetch(`/ai/meetings/${id}/contributions`, { method: 'POST', body: '{}' })
 export const generateMeetingSummary = (id) =>
   officeFetch(`/ai/meetings/${id}/summary`, { method: 'POST', body: '{}' })
+
+export const getOfficeSchedule = () => officeFetch('/schedule')
+export const createOfficeSchedule = (data) =>
+  officeFetch('/schedule', { method: 'POST', body: JSON.stringify(data) })
+export const updateOfficeSchedule = (id, data) =>
+  officeFetch(`/schedule/${id}`, { method: 'PUT', body: JSON.stringify(data) })
+export const deleteOfficeSchedule = (id) => officeFetch(`/schedule/${id}`, { method: 'DELETE' })
+export const createKimchiRound = (data) =>
+  officeFetch('/schedule/kimchi-round', { method: 'POST', body: JSON.stringify(data) })
+export const ensureHangeulSchedule = () =>
+  officeFetch('/schedule/ensure-hangeul', { method: 'POST', body: '{}' })
