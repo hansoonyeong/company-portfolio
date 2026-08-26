@@ -72,6 +72,26 @@ export default function TimelinePage({ lockedProjectId = null }) {
   const undated = projectItems.filter((i) => !itemEffectiveDate(i))
   const byId = useMemo(() => new Map(projectItems.map((i) => [i.id, i])), [projectItems])
 
+  const phaseGroups = useMemo(() => {
+    const labels = {
+      kimchi_phase_3: 'PHASE 3 — 3차 집중',
+      kimchi_phase_4: 'PHASE 4 — 4차 운영 체계 정비 및 광고 준비',
+      kimchi_phase_5: 'PHASE 5 — 5차 외부 확장 및 데이터 분석',
+    }
+    const order = ['kimchi_phase_3', 'kimchi_phase_4', 'kimchi_phase_5']
+    const hasPhase = projectItems.some((i) => order.includes(i.category))
+    if (!hasPhase) return null
+    return order
+      .map((key) => ({
+        key,
+        label: labels[key],
+        items: projectItems
+          .filter((i) => i.category === key)
+          .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)),
+      }))
+      .filter((g) => g.items.length)
+  }, [projectItems])
+
   async function complete(item) {
     await updateOfficeSchedule(item.id, { status: 'completed' })
     await refresh()
@@ -81,6 +101,82 @@ export default function TimelinePage({ lockedProjectId = null }) {
     await updateOfficeSchedule(item.id, { date: editDate || null })
     setEditingId(null)
     await refresh()
+  }
+
+  function renderTimelineItem(item) {
+    const date = itemEffectiveDate(item)
+    const health = item.isMilestone ? milestoneHealth(item, schedule || [], todayKey()) : 'normal'
+    const warnings = dependencyWarnings(item, schedule || [], todayKey())
+    const relatedTasks = tasks.filter(
+      (t) => t.id === item.relatedTaskId || t.scheduleId === item.id,
+    )
+    const deps = (item.dependsOn || []).map((id) => byId.get(id)).filter(Boolean)
+
+    return (
+      <article key={item.id} className={`sch-tl-item sch-tl-item--${health}`}>
+        <div className="sch-tl-item__rail" aria-hidden />
+        <div className="sch-tl-item__body">
+          <div className="sch-tl-item__top">
+            <time>{date ? formatKoreanDateTime(date, item.time) : '날짜 미정'}</time>
+            {item.isMilestone && date ? (
+              <span className="sch-countdown">{countdownLabel(date)}</span>
+            ) : null}
+            {item.isMilestone ? (
+              <span className={`sch-health sch-health--${health}`}>{HEALTH_LABEL[health]}</span>
+            ) : null}
+            {item.isMilestone ? <span className="sch-tag">Phase</span> : null}
+            <span className="office-badge">{SCHEDULE_STATUS_LABEL[item.status] || item.status}</span>
+          </div>
+          <h3>{item.title}</h3>
+          {item.roundName ? <p className="sch-muted">{item.roundName}</p> : null}
+          {deps.length ? (
+            <p className="sch-deps">
+              선행: {deps.map((d) => d.title).join(' → ')} → {item.title}
+            </p>
+          ) : null}
+          {warnings.map((w, i) => (
+            <p key={`${w.kind}-${i}`} className="sch-warn">
+              {w.text}
+              {w.depTitle ? ` (${w.depTitle})` : ''}
+            </p>
+          ))}
+          {relatedTasks.length ? (
+            <p className="sch-muted">관련 업무: {relatedTasks.map((t) => t.title).join(', ')}</p>
+          ) : null}
+          {item.notes ? <p className="sch-muted">{item.notes}</p> : null}
+          <div className="sch-row__actions">
+            {item.status !== 'completed' ? (
+              <button type="button" className="office-btn office-btn--primary" onClick={() => complete(item)}>
+                완료
+              </button>
+            ) : (
+              <span className="sch-tag">완료 / 지남</span>
+            )}
+            <button type="button" className="office-btn" onClick={() => setEditItem(item)}>
+              수정
+            </button>
+            <button
+              type="button"
+              className="office-btn"
+              onClick={() => {
+                setEditingId(item.id)
+                setEditDate(date || '')
+              }}
+            >
+              날짜 변경
+            </button>
+            {editingId === item.id ? (
+              <span className="sch-inline-date">
+                <input type="date" value={editDate} onChange={(e) => setEditDate(e.target.value)} />
+                <button type="button" className="office-btn" onClick={() => saveDate(item)}>
+                  저장
+                </button>
+              </span>
+            ) : null}
+          </div>
+        </div>
+      </article>
+    )
   }
 
   return (
@@ -120,135 +216,23 @@ export default function TimelinePage({ lockedProjectId = null }) {
 
       {loading ? <p>불러오는 중…</p> : null}
 
-      <div className="sch-timeline">
-        {dated.map((item) => {
-          const date = itemEffectiveDate(item)
-          const health = item.isMilestone ? milestoneHealth(item, schedule || [], todayKey()) : 'normal'
-          const warnings = dependencyWarnings(item, schedule || [], todayKey())
-          const relatedTasks = tasks.filter(
-            (t) => t.id === item.relatedTaskId || t.scheduleId === item.id,
-          )
-          const deps = (item.dependsOn || []).map((id) => byId.get(id)).filter(Boolean)
-
-          return (
-            <article key={item.id} className={`sch-tl-item sch-tl-item--${health}`}>
-              <div className="sch-tl-item__rail" aria-hidden />
-              <div className="sch-tl-item__body">
-                <div className="sch-tl-item__top">
-                  <time>{formatKoreanDateTime(date, item.time)}</time>
-                  {item.isMilestone ? (
-                    <span className="sch-countdown">{countdownLabel(date)}</span>
-                  ) : null}
-                  {item.isMilestone ? (
-                    <span className={`sch-health sch-health--${health}`}>{HEALTH_LABEL[health]}</span>
-                  ) : null}
-                  <span className="office-badge">{SCHEDULE_STATUS_LABEL[item.status] || item.status}</span>
-                </div>
-                <h3>{item.title}</h3>
-                {item.roundName ? <p className="sch-muted">{item.roundName}</p> : null}
-                {deps.length ? (
-                  <p className="sch-deps">
-                    선행: {deps.map((d) => d.title).join(' → ')} → {item.title}
-                  </p>
-                ) : null}
-                {warnings.map((w, i) => (
-                  <p key={`${w.kind}-${i}`} className="sch-warn">
-                    {w.text}
-                    {w.depTitle ? ` (${w.depTitle})` : ''}
-                  </p>
-                ))}
-                {relatedTasks.length ? (
-                  <p className="sch-muted">관련 업무: {relatedTasks.map((t) => t.title).join(', ')}</p>
-                ) : null}
-                {item.notes ? <p className="sch-muted">{item.notes}</p> : null}
-                <div className="sch-row__actions">
-                  {item.status !== 'completed' ? (
-                    <button type="button" className="office-btn office-btn--primary" onClick={() => complete(item)}>
-                      완료
-                    </button>
-                  ) : (
-                    <span className="sch-tag">완료 / 지남</span>
-                  )}
-                  <button type="button" className="office-btn" onClick={() => setEditItem(item)}>
-                    수정
-                  </button>
-                  <button
-                    type="button"
-                    className="office-btn"
-                    onClick={() => {
-                      setEditingId(item.id)
-                      setEditDate(date || '')
-                    }}
-                  >
-                    날짜 변경
-                  </button>
-                  {editingId === item.id ? (
-                    <span className="sch-inline-date">
-                      <input type="date" value={editDate} onChange={(e) => setEditDate(e.target.value)} />
-                      <button type="button" className="office-btn" onClick={() => saveDate(item)}>
-                        저장
-                      </button>
-                    </span>
-                  ) : null}
-                </div>
-              </div>
-            </article>
-          )
-        })}
-      </div>
-
-      <section className="sch-section">
-        <h3 className="sch-section__title">날짜 미정</h3>
-        {undated.length === 0 ? <p className="sch-empty">없음</p> : null}
-        {undated.map((item) => {
-          const warnings = dependencyWarnings(item, schedule || [], todayKey())
-          const deps = (item.dependsOn || []).map((id) => byId.get(id)).filter(Boolean)
-          return (
-            <article key={item.id} className="sch-row">
-              <div className="sch-row__main">
-                <strong className="sch-row__title">{item.title}</strong>
-                <div className="sch-row__meta">
-                  <span>{SCHEDULE_STATUS_LABEL[item.status] || item.status}</span>
-                  {deps.length ? <span>선행: {deps.map((d) => d.title).join(', ')}</span> : null}
-                </div>
-                {warnings.map((w, i) => (
-                  <p key={i} className="sch-warn">
-                    {w.text}
-                  </p>
-                ))}
-              </div>
-              <div className="sch-row__actions">
-                <button type="button" className="office-btn" onClick={() => setEditItem(item)}>
-                  수정
-                </button>
-                <button
-                  type="button"
-                  className="office-btn"
-                  onClick={() => {
-                    setEditingId(item.id)
-                    setEditDate('')
-                  }}
-                >
-                  날짜 지정
-                </button>
-                {editingId === item.id ? (
-                  <span className="sch-inline-date">
-                    <input type="date" value={editDate} onChange={(e) => setEditDate(e.target.value)} />
-                    <button type="button" className="office-btn" onClick={() => saveDate(item)}>
-                      저장
-                    </button>
-                  </span>
-                ) : null}
-                {item.status !== 'completed' ? (
-                  <button type="button" className="office-btn" onClick={() => complete(item)}>
-                    완료
-                  </button>
-                ) : null}
-              </div>
-            </article>
-          )
-        })}
-      </section>
+      {phaseGroups ? (
+        phaseGroups.map((group) => (
+          <section key={group.key} className="sch-section">
+            <h3 className="sch-section__title">{group.label}</h3>
+            <div className="sch-timeline">{group.items.map((item) => renderTimelineItem(item))}</div>
+          </section>
+        ))
+      ) : (
+        <>
+          <div className="sch-timeline">{dated.map((item) => renderTimelineItem(item))}</div>
+          <section className="sch-section">
+            <h3 className="sch-section__title">날짜 미정</h3>
+            {undated.length === 0 ? <p className="sch-empty">없음</p> : null}
+            {undated.map((item) => renderTimelineItem(item))}
+          </section>
+        </>
+      )}
 
       {addOpen ? (
         <ScheduleAddModal

@@ -147,8 +147,15 @@ export function partitionToday(items, nowKey = todayKey()) {
 
   const overdue = active.filter((i) => i.date && i.date < nowKey)
   const todayAction = active.filter((i) => {
+    if (i.category === 'kimchi_phase_4' || i.category === 'kimchi_phase_5') {
+      // Only surface if a real date/follow-up hits today
+      if (i.date === nowKey || i.followUpDate === nowKey) return true
+      return false
+    }
     if (i.date === nowKey) return true
     if (i.followUpDate === nowKey) return true
+    // Current-focus phase without inventing extra dates elsewhere
+    if (i.category === 'kimchi_phase_3' && !i.isMilestone) return true
     return false
   })
   const thisWeek = active.filter((i) => {
@@ -178,6 +185,13 @@ export function partitionToday(items, nowKey = todayKey()) {
 function pickFirstCheck(active, nowKey) {
   const scored = []
   for (const item of active) {
+    // Phase 4–5 undated work stays off the morning "check first" list
+    const deferredPhase =
+      item.category === 'kimchi_phase_4' || item.category === 'kimchi_phase_5'
+    if (deferredPhase && !(item.date && item.date <= nowKey) && item.followUpDate !== nowKey) {
+      continue
+    }
+
     let rank = 99
     if (item.date && item.date < nowKey) rank = 1
     else if (item.date === nowKey) rank = 2
@@ -186,6 +200,8 @@ function pickFirstCheck(active, nowKey) {
     else if (item.isMilestone && item.date) {
       const d = daysBetween(nowKey, item.date)
       if (d !== null && d >= 0 && d <= 14) rank = 5
+    } else if (item.category === 'kimchi_phase_3' && !item.isMilestone) {
+      rank = 2
     }
     if (rank < 99) scored.push({ item, rank })
   }

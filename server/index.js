@@ -10,6 +10,7 @@ import { buildDefaultHero } from '../src/data/defaultHero.js'
 import { createWeddingRouter } from './wedding/routes.js'
 import { createOfficeRouter } from './office/routes.js'
 import { ensureRealWorkspaceImported } from './office/ensureWorkspaceImport.js'
+import { ensureKimchiMeeting20260826 } from './office/ensureKimchiMeeting20260826.js'
 import { loadEnvFile } from './loadEnv.js'
 
 loadEnvFile()
@@ -842,6 +843,18 @@ if (isDirectRun) {
         if (created?.length) console.log(`[office] Hangeul timeline seeded (${created.length})`)
       } catch (err) {
         console.error('[office] Hangeul timeline seed failed:', err.message)
+      }
+    })
+    .then(async () => {
+      try {
+        const result = await ensureKimchiMeeting20260826()
+        if (result?.skipped) console.log('[office] Kimchi meeting import skipped:', result.reason)
+        else console.log('[office] Kimchi meeting 2026-08-26 imported', {
+          tasks: result.createdTasks?.length,
+          schedule: result.createdSchedule?.length,
+        })
+      } catch (err) {
+        console.error('[office] Kimchi meeting import failed:', err.message)
       }
     })
     .finally(() => {
