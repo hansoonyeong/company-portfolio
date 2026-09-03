@@ -1,4 +1,10 @@
 export const weddingConfig = {
+  entry: {
+    welcome: 'we invite you to our little corner of the day',
+    withSound: 'enter with sound ·',
+    withoutSound: 'enter without sound',
+    enter: 'enter ·',
+  },
   couple: {
     groom: 'TAEJOO',
     bride: 'SOONYEONG',

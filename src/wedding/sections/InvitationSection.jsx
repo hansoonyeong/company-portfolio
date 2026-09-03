@@ -8,7 +8,7 @@ export default function InvitationSection() {
     <section className="w-invite" id="about">
       <Reveal className="w-copy">
         <p className="w-eyebrow">Invitation</p>
-        <h2 className="w-lede">{weddingConfig.invitation.headline.ko}</h2>
+        <blockquote className="w-pullquote">{weddingConfig.invitation.headline.ko}</blockquote>
         <p className="w-body">{weddingConfig.invitation.body.ko}</p>
       </Reveal>
       <LookbookFrame image={weddingImages.invitation} ratio="3 / 4" />

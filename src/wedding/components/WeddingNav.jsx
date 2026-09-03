@@ -1,104 +1,62 @@
 import { useEffect, useState } from 'react'
+import { weddingImages } from '../config/weddingImages.js'
 
-const LEFT_LINKS = [
-  { href: '#about', label: 'About' },
-  { href: '#place', label: 'Place' },
+const LINKS = [
+  { href: '#about', label: 'about' },
+  { href: '#place', label: 'place' },
+  { href: '#rsvp', label: 'rsvp' },
 ]
 
-export default function WeddingNav({ overlay = false, onRsvpClick }) {
-  const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+export default function WeddingNav({ onRsvpClick }) {
+  const [active, setActive] = useState('')
 
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : ''
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [open])
+    const ids = LINKS.map((l) => l.href.slice(1))
+    const sections = ids.map((id) => document.getElementById(id)).filter(Boolean)
+    if (!sections.length) return undefined
 
-  useEffect(() => {
-    if (!overlay) return undefined
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)
+        if (visible[0]?.target?.id) setActive(visible[0].target.id)
+      },
+      { rootMargin: '-40% 0px -45% 0px', threshold: [0, 0.25, 0.5] },
+    )
 
-    const onScroll = () => setScrolled(window.scrollY > 72)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [overlay])
+    sections.forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [])
 
   const handleRsvp = (event) => {
     event.preventDefault()
-    setOpen(false)
     onRsvpClick?.()
   }
 
-  const navClass = [
-    'w-nav',
-    overlay ? 'w-nav--overlay' : '',
-    overlay && scrolled ? 'w-nav--solid' : '',
-  ]
-    .filter(Boolean)
-    .join(' ')
-
   return (
-    <header className={navClass}>
-      <div className="w-nav__inner">
-        <div className="w-nav__side w-nav__side--left">
-          <button
-            type="button"
-            className="w-nav__burger"
-            aria-expanded={open}
-            aria-controls="wedding-mobile-nav"
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            onClick={() => setOpen((v) => !v)}
-          >
-            <span />
-            <span />
-          </button>
-          <nav className="w-nav__links w-nav__links--left" aria-label="Primary">
-            {LEFT_LINKS.map((link) => (
-              <a key={link.href} href={link.href}>
+    <header className="w-nav-pillbar">
+      <a className="w-nav-pillbar__logo" href="#top" aria-label="Top">
+        <img src={weddingImages.doodles.mark} alt="" width={28} height={28} />
+      </a>
+      <nav className="w-nav-pills" aria-label="Primary">
+        {LINKS.map((link) => {
+          const id = link.href.slice(1)
+          const isRsvp = id === 'rsvp'
+          const className = `w-nav-pills__link${active === id ? ' is-active' : ''}`
+
+          if (isRsvp) {
+            return (
+              <a key={link.href} href={link.href} className={className} onClick={handleRsvp}>
                 {link.label}
               </a>
-            ))}
-          </nav>
-        </div>
+            )
+          }
 
-        <div className="w-nav__side w-nav__side--right">
-          <nav className="w-nav__links w-nav__links--right" aria-label="RSVP">
-            <a href="#rsvp" onClick={handleRsvp}>
-              RSVP
+          return (
+            <a key={link.href} href={link.href} className={className}>
+              {link.label}
             </a>
-          </nav>
-        </div>
-      </div>
-
-      {open && (
-        <div className="w-nav__overlay" role="presentation" onClick={() => setOpen(false)} />
-      )}
-
-      <nav
-        id="wedding-mobile-nav"
-        className={`w-nav__panel${open ? ' is-open' : ''}`}
-        aria-label="Mobile"
-        aria-hidden={!open}
-      >
-        <button type="button" className="w-nav__close" onClick={() => setOpen(false)} aria-label="Close">
-          ×
-        </button>
-        <ul className="w-nav__panel-list">
-          {LEFT_LINKS.map((link) => (
-            <li key={link.href}>
-              <a href={link.href} onClick={() => setOpen(false)}>
-                {link.label}
-              </a>
-            </li>
-          ))}
-          <li>
-            <a href="#rsvp" onClick={handleRsvp}>
-              RSVP
-            </a>
-          </li>
-        </ul>
+          )
+        })}
       </nav>
     </header>
   )
